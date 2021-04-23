@@ -16,4 +16,5 @@ Dans le container :
 		`ng serve --host 0.0.0.0 --port 4200`  
 Dans un navigateur :  
 	[](http://127.0.0.1:4200/)  
+`sudo chown --recursive "$(id --user):$(id --group)" ./angular_front_end/`  
 
