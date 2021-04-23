@@ -18,4 +18,6 @@ Dans le container :
 Dans un navigateur :  
 |	[Serveur de developpement](http://127.0.0.1:4200/)  
 `sudo chown --recursive "$(id --user):$(id --group)" ./angular_front_end/`  
+`touch .gitignore`  
+`git add angular_front_end/TWOUITTER/` (le dernier '/' est necessaire)  
 
