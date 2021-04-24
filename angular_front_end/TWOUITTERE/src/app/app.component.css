@@ -6,6 +6,10 @@ div.title {
 	text-align: center;
 }
 
+#authComponent {
+	float: right;
+}
+
 table {
     width: 100%;
 }

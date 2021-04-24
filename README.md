@@ -2,7 +2,7 @@
 
 ## Journal de bord
 
-`docker pull debian:latest`  
+`docker pull debian:buster`  
 `mkdir docker_image_build_context`  
 `cp ./dockerfiles/Dockerfile_twouittere_angular ./docker_image_build_context/Dockerfile`  
 Dans le repertoire './docker\_image\_build\_context/' :  
@@ -20,4 +20,26 @@ Dans un navigateur :
 `sudo chown --recursive "$(id --user):$(id --group)" ./angular_front_end/`  
 `touch .gitignore`  
 `git add angular_front_end/TWOUITTERE/` (le dernier '/' est necessaire)  
+
+Dans un navigateur :
+|	[Install MongoDB Community Edition on Debian - MongoDB Manual](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-debian/)  
+`cp ./dockerfiles/Dockerfile_twouittere_mongodb ./docker_image_build_context/Dockerfile`  
+Dans le repertoire './docker\_image\_build\_context/' :  
+|	`docker build --tag twouittere_mongodb:latest ./`  
+`docker volume create twouittere_mongodb`  
+`docker run --name twouittere_mongodb_container --tty --interactive --volume twouittere_mongodb:/var/lib/mongodb --publish 27017:27017 --rm twouittere_mongodb:latest bash`  
+
+Dans un navigateur :  
+|	[DockerHub - MongoDB](https://hub.docker.com/_/mongo)  
+`docker pull mongo:latest`  
+`docker run --name twouittere_mongod_container --detach --volume twouittere_mongodb:/var/lib/mongodb --publish 27017:27017 --rm mongo:latest`  
+
+Dans un navigateur :  
+|	[pip documentation - installation - upgrading pip](https://pip.pypa.io/en/stable/installing/#upgrading-pip)  
+`python3 -m pip install -U pip`  
+`pip3 install docker-compose`  
+
+Dans un navigateur :  
+|	[GitHub - Docker Compose](https://github.com/docker/compose)  
+|	[Docker Documentation - Get started with Docker Compose](https://docs.docker.com/compose/gettingstarted/)  
 
