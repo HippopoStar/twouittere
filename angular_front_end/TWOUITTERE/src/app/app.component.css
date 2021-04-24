@@ -1,0 +1,30 @@
+header {
+    background-color: lightgray;
+}
+
+div.title {
+	text-align: center;
+}
+
+table {
+    width: 100%;
+}
+
+tr {
+    width: 100%;
+}
+
+td.leftColumn {
+	width: 10%;
+}
+
+div.middleColumn {
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+td.rightColumn {
+	width: 10%;
+}
+
