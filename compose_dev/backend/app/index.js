@@ -29,19 +29,42 @@ https.createServer(options, app).listen(3000);
 
 let MongoClient = require("mongodb").MongoClient;
 let ObjectId = require("mongodb").ObjectId;
-let url = "mongodb://mongo:27017";
+let url = "mongodb://root:example@mongo:27017";
 
 
 MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err, client) => {
     let db = client.db("Twouittere");
     assert.equal(null, err);
 
-    /* ---------- TEST -------------------------------------------------------------------- */
+    /* ---------- TEST 01------------------------------------------------------------------ */
 
     app.get('/', (request, response) => {
       response.setHeader('ContentType', 'text/plain');
       response.setHeader('Access-Control-Allow-Origin', '*');
       response.end('Bonjour de Node.js');
+    });
+
+    /* ---------- TEST 02------------------------------------------------------------------ */
+
+    app.get('/init_users_db', (request, response) => {
+      const default_users = [
+        {
+          "email" : "delune@lirmm.fr",
+          "password" : "sideree",
+          "firstname" : "Claire",
+          "lastname" : "DELUNE"
+        },
+        {
+          "email" : "pompidor@lirmm.fr",
+          "password" : "2fast4U",
+          "firstname" : "Pierre",
+          "lastname" : "POMPIDOR"
+        }
+      ];
+      db.collection("Users").insertMany(default_users);
+      response.setHeader('ContentType', 'text/plain');
+      response.setHeader('Access-Control-Allow-Origin', '*');
+      response.end('Initialisation de la collection "Users" de la base de donnees !');
     });
 
     /* ---------- AUTHENTIFICATION -------------------------------------------------------- */
