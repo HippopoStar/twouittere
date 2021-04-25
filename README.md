@@ -43,3 +43,7 @@ Dans un navigateur :
 |	[GitHub - Docker Compose](https://github.com/docker/compose)  
 |	[Docker Documentation - Get started with Docker Compose](https://docs.docker.com/compose/gettingstarted/)  
 
+Dans le repertoire 'compose\_dev' :  
+|	docker-compose up -d  
+|	docker-compose down  
+

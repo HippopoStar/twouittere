@@ -1,0 +1,44 @@
+<header>
+	<table>
+		<tr>
+			<td>
+				<div class="title">
+					<span>Bienvenue sur {{title}} !</span>
+				</div>
+			</td>
+			<td>
+				<div id="authComponent">
+					<app-auth></app-auth>
+				</div>
+			</td>
+		</tr>
+	</table>
+</header>
+<table>
+	<tr>
+		<td class="leftColumn" rowspan="2">
+			<span>Colonne de gauche</span>
+		</td>
+		<td>
+			<div class="middleColumn">
+				<span>Emplacement redaction</span>
+			</div>
+		</td>
+		<td class="rightColumn" rowspan="2">
+			<span>Colonne de droite</span>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div class="middleColumn">
+				<span>Emplacement fil d'actualite</span>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3">
+			<span>Router outlet</span>
+			<router-outlet></router-outlet>
+		</td>
+	</tr>
+</table>

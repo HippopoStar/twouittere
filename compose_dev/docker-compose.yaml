@@ -1,0 +1,41 @@
+services:
+  frontend:
+    build: frontend
+    ports:
+      - 4200:4200
+    stdin_open: true
+    volumes:
+      - ./frontend/app:/root/angular/TWOUITTERE/src/app
+    container_name: compose_dev_frontend
+    restart: always
+    networks:
+      - angular-express
+    depends_on:
+      - backend
+
+  backend:
+    container_name: compose_dev_backend
+    restart: always
+    build: backend
+    volumes:
+      - ./backend/app:/usr/src/app
+    depends_on:
+      - mongo
+    networks:
+      - express-mongo
+      - angular-express
+
+  mongo:
+    container_name: compose_dev_mongo
+    restart: always
+    image: mongo:latest
+    volumes:
+      - ./data:/var/lib/mongodb
+    networks:
+      - express-mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+networks:
+  angular-express:
+  express-mongo:
