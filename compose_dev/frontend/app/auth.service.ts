@@ -14,7 +14,7 @@ export class AuthService {
   // Dans cet exemple nous n'utilisons pas le serveur https
   authentification(login: string, password: string): Observable<any> {
     console.log("Dans auth.service.ts avec login="+login+" password="+password);
-    let url: string = "http://localhost:8888/auth/login="+login+"/password="+password;
+    let url: string = "https://127.0.0.1:3000/auth/login="+login+"/password="+password;
     return this.http.get(url);
   }
 }

@@ -6,6 +6,11 @@
 `docker pull node:lts-buster-slim`  
 `docker pull mongo:latest`  
 
+Repertoires :  
+`/var/lib/mongodb/` [Source](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-debian/#run-mongodb-community-edition)  
+`/data/db/` [Source (voir section Caveats)](https://hub.docker.com/_/mongo)  
+`/usr/local/lib/node_modules/` [Source](https://docs.npmjs.com/cli/v7/configuring-npm/folders)  
+
 `mkdir docker_image_build_context`  
 `cp ./dockerfiles/Dockerfile_twouittere_angular ./docker_image_build_context/Dockerfile`  
 Dans le repertoire './docker\_image\_build\_context/' :  
@@ -61,4 +66,9 @@ Dans le container :
 Dans un navigateur :
 |	[nodemon](https://nodemon.io/)  
 |	[GitHub - nodemon documentation](https://github.com/remy/nodemon#nodemon)  
+
+Dans le fichier './compose\_dev/backend/app/index.js' :  
+|	`mongodb://mongo:27017`  
+Dans le fichier './compose\_dev/frontend/app/auth.service.ts' :  
+|	`https://127.0.0.1:3000/auth/login`  
 
