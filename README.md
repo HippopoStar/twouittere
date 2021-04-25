@@ -3,6 +3,9 @@
 ## Journal de bord
 
 `docker pull debian:buster`  
+`docker pull node:lts-buster-slim`  
+`docker pull mongo:latest`  
+
 `mkdir docker_image_build_context`  
 `cp ./dockerfiles/Dockerfile_twouittere_angular ./docker_image_build_context/Dockerfile`  
 Dans le repertoire './docker\_image\_build\_context/' :  
@@ -43,7 +46,19 @@ Dans un navigateur :
 |	[GitHub - Docker Compose](https://github.com/docker/compose)  
 |	[Docker Documentation - Get started with Docker Compose](https://docs.docker.com/compose/gettingstarted/)  
 
+`cp --recursive ./angular_front_end/TWOUITTERE/src/app ./compose_dev/frontend/app`  
+
 Dans le repertoire 'compose\_dev' :  
 |	docker-compose up -d  
 |	docker-compose down  
+
+`docker run --name twouittere_node_container --interactive --tty --volume "$(pwd)/compose_dev/backend/app:/root/TWOUITTERE" --publish 3000:3000 --rm node:lts-buster-slim bash`  
+Dans le container :  
+|	`npm init --yes`  
+|	`npm install express cors mongodb --save`  
+|	`npm install nodemon --save-dev`  
+
+Dans un navigateur :
+|	[nodemon](https://nodemon.io/)  
+|	[GitHub - nodemon documentation](https://github.com/remy/nodemon#nodemon)  
 

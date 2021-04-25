@@ -17,8 +17,10 @@ services:
     container_name: compose_dev_backend
     restart: always
     build: backend
+    ports:
+      - 3000:3000
     volumes:
-      - ./backend/app:/usr/src/app
+      - ./backend/app:/root/TWOUITTERE
     depends_on:
       - mongo
     networks:
