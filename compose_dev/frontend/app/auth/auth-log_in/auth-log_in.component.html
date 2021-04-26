@@ -7,7 +7,7 @@
 				</td>
 				<td>
 					<input type="text" class="form-control" id="login" required
-						placeholder="pseudonym" [(ngModel)]="login" name="login" />
+						placeholder="email" [(ngModel)]="login" name="login" />
 				</td>
 			</tr>
 			<tr>
@@ -26,6 +26,9 @@
 			</tr>
 		</table>
 	</form>
+	<div class="error-message">
+		<span>{{errorMessage}}</span>
+	</div>
 </div>
 <div *ngIf="auth.isLoggedIn">
 	<span>Connected as {{auth.firstname}} {{auth.lastname}}</span>

@@ -13,6 +13,7 @@ export class AuthLogInComponent {
   public login: string|null = null;
   public password: string|null = null;
   private nomEtPrenom: string[] = [];
+  public errorMessage: string = "";
 
   constructor(public auth: AuthService) {}
 
@@ -42,8 +43,15 @@ export class AuthLogInComponent {
               this.auth.firstname = this.nomEtPrenom[0];
               this.auth.lastname = this.nomEtPrenom[1];
               this.auth.email = this.login;
+              this.errorMessage = "";
+          }
+          else {
+            this.errorMessage = "Authentification failed: invalid login or password";
           }
 
+      }
+      else {
+        this.errorMessage = "Authentification failed: invalid field(s)";
       }
   }
 

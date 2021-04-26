@@ -23,7 +23,7 @@ export class AuthService {
 
   register(login: string, password: string, firstname: string, lastname: string) : Observable<any> {
     console.log("Dans la methode 'registering' de auth.service.ts");
-    let url: string = this.backend_server_url+"/auth";
+    let url: string = this.backend_server_url+"/auth/register";
     let req: Object = {
       "login": login,
       "password": password,

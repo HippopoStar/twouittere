@@ -96,15 +96,39 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
 	  });
     });
 
-	app.post("/auth", (req, res) => {
-      let login = req.body.login;
-      let password = req.body.password;
-      let firstname = req.body.firstname;
-      let lastname = req.body.lastname;
-      console.log(JSON.stringify(req.body));
+	app.post("/auth/register", (req, res) => {
       res.setHeader("Content-type","application/json; charset=UTF-8");
       res.setHeader("Access-Control-Allow-Origin","*");
-      res.end(JSON.stringify([firstname, lastname]));
+      const reEmail = /^(\w+)@(\w+)\.(\w{2,3})$/;
+      const reWord = /^(\w+)$/;
+
+      if (!(req.body.login === null) && reEmail.test(req.body.login)
+        && !(req.body.password === null) && reWord.test(req.body.password)
+        && !(req.body.firstname === null) && reWord.test(req.body.firstname)
+        && !(req.body.lastname === null) && reWord.test(req.body.lastname)) {
+        let newUser = {
+          "email": req.body.login,
+          "password": req.body.password,
+          "firstname": req.body.firstname,
+          "lastname": req.body.lastname
+        };
+        console.log(JSON.stringify(req.body));
+        db.collection("Users").find({"email": newUser.email}).toArray((err, documents) => {
+          if (documents !== undefined && documents.length == 0) {
+            db.collection("Users").insertOne(newUser);
+            res.end(JSON.stringify([newUser.firstname, newUser.lastname]));
+            console.log("Nouvel utilisateur : " + newUser.firstname + " " + newUser.lastname);
+          }
+          else {
+            console.log("L'utilisateur \"" + newUser.login + "\" existe deja !");
+            res.end(JSON.stringify([]));
+          }
+        });
+      }
+      else {
+        console.log("Erreur dans la requete ('/auth' - POST)");
+        res.end(JSON.stringify([]));
+      }
     });
 
 });

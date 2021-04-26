@@ -15,6 +15,7 @@ export class AuthSignInComponent {
   public firstname: string|null = null;
   public lastname: string|null = null;
   private nomEtPrenom: string[] = [];
+  public errorMessage: string = "";
 
   constructor(public auth: AuthService) {}
 
@@ -22,12 +23,13 @@ export class AuthSignInComponent {
 
       /* ---------- REGISTERING ------------------------------------------------------------- */
 
-      const re = /^(\w+)$/;
+      const reEmail = /^(\w+)@(\w+)\.(\w{2,3})$/;
+      const reWord = /^(\w+)$/;
 
-      if (!(this.login === null) && re.test(this.login)
-        && !(this.password === null) && re.test(this.password)
-        && !(this.firstname === null) && re.test(this.firstname)
-        && !(this.lastname === null) && re.test(this.lastname)) {
+      if (!(this.login === null) && reEmail.test(this.login)
+        && !(this.password === null) && reWord.test(this.password)
+        && !(this.firstname === null) && reWord.test(this.firstname)
+        && !(this.lastname === null) && reWord.test(this.lastname)) {
           console.log(this.login+" "+this.password+" "+this.firstname+" "+this.lastname);
           this.auth.isSigningIn = true;
 
@@ -38,9 +40,16 @@ export class AuthSignInComponent {
               this.auth.firstname = this.nomEtPrenom[0];
               this.auth.lastname = this.nomEtPrenom[1];
               this.auth.email = this.login;
+              this.errorMessage = "";
               this.hide_signin_form();
           }
+          else {
+            this.errorMessage = "Registration failed: existing user";
+          }
 
+      }
+      else {
+        this.errorMessage = "Registration failed: invalid field(s)";
       }
 
   }
