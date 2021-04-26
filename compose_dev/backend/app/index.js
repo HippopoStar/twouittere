@@ -81,7 +81,10 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
 	let login = req.params.login;
 	let password = req.params.password;
 	console.log("Demande d'authentification avec login="+login+" et password="+password);
-        db.collection("Users").find({"email":login, "password":password})
+        db.collection("Users").find({
+          "email": login,
+          "password": password
+        })
 	  .toArray(function(err, documents) {
 	    res.setHeader("Content-type","application/json; charset=UTF-8");
 	    res.setHeader("Access-Control-Allow-Origin","*");

@@ -11,6 +11,7 @@ import { AuthService } from './auth.service';
 import { AuthGuardService } from './auth-guard.service';
 
 import { AuthModule } from './auth/auth.module';
+import { ArticlesModule } from './articles/articles.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AuthModule } from './auth/auth.module';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    AuthModule
+    AuthModule,
+    ArticlesModule
   ],
   providers: [
     AuthService,

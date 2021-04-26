@@ -18,7 +18,8 @@ DROIT D'ACCES AUX FICHIERS: `sudo chown --recursive "$(id --user):$(id --group)"
 Dans le repertoire './docker\_image\_build\_context/' :  
 |	`docker build --tag twouittere_angular:latest ./`  
 `mkdir angular_front_end`  
-`docker run --name twouittere_angular_container --tty --interactive --volume "$(pwd)/angular_front_end:/root/angular" --publish 4200:4200 --rm twouittere_angular:latest bash`  
+`docker run --name twouittere_angular_container --interactive --tty --volume "$(pwd)/angular_front_end:/root/angular" --publish 4200:4200 --rm twouittere_angular:latest bash`  
+`docker run --name twouittere_angular_container --interactive --tty --volume "$(pwd)/app:/root/angular/TWOUITTERE/src/app" --publish 4200:4200 --rm compose_dev_frontend:latest bash`  
 Dans le container :  
 |	`git config --global user.email "leocabanes@wanadoo.fr"`  
 |	`git config --global user.name "HippopoStar"`  
@@ -62,7 +63,7 @@ Dans le repertoire 'compose\_dev' :
 `docker run --name twouittere_node_container --interactive --tty --volume "$(pwd)/compose_dev/backend/app:/root/TWOUITTERE" --publish 3000:3000 --rm node:lts-buster-slim bash`  
 Dans le container :  
 |	`npm init --yes`  
-|	`npm install express cors mongodb fs md5sum --save # rxjs rxjs-compact https body-parser`  
+|	`npm install express cors mongodb fs --save # rxjs rxjs-compact https body-parser md5sum crypto`  
 |	`npm install nodemon --save-dev`  
 
 Dans un navigateur :
@@ -73,4 +74,7 @@ Dans le fichier './compose\_dev/backend/app/index.js' [Source](https://docs.mong
 |	`mongodb://admin:example@mongo:27017`  
 Dans le fichier './compose\_dev/frontend/app/auth.service.ts' :  
 |	`https://127.0.0.1:3000/auth/login`  
+
+Dans un navigateur :
+|	[NodeJS - Crypto - Hash](https://nodejs.org/api/all.html#crypto_crypto)  
 
