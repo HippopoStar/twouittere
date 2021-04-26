@@ -5,11 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 
 @Component({
-  selector: 'app-log-in',
-  templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.css']
+  selector: 'app-auth-log-in',
+  templateUrl: './auth-log_in.component.html',
+  styleUrls: ['./auth-log_in.component.css']
 })
-export class LogInComponent {
+export class AuthLogInComponent {
   public login: string|null = null;
   public password: string|null = null;
   private nomEtPrenom: string[] = [];

@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LogInComponent } from './log-in/log-in.component';
-import { SignInComponent } from './sign-in/sign-in.component';
+import { AuthLogInComponent } from './auth-log_in/auth-log_in.component';
+import { AuthSignInComponent } from './auth-sign_in/auth-sign_in.component';
 
 const routes: Routes = [
   {
-    path: 'log-in',
-    component: LogInComponent,
-    outlet: 'logIn'
+    path: 'log_in',
+    component: AuthLogInComponent,
+    outlet: 'authLogIn'
   },
   {
-    path: 'sign-in',
-    component: SignInComponent,
-    outlet: 'signIn'
+    path: 'sign_in',
+    component: AuthSignInComponent,
+    outlet: 'authSignIn'
   }
 ];
 

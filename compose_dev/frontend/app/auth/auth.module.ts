@@ -6,16 +6,16 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AuthComponent } from './auth.component';
-import { LogInComponent } from './log-in/log-in.component';
-import { SignInComponent } from './sign-in/sign-in.component';
+import { AuthLogInComponent } from './auth-log_in/auth-log_in.component';
+import { AuthSignInComponent } from './auth-sign_in/auth-sign_in.component';
 
 import { AuthRoutingModule } from './auth-routing.module';
 
 @NgModule({
   declarations: [
     AuthComponent,
-    LogInComponent,
-    SignInComponent
+    AuthLogInComponent,
+    AuthSignInComponent
   ],
   imports: [
     CommonModule,
