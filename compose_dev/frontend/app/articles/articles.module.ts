@@ -13,6 +13,8 @@ import { ArticlesFeedComponent } from './articles-feed/articles-feed.component';
 import { AuthService } from '../auth.service';
 import { AuthGuardService } from '../auth-guard.service';
 
+import { ArticlesService } from './articles.service';
+
 @NgModule({
   declarations: [
     ArticlesComponent,
@@ -29,7 +31,8 @@ import { AuthGuardService } from '../auth-guard.service';
   exports: [ArticlesComponent],
   providers: [
     AuthService,
-    AuthGuardService
+    AuthGuardService,
+    ArticlesService
   ],
   bootstrap: [ArticlesComponent]
 })

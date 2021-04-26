@@ -20,6 +20,7 @@ const app = express();
 const assert = require("assert");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const async = require("async");
 
 const options = {
     key: fs.readFileSync('./server.key'),
@@ -75,6 +76,45 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
 //      response.end('Initialisation de la collection "Users" de la base de donnees !');
 //    });
 
+    /* ---------- USER VERIFICATION ------------------------------------------------------- */
+
+    function checkClientAuth(db, req, res, param, callback) {
+      var logMessage = "In \"checkClientAuth\": ";
+      console.log(logMessage + JSON.stringify(param));
+      console.log(JSON.stringify(param["filterObject"] !== undefined));
+      console.log(JSON.stringify(param["filterObject"] instanceof Object));
+      console.log(JSON.stringify(param["filterObject"]["login"] !== undefined));
+      console.log(JSON.stringify(param["filterObject"]["login"] instanceof String));
+      console.log(typeof param["filterObject"]["login"]);
+      console.log(typeof(typeof "I need to know"));
+      console.log(JSON.stringify(typeof(param["filterObject"]["login"]) == "string"));
+      if (param["filterObject"] !== undefined && param["filterObject"] instanceof Object
+        && param["filterObject"]["login"] !== undefined && typeof(param["filterObject"]["login"]) === "string"
+        && param["filterObject"]["password"] !== undefined && typeof(param["filterObject"]["password"]) === "string") {
+        db.collection("Users").find({
+          "email": param["filterObject"]["login"],
+          "password": param["filterObject"]["password"]
+        }).toArray((err, documents) => {
+          if (err) {
+            console.log(logMessage + err);
+            res.end(JSON.stringify({ "status": "fail" }));
+          }
+          else if (documents !== undefined && documents.length > 0) {
+            console.log(logMessage + "OK");
+            callback(db, req, res, param, documents);
+          }
+          else {
+            console.log(logMessage + "auth not found in \"Users\" database");
+            res.end(JSON.stringify({ "status": "fail" }));
+          }
+        });
+      }
+      else {
+        console.log(logMessage + "invalid parameters");
+        res.end(JSON.stringify({ "status": "fail" }));
+      }
+    }
+
     /* ---------- AUTHENTIFICATION -------------------------------------------------------- */
 
     app.get("/auth/login=:login/password=:password", (req, res) => {
@@ -98,6 +138,8 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
 	    }
 	  });
     });
+
+    /* ---------- REGISTRATION ------------------------------------------------------------ */
 
 	app.post("/auth/register", (req, res) => {
       res.setHeader("Content-type","application/json; charset=UTF-8");
@@ -129,10 +171,40 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
         });
       }
       else {
-        console.log("Erreur dans la requete ('/auth' - POST)");
+        console.log("Erreur dans la requete ('/auth/register' - POST)");
         res.end(JSON.stringify([]));
       }
     });
+
+    /* ---------- PUBLICATION ------------------------------------------------------------- */
+
+	app.post("/articles/publish", (req, res) => {
+      var logMessage = "Dans la requete '/articles/publish' - POST: ";
+      res.setHeader("Content-type","application/json; charset=UTF-8");
+      res.setHeader("Access-Control-Allow-Origin","*");
+
+      checkClientAuth(db, req, res, { "filterObject": req.body }, (db, req, res, param, documents) => {
+        console.log(logMessage + JSON.stringify(req.body));
+        if (param["filterObject"]["content"] !== undefined && typeof(param["filterObject"]["content"]) === "string") {
+          let newArticle = {
+            "auth": param["filterObject"]["login"],
+            "content": param["filterObject"]["content"],
+            "publication_date": "2020-04-26"
+          };
+          db.collection("Articles").insertOne(newArticle);
+          console.log("Nouvel article poste:\n"+JSON.stringify(newArticle));
+          res.end(JSON.stringify({ "status": "success" }));
+        }
+        else {
+          console.log(logMessage + "invalid parameters");
+          res.end(JSON.stringify({ "status": "fail" }));
+        }
+      });
+    });
+
+    /* ---------- FEED -------------------------------------------------------------------- */
+
+/* [...] */
 
 });
 

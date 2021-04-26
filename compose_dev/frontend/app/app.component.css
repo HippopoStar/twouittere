@@ -6,6 +6,12 @@ div.title {
 	text-align: center;
 }
 
+div.subtitle {
+	text-align: center;
+	font-size: 10px;
+	font-style: italic;
+}
+
 #authComponent {
 	float: right;
 }

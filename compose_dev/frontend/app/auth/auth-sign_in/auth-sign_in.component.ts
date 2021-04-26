@@ -37,9 +37,10 @@ export class AuthSignInComponent {
           if ( this.nomEtPrenom.length > 0 ) {
               console.log(JSON.stringify(this.nomEtPrenom));
               this.auth.isLoggedIn = true;
+              this.auth.email = this.login;
+              this.auth.password = this.password;
               this.auth.firstname = this.nomEtPrenom[0];
               this.auth.lastname = this.nomEtPrenom[1];
-              this.auth.email = this.login;
               this.errorMessage = "";
               this.hide_signin_form();
           }
