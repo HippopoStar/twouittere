@@ -1,1 +1,52 @@
-<p>sign-in works!</p>
+<div *ngIf="!auth.isLoggedIn && !auth.isSigningIn">
+    <button (click)="display_signin_form()"> Sign in </button>
+</div>
+<div *ngIf="auth.isSigningIn">
+	<button (click)="hide_signin_form()"> Back to log in </button>
+	<form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+		<table class="form-group">
+			<tr>
+				<td>
+					<label for="login"> Login </label>
+				</td>
+				<td>
+					<input type="text" class="form-control" id="login" required
+						placeholder="pseudonym" [(ngModel)]="login" name="login" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for="pass"> Password </label>
+				</td>
+				<td>
+					<input type="password" class="form-control" id="pass" required
+						placeholder="password" [(ngModel)]="password" name="pass" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for="firstname"> First Name </label>
+				</td>
+				<td>
+					<input type="firstname" class="form-control" id="firstname" required
+						placeholder="first name" [(ngModel)]="firstname" name="firstname" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for="lastname"> Last Name </label>
+				</td>
+				<td>
+					<input type="lastname" class="form-control" id="lastname" required
+						placeholder="last name" [(ngModel)]="lastname" name="lastname" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<button type="submit"> Sign in </button>
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+

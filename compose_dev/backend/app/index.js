@@ -1,3 +1,5 @@
+"use strict";
+
 /* ---------- TEST 01 ----------------------------------------------------------------- */
 
 //var express	= require('express');
@@ -16,6 +18,8 @@ const fs = require('fs');
 const express = require('express');
 const app = express();
 const assert = require("assert");
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const options = {
     key: fs.readFileSync('./server.key'),
@@ -24,7 +28,11 @@ const options = {
     requestCert: true,
     rejectUnauthorized: false
 };      
-    
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors());
+
 https.createServer(options, app).listen(3000);
 
 let MongoClient = require("mongodb").MongoClient;
@@ -86,6 +94,17 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
 	        res.end(JSON.stringify([]));	    
 	    }
 	  });
+    });
+
+	app.post("/auth", (req, res) => {
+      let login = req.body.login;
+      let password = req.body.password;
+      let firstname = req.body.firstname;
+      let lastname = req.body.lastname;
+      console.log(JSON.stringify(req.body));
+      res.setHeader("Content-type","application/json; charset=UTF-8");
+      res.setHeader("Access-Control-Allow-Origin","*");
+      res.end(JSON.stringify([firstname, lastname]));
     });
 
 });

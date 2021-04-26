@@ -15,7 +15,7 @@ export class AuthLogInComponent {
   private nomEtPrenom: string[] = [];
 
   constructor(public auth: AuthService) {}
-  
+
   onSubmit() {
 
       /* ---------- TEST 01 ----------------------------------------------------------------- */

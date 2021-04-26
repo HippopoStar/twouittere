@@ -1,29 +1,34 @@
-<form *ngIf="!auth.isLoggedIn" (ngSubmit)="onSubmit()" #loginForm="ngForm">
-	<table class="form-group">
-		<tr>
-			<td>
-				<label for="login"> Login </label>
-			</td>
-			<td>
-				<input type="text" class="form-control" id="login" required
-					placeholder="email" [(ngModel)]="login" name="login" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="pass"> Password </label>
-			</td>
-			<td>
-				<input type="password" class="form-control" id="pass" required
-					placeholder="password" [(ngModel)]="password" name="pass" />
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<button type="submit"> Connectez-vous / Sign in </button>
-			</td>
-		</tr>
-	</table>
-</form>
-<button (click)="logout()" *ngIf="auth.isLoggedIn"> Pour vous déconnecter / Sign out </button>
+<div *ngIf="!auth.isLoggedIn && !auth.isSigningIn">
+	<form *ngIf="!auth.isLoggedIn && !auth.isSigningIn" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+		<table class="form-group">
+			<tr>
+				<td>
+					<label for="login"> Login </label>
+				</td>
+				<td>
+					<input type="text" class="form-control" id="login" required
+						placeholder="pseudonym" [(ngModel)]="login" name="login" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for="pass"> Password </label>
+				</td>
+				<td>
+					<input type="password" class="form-control" id="pass" required
+						placeholder="password" [(ngModel)]="password" name="pass" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<button type="submit"> Log in </button>
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<div *ngIf="auth.isLoggedIn">
+	<span>Connected as {{auth.firstname}} {{auth.lastname}}</span>
+	<button (click)="logout()"> Log out </button>
+</div>
 
