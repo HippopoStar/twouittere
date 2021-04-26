@@ -21,7 +21,10 @@ import { AuthGuardService } from '../auth-guard.service';
   ],
   imports: [
     CommonModule,
-    ArticlesRoutingModule
+    ArticlesRoutingModule,
+    BrowserModule,
+    FormsModule,
+    HttpClientModule
   ],
   exports: [ArticlesComponent],
   providers: [

@@ -78,3 +78,5 @@ Dans le fichier './compose\_dev/frontend/app/auth.service.ts' :
 Dans un navigateur :
 |	[NodeJS - Crypto - Hash](https://nodejs.org/api/all.html#crypto_crypto)  
 
+Ne pas omettre de completer le champ "imports" des fichiers \<module\_name\>.module.ts
+

@@ -1,1 +1,27 @@
-<p>article-redact works!</p>
+<div>
+	<form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+		<table class="form-group">
+			<tr>
+				<td>
+					<label for="redact"> Redact </label>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea type="text" class="form-control" id="redact" required
+						placeholder="Type your text here" [(ngModel)]="redact" name="redact" >
+					</textarea>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<button type="submit"> Publish </button>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<div class="error-message">
+		<span>{{errorMessage}}</span>
+	</div>
+</div>
+
