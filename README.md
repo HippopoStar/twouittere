@@ -62,7 +62,7 @@ Dans le repertoire 'compose\_dev' :
 `docker run --name twouittere_node_container --interactive --tty --volume "$(pwd)/compose_dev/backend/app:/root/TWOUITTERE" --publish 3000:3000 --rm node:lts-buster-slim bash`  
 Dans le container :  
 |	`npm init --yes`  
-|	`npm install express cors https body-parser mongodb fs md5sum --save`  
+|	`npm install express cors mongodb fs md5sum --save # rxjs rxjs-compact https body-parser`  
 |	`npm install nodemon --save-dev`  
 
 Dans un navigateur :

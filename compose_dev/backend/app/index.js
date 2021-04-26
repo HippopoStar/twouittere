@@ -1,15 +1,15 @@
-/*
-**var express	= require('express');
-**var app = express();
-**
-**app.get('/', (request, response) => {
-**	response.setHeader('ContentType', 'text/plain');
-**	response.setHeader('Access-Control-Allow-Origin', '*');
-**	response.end('Bonjour de Node.js');
-**});
-**
-**app.listen(3000);
-*/
+/* ---------- TEST 01 ----------------------------------------------------------------- */
+
+//var express	= require('express');
+//var app = express();
+//
+//app.get('/', (request, response) => {
+//	response.setHeader('ContentType', 'text/plain');
+//	response.setHeader('Access-Control-Allow-Origin', '*');
+//	response.end('Bonjour de Node.js');
+//});
+//
+//app.listen(3000);
 
 const https = require('https');
 const fs = require('fs');
@@ -36,7 +36,7 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
     let db = client.db("Twouittere");
     assert.equal(null, err);
 
-    /* ---------- TEST 01------------------------------------------------------------------ */
+    /* ---------- TEST 02 ----------------------------------------------------------------- */
 
     app.get('/', (request, response) => {
       response.setHeader('ContentType', 'text/plain');
@@ -44,28 +44,28 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
       response.end('Bonjour de Node.js');
     });
 
-    /* ---------- TEST 02------------------------------------------------------------------ */
+    /* ---------- TEST 03 ----------------------------------------------------------------- */
 
-    app.get('/init_users_db', (request, response) => {
-      const default_users = [
-        {
-          "email" : "delune@lirmm.fr",
-          "password" : "sideree",
-          "firstname" : "Claire",
-          "lastname" : "DELUNE"
-        },
-        {
-          "email" : "pompidor@lirmm.fr",
-          "password" : "2fast4U",
-          "firstname" : "Pierre",
-          "lastname" : "POMPIDOR"
-        }
-      ];
-      db.collection("Users").insertMany(default_users);
-      response.setHeader('ContentType', 'text/plain');
-      response.setHeader('Access-Control-Allow-Origin', '*');
-      response.end('Initialisation de la collection "Users" de la base de donnees !');
-    });
+//    app.get('/init_users_db', (request, response) => {
+//      const default_users = [
+//        {
+//          "email" : "delune@lirmm.fr",
+//          "password" : "sideree",
+//          "firstname" : "Claire",
+//          "lastname" : "DELUNE"
+//        },
+//        {
+//          "email" : "pompidor@lirmm.fr",
+//          "password" : "2fast4U",
+//          "firstname" : "Pierre",
+//          "lastname" : "POMPIDOR"
+//        }
+//      ];
+//      db.collection("Users").insertMany(default_users);
+//      response.setHeader('ContentType', 'text/plain');
+//      response.setHeader('Access-Control-Allow-Origin', '*');
+//      response.end('Initialisation de la collection "Users" de la base de donnees !');
+//    });
 
     /* ---------- AUTHENTIFICATION -------------------------------------------------------- */
 
