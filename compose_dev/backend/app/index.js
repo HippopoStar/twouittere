@@ -118,25 +118,32 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
     /* ---------- AUTHENTIFICATION -------------------------------------------------------- */
 
     app.get("/auth/login=:login/password=:password", (req, res) => {
-	let login = req.params.login;
-	let password = req.params.password;
-	console.log("Demande d'authentification avec login="+login+" et password="+password);
+      var logMessage = "Dans la requete '/auth/login' - GET: ";
+      res.setHeader("Content-type","application/json; charset=UTF-8");
+      res.setHeader("Access-Control-Allow-Origin","*");
+      if (req.params.login !== undefined && typeof(req.params.login) === "string"
+        && req.params.password !== undefined && typeof(req.params.password) === "string") {
+        let login = req.params.login;
+        let password = req.params.password;
+        console.log(logMessage + "Demande d'authentification avec login="+login+" et password="+password);
         db.collection("Users").find({
           "email": login,
           "password": password
-        })
-	  .toArray(function(err, documents) {
-	    res.setHeader("Content-type","application/json; charset=UTF-8");
-	    res.setHeader("Access-Control-Allow-Origin","*");
-	    if (documents !== undefined && documents.length == 1) {
-	        console.log("Authentification de "+documents[0].firstname+" "+documents[0].lastname);		
-                res.end(JSON.stringify([documents[0].firstname, documents[0].lastname]));
-	    }
-	    else {
-	        console.log("Pas d'authentification");
-	        res.end(JSON.stringify([]));	    
-	    }
-	  });
+        }).toArray(function(err, documents) {
+          if (documents !== undefined && documents.length == 1) {
+            console.log(logMessage+"Authentification de "+documents[0].firstname+" "+documents[0].lastname);
+            res.end(JSON.stringify([documents[0].firstname, documents[0].lastname]));
+          }
+          else {
+            console.log(logMessage+"Pas d'authentification");
+            res.end(JSON.stringify([]));
+          }
+	    });
+	  }
+      else {
+        console.log(logMessage+"Invalid parameters");
+        res.end(JSON.stringify([]));
+      }
     });
 
     /* ---------- REGISTRATION ------------------------------------------------------------ */
@@ -147,10 +154,10 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
       const reEmail = /^(\w+)@(\w+)\.(\w{2,3})$/;
       const reWord = /^(\w+)$/;
 
-      if (!(req.body.login === null) && reEmail.test(req.body.login)
-        && !(req.body.password === null) && reWord.test(req.body.password)
-        && !(req.body.firstname === null) && reWord.test(req.body.firstname)
-        && !(req.body.lastname === null) && reWord.test(req.body.lastname)) {
+      if (!(req.body.login === undefined) && typeof(req.body.login) === "string" && reEmail.test(req.body.login)
+        && !(req.body.password === undefined) && typeof(req.body.password) === "string" && reWord.test(req.body.password)
+        && !(req.body.firstname === undefined) && typeof(req.body.firstname) === "string" && reWord.test(req.body.firstname)
+        && !(req.body.lastname === undefined) && typeof(req.body.lastname) === "string" && reWord.test(req.body.lastname)) {
         let newUser = {
           "email": req.body.login,
           "password": req.body.password,

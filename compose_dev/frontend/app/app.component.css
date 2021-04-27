@@ -1,4 +1,8 @@
 header {
+	!width: 100%;
+	!position: fixed;
+	!top: 0px;
+	!z-index: 1;
     background-color: lightgray;
 }
 
@@ -18,6 +22,8 @@ div.subtitle {
 
 table {
     width: 100%;
+	!float: top;
+	!z-index: 0;
 }
 
 tr {
@@ -25,6 +31,8 @@ tr {
 }
 
 td.leftColumn {
+	font-size: 10px;
+	color: gray;
 	width: 10%;
 }
 
@@ -35,6 +43,14 @@ div.middleColumn {
 }
 
 td.rightColumn {
+	font-size: 10px;
+	color: gray;
+	width: 10%;
+}
+
+tr.topRaw {
+	font-size: 10px;
+	color: gray;
 	width: 10%;
 }
 

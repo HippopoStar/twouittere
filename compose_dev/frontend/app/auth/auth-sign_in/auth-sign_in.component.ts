@@ -23,6 +23,8 @@ export class AuthSignInComponent {
 
       /* ---------- REGISTERING ------------------------------------------------------------- */
 
+      const reEmailString = "/^(\\w+)@(\\w+)\\.(\\w{2,3})$/"
+      const reWordString = "/^(\\w+)$/"
       const reEmail = /^(\w+)@(\w+)\.(\w{2,3})$/;
       const reWord = /^(\w+)$/;
 
@@ -50,7 +52,9 @@ export class AuthSignInComponent {
 
       }
       else {
-        this.errorMessage = "Registration failed: invalid field(s)";
+        this.errorMessage = "Registration failed: invalid field(s)"
+          + " login: " + reEmailString
+          + " other fields: " + reWordString;
       }
 
   }

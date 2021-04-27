@@ -21,7 +21,20 @@ div.article-content {
 
 div.article-author {
 	width: 100%;
-	font-size: 10px;
-	color: gray;
 	text-align: right;
 }
+
+span.bold {
+	font-size: 25px;
+	font-style: bold;
+}
+
+span.article-content-text {
+	font-style: italic;
+}
+
+span.article-author-text {
+	font-size: 10px;
+	color: gray;
+}
+

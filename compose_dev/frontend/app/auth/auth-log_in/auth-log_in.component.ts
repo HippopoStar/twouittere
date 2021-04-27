@@ -36,20 +36,21 @@ export class AuthLogInComponent {
           console.log(this.login+" "+this.password);
           this.auth.isLoggedIn = false;
 
-          this.auth.authentification(this.login, this.password).subscribe(res => this.nomEtPrenom = res);
-          if ( this.nomEtPrenom.length > 0 ) {
-              console.log(JSON.stringify(this.nomEtPrenom));
-              this.auth.isLoggedIn = true;
-              this.auth.email = this.login;
-              this.auth.password = this.password;
-              this.auth.firstname = this.nomEtPrenom[0];
-              this.auth.lastname = this.nomEtPrenom[1];
-              this.errorMessage = "";
-          }
-          else {
-            this.errorMessage = "Authentification failed: invalid login or password";
-          }
-
+          this.auth.authentification(this.login, this.password).subscribe(res => {
+            this.nomEtPrenom = res;
+            if ( this.nomEtPrenom.length > 0 ) {
+                console.log(JSON.stringify(this.nomEtPrenom));
+                this.auth.isLoggedIn = true;
+                this.auth.email = this.login;
+                this.auth.password = this.password;
+                this.auth.firstname = this.nomEtPrenom[0];
+                this.auth.lastname = this.nomEtPrenom[1];
+                this.errorMessage = "";
+            }
+            else {
+              this.errorMessage = "Authentification failed: invalid login or password";
+            }
+          });
       }
       else {
         this.errorMessage = "Authentification failed: invalid field(s)";
