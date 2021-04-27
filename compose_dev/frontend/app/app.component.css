@@ -1,8 +1,8 @@
 header {
-	!width: 100%;
-	!position: fixed;
-	!top: 0px;
-	!z-index: 1;
+	!position: -webkit-sticky;
+	position: sticky;
+	top: 0px;
+	padding: 5px;
     background-color: lightgray;
 }
 
@@ -22,8 +22,6 @@ div.subtitle {
 
 table {
     width: 100%;
-	!float: top;
-	!z-index: 0;
 }
 
 tr {
