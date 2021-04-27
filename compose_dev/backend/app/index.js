@@ -40,6 +40,15 @@ let MongoClient = require("mongodb").MongoClient;
 let ObjectId = require("mongodb").ObjectId;
 let url = "mongodb://root:example@mongo:27017";
 
+function pushReversedTab (currentTab, toAddTab) {
+  var iterator;
+
+  iterator = toAddTab.length - 1;
+  while (iterator >= 0) {
+    currentTab.push(toAddTab[iterator]);
+    i--;
+  }
+}
 
 MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err, client) => {
     let db = client.db("Twouittere");

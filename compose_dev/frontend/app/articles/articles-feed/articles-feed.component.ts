@@ -28,6 +28,16 @@ export class ArticlesFeedComponent implements OnInit {
     this.loadArticles();
   }
 
+  pushReverseTab (currentTab: Array<ArticleInterface>, toAddTab: Array<ArticleInterface>) {
+    let i: number;
+
+    i = toAddTab.length - 1;
+    while (i >= 0) {
+      currentTab.push(toAddTab[i]);
+      i--;
+    }
+  }
+
   loadArticles(): void {
     let logMessage: string = "Dans la fonction \"loadArticles\": ";
     let receivedArticles: Array<ArticleInterface>|null = null;
@@ -36,9 +46,10 @@ export class ArticlesFeedComponent implements OnInit {
         && serverResponse.status === "success" && (receivedArticles = serverResponse.result) !== null) {
         //receivedArticles = serverResponse.result;
         console.log(logMessage + JSON.stringify(serverResponse));
-        for (let elem of receivedArticles) {
-          this.articlesFeed.push(elem);
-        }
+//        for (let elem of receivedArticles) {
+//          this.articlesFeed.push(elem);
+//        }
+        this.pushReverseTab(this.articlesFeed, receivedArticles);
       }
       else {
         console.log(logMessage + "Rien ne va plus");

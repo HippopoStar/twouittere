@@ -9,6 +9,7 @@ import { AuthService } from '../auth.service';
 })
 export class ArticlesService {
 
+  public isPublishing: boolean = false;
   public lastLoadedArticle: string = "None";
 
   constructor(private http: HttpClient, public auth: AuthService) { }

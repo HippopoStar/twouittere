@@ -20,13 +20,14 @@ export class ArticlesRedactComponent {
   onSubmit() {
 
     /* ---------- PUBLISH ----------------------------------------------------------------- */
-    console.log("SUBMITTED");
+
     if (!(this.redact === null)) {
       this.articles.publishRedact(this.redact).subscribe(res => {
         if (res.status === "success") {
           console.log("ARTICLE PUBLIE AVEC SUCCES:\n");
           console.log(this.auth.email + ": " + this.redact);
           this.errorMessage = "";
+          this.hide_redact_form();
         }
         else {
           this.errorMessage = "Publication failed: see backend";
@@ -39,6 +40,13 @@ export class ArticlesRedactComponent {
 
   }
 
+  display_redact_form() {
+    this.articles.isPublishing = false;
+  }
+
+  hide_redact_form() {
+    this.articles.isPublishing = true;
+  }
 
 }
 
