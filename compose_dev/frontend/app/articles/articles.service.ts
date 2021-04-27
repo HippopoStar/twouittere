@@ -17,6 +17,7 @@ export interface ArticleInterface {
 export class ArticlesService {
 
   public isPublishing: boolean = false;
+  public articlesFeed: Array<ArticleInterface> = [];
   public last_article_date: string = "None";
   public last_article_id: string = "None";
 
@@ -38,21 +39,21 @@ export class ArticlesService {
     return this.http.post(url, JSON.stringify(req), httpOptions);
   }
 
-  refreshArticles(articlesFeedComponentTab: Array<ArticleInterface>): void {
-    articlesFeedComponentTab = [];
+  refreshArticles(): void {
+    this.articlesFeed = [];
     this.last_article_date = "None";
     this.last_article_id = "None";
-    this.loadArticles(articlesFeedComponentTab);
+    this.loadArticles();
   }
 
-  loadArticles(articlesFeedComponentTab: Array<ArticleInterface>): void {
+  loadArticles(): void {
     let logMessage: string = "Dans la fonction \"loadArticles\": ";
     let receivedArticles: Array<ArticleInterface>|null = null;
     let articleDatePrinter: Date|null = null;
     this.loadTen().subscribe(serverResponse => {
       if (serverResponse.status !== undefined && typeof(serverResponse.status) === "string"
         && serverResponse.status === "success" && (receivedArticles = serverResponse.result) !== null) {
-        //receivedArticles = serverResponse.result;
+        //receivedArticles = serverResponse.result; /* Voir condition ci-dessus */
         console.log(logMessage + JSON.stringify(serverResponse));
         if (receivedArticles.length > 0) {
 
@@ -62,7 +63,7 @@ export class ArticlesService {
           for (let elem of receivedArticles) {
             articleDatePrinter = new Date(elem["publication_date"]);
             elem["publication_date"] = articleDatePrinter.toDateString() + " at " + articleDatePrinter.toTimeString();
-            articlesFeedComponentTab.push(elem);
+            this.articlesFeed.push(elem);
           }
         }
         else {

@@ -16,7 +16,7 @@ export class ArticlesFeedComponent implements OnInit {
 
   public articlesFeed: Array<ArticleInterface> = [];
 
-  constructor(private articles: ArticlesService, public auth: AuthService, private route: ActivatedRoute, private router: Router) { }
+  constructor(public articles: ArticlesService, public auth: AuthService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     let logMessage: string = "Appel de ngOnInit du composant 'articles-feed'";
@@ -34,10 +34,10 @@ export class ArticlesFeedComponent implements OnInit {
     let logMessage: string = "Dans la fontion \"articlesFeedManagement\": ";
     console.log(logMessage + action);
     if (action === "load") {
-      this.articles.loadArticles(this.articlesFeed);
+      this.articles.loadArticles();
     }
     else if (action === "refresh") {
-      this.articles.refreshArticles(this.articlesFeed);
+      this.articles.refreshArticles();
     }
     else {
       console.log(logMessage + "Unknown action");

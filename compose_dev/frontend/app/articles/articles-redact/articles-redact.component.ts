@@ -24,9 +24,10 @@ export class ArticlesRedactComponent {
         if (res.status === "success") {
           console.log("ARTICLE PUBLIE AVEC SUCCES:\n");
           console.log(this.auth.email + ": " + this.redact);
-          this.errorMessage = "";
           this.hide_redact_form();
           this.redact = "";
+          this.errorMessage = "";
+          this.articles.refreshArticles();
         }
         else {
           this.errorMessage = "Publication failed: see backend";
