@@ -222,16 +222,18 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
 
     /* ---------- FEED -------------------------------------------------------------------- */
 
-    app.get("/articles/feed/login=:login/password=:password/last_article_date=:last_article_date", (req, res) => {
+    app.get("/articles/feed/login=:login/password=:password/last_article_date=:last_article_date/last_article_id=:last_article_id", (req, res) => {
       var logMessage = "Dans la requete '/articles/feed' - GET: ";
       res.setHeader("Content-type","application/json; charset=UTF-8");
       res.setHeader("Access-Control-Allow-Origin","*");
 
       console.log(logMessage + JSON.stringify(req.params));
-      if (req.params.last_article_date !== undefined && typeof(req.params.last_article_date) === "string")
+      if (req.params.last_article_date !== undefined && typeof(req.params.last_article_date) === "string"
+        && req.params.last_article_id !== undefined && typeof(req.params.last_article_id) === "string") //TODO
       {
         if (req.params.last_article_date === "None" || !/$(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}):(\d{3})Z/.test(req.params.last_article_date)) {
           req.params.last_article_date = new Date().toISOString();
+          req.params.last_article_id = "\0"; //TODO
         }
         db.collection("Articles").find({
           "publication_date": { $lt: req.params.last_article_date }

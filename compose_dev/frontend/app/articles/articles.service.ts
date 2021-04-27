@@ -5,6 +5,7 @@ import { AuthService } from '../auth.service';
 
 
 export interface ArticleInterface {
+  _id: string;
   author: string;
   content: string;
   publication_date: string;
@@ -17,6 +18,7 @@ export class ArticlesService {
 
   public isPublishing: boolean = false;
   public last_article_date: string = "None";
+  public last_article_id: string = "None";
 
   constructor(private http: HttpClient, public auth: AuthService) { }
 
@@ -39,6 +41,7 @@ export class ArticlesService {
   refreshArticles(articlesFeedComponentTab: Array<ArticleInterface>): void {
     articlesFeedComponentTab = [];
     this.last_article_date = "None";
+    this.last_article_id = "None";
     this.loadArticles(articlesFeedComponentTab);
   }
 
@@ -52,7 +55,10 @@ export class ArticlesService {
         //receivedArticles = serverResponse.result;
         console.log(logMessage + JSON.stringify(serverResponse));
         if (receivedArticles.length > 0) {
+
           this.last_article_date = receivedArticles[receivedArticles.length - 1].publication_date;
+          this.last_article_id = receivedArticles[receivedArticles.length - 1]._id;
+
           for (let elem of receivedArticles) {
             articleDatePrinter = new Date(elem["publication_date"]);
             elem["publication_date"] = articleDatePrinter.toDateString() + " at " + articleDatePrinter.toTimeString();
@@ -75,9 +81,11 @@ export class ArticlesService {
     return this.http.get(url
       +"/login="+(this.auth.email || "default")
       +"/password="+(this.auth.password || "default")
-      +"/last_article_date="+this.last_article_date);
+      +"/last_article_date="+(this.last_article_date || "None")
+      +"/last_article_id="+(this.last_article_id || "None")
+    );
   }
 
 
-
 }
+

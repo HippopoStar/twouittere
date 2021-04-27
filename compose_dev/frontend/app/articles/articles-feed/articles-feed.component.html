@@ -1,6 +1,11 @@
 <div>
 	<span>Recent articles:</span>
 	<table>
+		<tr>
+			<td>
+				<button (click)="this.articlesFeedManagement('refresh')"> Refresh </button>
+			</td>
+		</tr>
 		<tr *ngFor="let article of articlesFeed">
 			<td>
 				<div class="article">
@@ -14,6 +19,11 @@
 						<span>[</span><span class="article-publication-date-text">{{article.publication_date}}</span><span>]</span>
 					</div>
 				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button (click)="this.articlesFeedManagement('load')"> Load more </button>
 			</td>
 		</tr>
 	</table>

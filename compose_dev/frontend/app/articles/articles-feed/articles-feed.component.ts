@@ -19,10 +19,15 @@ export class ArticlesFeedComponent implements OnInit {
   constructor(private articles: ArticlesService, public auth: AuthService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    let logMessage: string = "Appel de ngOnInit du composant 'articles-feed'";
+    console.log(logMessage);
+/*
+    this.route.params.subscribe((params: Params) => {
+      console.log(JSON.stringify(params));
       this.articlesFeedManagement(params["action"]);
     });
-    this.articles.loadArticles(this.articlesFeed); //TO_DELETE
+*/
+    this.articlesFeedManagement("load");
   }
 
   articlesFeedManagement(action: string): void {

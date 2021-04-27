@@ -85,3 +85,5 @@ Dans un navigateur :
 |	[GitHub.io - Mongo - find](http://mongodb.github.io/node-mongodb-native/3.6/api/Collection.html#find)  
 |	[docs.mongodb - order & limit](https://docs.mongodb.com/manual/reference/method/cursor.sort/#limit-results)  
 
+Note: importer 'BrowserModule' abusivement peut s'averer contre-productif
+

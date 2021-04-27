@@ -3,8 +3,10 @@
 </div>
 <div>
 	<app-articles-feed></app-articles-feed>
-	<router-outlet name="articlesFeed"></router-outlet>
-</div>
-<div>
-	<a [routerLink]="['/articles', {outlets:{'articlesFeed': ['feed', 'load']}}]"> Load more </a>
+	<!--
+	<div>
+		<router-outlet name="articlesFeed"></router-outlet>
+		<a [routerLink]="['/articles', {outlets:{'articlesFeed': ['feed', 'load']}}]"> Load more </a>
+	</div>
+	-->
 </div>
