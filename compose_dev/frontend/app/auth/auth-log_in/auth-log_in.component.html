@@ -30,7 +30,7 @@
 		<span>{{errorMessage}}</span>
 	</div>
 </div>
-<div *ngIf="auth.isLoggedIn">
+<div *ngIf="auth.isLoggedIn" id="user-identification">
 	<span>Connected as {{auth.firstname}} {{auth.lastname}}</span>
 	<button (click)="logout()"> Log out </button>
 </div>

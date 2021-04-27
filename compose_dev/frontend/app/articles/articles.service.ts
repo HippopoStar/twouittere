@@ -9,6 +9,8 @@ import { AuthService } from '../auth.service';
 })
 export class ArticlesService {
 
+  public lastLoadedArticle: string = "None";
+
   constructor(private http: HttpClient, public auth: AuthService) { }
 
   publishRedact(parameters: string): Observable<any> {
@@ -25,6 +27,15 @@ export class ArticlesService {
       })
     };
     return this.http.post(url, JSON.stringify(req), httpOptions);
+  }
+
+  loadTen(): Observable<any> {
+    console.log("Appel de \"loadTen\"");
+    let url: string = this.auth.backend_server_url+"/articles/feed";
+    return this.http.get(url
+      +"/login="+(this.auth.email || "default")
+      +"/password="+(this.auth.password || "default")
+      +"/lastLoadedArticle="+this.lastLoadedArticle);
   }
 
 }

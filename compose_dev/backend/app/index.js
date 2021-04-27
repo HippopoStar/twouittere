@@ -187,7 +187,7 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
         console.log(logMessage + JSON.stringify(req.body));
         if (param["filterObject"]["content"] !== undefined && typeof(param["filterObject"]["content"]) === "string") {
           let newArticle = {
-            "auth": param["filterObject"]["login"],
+            "author": param["filterObject"]["login"],
             "content": param["filterObject"]["content"],
             "publication_date": "2020-04-26"
           };
@@ -200,11 +200,46 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
           res.end(JSON.stringify({ "status": "fail" }));
         }
       });
+      //A partir d'ici on est sortis du callback de l'appel de db.collection(<collection name>).find() de la fonction 'checkClientAuth'
     });
 
     /* ---------- FEED -------------------------------------------------------------------- */
 
-/* [...] */
+    app.get("/articles/feed/login=:login/password=:password/lastLoadedArticle=:lastLoadedArticle", (req, res) => {
+      var logMessage = "Dans la requete '/articles/feed' - GET: ";
+      res.setHeader("Content-type","application/json; charset=UTF-8");
+      res.setHeader("Access-Control-Allow-Origin","*");
+
+      console.log(logMessage + JSON.stringify(req.params));
+      if (req.params.login !== undefined && typeof(req.params.login) === "string")
+      {
+        if ((req.params.login === "default") || true) {
+          db.collection("Articles").find().toArray((err, documents) => {
+            if (err) {
+              console.log(logMessage + err);
+              res.end(JSON.stringify({ "status": "fail" }));
+            }
+            else if (documents !== undefined && documents.length > 0) {
+              console.log(logMessage + "OK");
+              res.end(JSON.stringify({
+                "status": "success",
+                "result": documents
+              }));
+              //callback(db, req, res, params, documents);
+            }
+            else {
+              console.log(logMessage + "No matching articles");
+              res.end(JSON.stringify({ "status": "fail" }));
+            }
+          });
+        }
+        else {
+        }
+      }
+      else {
+        console.log(logMessage + "invalid parameters");
+      }
+    });
 
 });
 

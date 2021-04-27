@@ -1,1 +1,16 @@
-<p>article-feed works!</p>
+<div>
+	<table>
+		<tr *ngFor="let article of articlesFeed">
+			<td>
+				<div class="article">
+					<div class="article-content">
+						<span>{{article.content}}</span>
+					</div>
+					<div class="article-author">
+						<span>{{article.author}}</span>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
