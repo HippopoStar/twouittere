@@ -10,8 +10,9 @@ import { AuthService } from '../../auth.service';
 import { ArticlesService } from '../articles.service';
 
 interface ArticleInterface {
-  author: String;
-  content: String;
+  author: string;
+  content: string;
+  publication_date: string;
 }
 
 @Component({
@@ -28,11 +29,14 @@ export class ArticlesFeedComponent implements OnInit {
     this.loadArticles();
   }
 
-  pushReverseTab (currentTab: Array<ArticleInterface>, toAddTab: Array<ArticleInterface>) {
+  pushReverseArticlesTab (currentTab: Array<ArticleInterface>, toAddTab: Array<ArticleInterface>) {
     let i: number;
+    let articleDate: Date;
 
     i = toAddTab.length - 1;
     while (i >= 0) {
+      articleDate = new Date(toAddTab[i]["publication_date"]);
+      toAddTab[i]["publication_date"] = articleDate.toDateString() + " at " + articleDate.toTimeString();
       currentTab.push(toAddTab[i]);
       i--;
     }
@@ -49,7 +53,7 @@ export class ArticlesFeedComponent implements OnInit {
 //        for (let elem of receivedArticles) {
 //          this.articlesFeed.push(elem);
 //        }
-        this.pushReverseTab(this.articlesFeed, receivedArticles);
+        this.pushReverseArticlesTab(this.articlesFeed, receivedArticles);
       }
       else {
         console.log(logMessage + "Rien ne va plus");

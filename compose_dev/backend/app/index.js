@@ -205,7 +205,7 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
           let newArticle = {
             "author": param["filterObject"]["login"],
             "content": param["filterObject"]["content"],
-            "publication_date": "2020-04-26"
+            "publication_date": new Date().toISOString()
           };
           db.collection("Articles").insertOne(newArticle);
           console.log("Nouvel article poste:\n"+JSON.stringify(newArticle));
