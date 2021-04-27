@@ -40,15 +40,6 @@ let MongoClient = require("mongodb").MongoClient;
 let ObjectId = require("mongodb").ObjectId;
 let url = "mongodb://root:example@mongo:27017";
 
-function pushReversedTab (currentTab, toAddTab) {
-  var iterator;
-
-  iterator = toAddTab.length - 1;
-  while (iterator >= 0) {
-    currentTab.push(toAddTab[iterator]);
-    i--;
-  }
-}
 
 MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err, client) => {
     let db = client.db("Twouittere");
@@ -231,39 +222,45 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
 
     /* ---------- FEED -------------------------------------------------------------------- */
 
-    app.get("/articles/feed/login=:login/password=:password/lastLoadedArticle=:lastLoadedArticle", (req, res) => {
+    app.get("/articles/feed/login=:login/password=:password/last_article_date=:last_article_date", (req, res) => {
       var logMessage = "Dans la requete '/articles/feed' - GET: ";
       res.setHeader("Content-type","application/json; charset=UTF-8");
       res.setHeader("Access-Control-Allow-Origin","*");
 
       console.log(logMessage + JSON.stringify(req.params));
-      if (req.params.login !== undefined && typeof(req.params.login) === "string")
+      if (req.params.last_article_date !== undefined && typeof(req.params.last_article_date) === "string")
       {
-        if ((req.params.login === "default") || true) {
-          db.collection("Articles").find().toArray((err, documents) => {
-            if (err) {
-              console.log(logMessage + err);
-              res.end(JSON.stringify({ "status": "fail" }));
-            }
-            else if (documents !== undefined && documents.length > 0) {
-              console.log(logMessage + "OK");
-              res.end(JSON.stringify({
-                "status": "success",
-                "result": documents
-              }));
-              //callback(db, req, res, params, documents);
-            }
-            else {
-              console.log(logMessage + "No matching articles");
-              res.end(JSON.stringify({ "status": "fail" }));
-            }
-          });
+        if (req.params.last_article_date === "None" || !/$(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}):(\d{3})Z/.test(req.params.last_article_date)) {
+          req.params.last_article_date = new Date().toISOString();
         }
-        else {
-        }
+        db.collection("Articles").find({
+          "publication_date": { $lt: req.params.last_article_date }
+        }).sort({
+          "publication_date": -1,
+          "_id": 1
+        }).limit(10).toArray((err, documents) => {
+          if (err) {
+            console.log(logMessage + err);
+            res.end(JSON.stringify({ "status": "fail" }));
+          }
+          else if (documents !== undefined && documents.length > 0) {
+            console.log(logMessage + "OK");
+            res.end(JSON.stringify({
+              "status": "success",
+              "result": documents,
+              "server_time": new Date().toISOString()
+            }));
+            //callback(db, req, res, params, documents);
+          }
+          else {
+            console.log(logMessage + "No matching articles");
+            res.end(JSON.stringify({ "status": "fail" }));
+          }
+        });
       }
       else {
         console.log(logMessage + "invalid parameters");
+        res.end(JSON.stringify({ "status": "fail" }));
       }
     });
 

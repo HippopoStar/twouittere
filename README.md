@@ -80,3 +80,8 @@ Dans un navigateur :
 
 Ne pas omettre de completer le champ "imports" des fichiers \<module\_name\>.module.ts
 
+Dans un navigateur :  
+|	[Mozilla Developer - JavaScript Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)  
+|	[GitHub.io - Mongo - find](http://mongodb.github.io/node-mongodb-native/3.6/api/Collection.html#find)  
+|	[docs.mongodb - order & limit](https://docs.mongodb.com/manual/reference/method/cursor.sort/#limit-results)  
+

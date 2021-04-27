@@ -29,34 +29,30 @@ export class ArticlesFeedComponent implements OnInit {
     this.loadArticles();
   }
 
-  pushReverseArticlesTab (currentTab: Array<ArticleInterface>, toAddTab: Array<ArticleInterface>) {
-    let i: number;
-    let articleDate: Date;
-
-    i = toAddTab.length - 1;
-    while (i >= 0) {
-      articleDate = new Date(toAddTab[i]["publication_date"]);
-      toAddTab[i]["publication_date"] = articleDate.toDateString() + " at " + articleDate.toTimeString();
-      currentTab.push(toAddTab[i]);
-      i--;
-    }
-  }
 
   loadArticles(): void {
     let logMessage: string = "Dans la fonction \"loadArticles\": ";
     let receivedArticles: Array<ArticleInterface>|null = null;
+    let articleDate: Date|null = null;
     this.articles.loadTen().subscribe(serverResponse => {
       if (serverResponse.status !== undefined && typeof(serverResponse.status) === "string"
         && serverResponse.status === "success" && (receivedArticles = serverResponse.result) !== null) {
         //receivedArticles = serverResponse.result;
         console.log(logMessage + JSON.stringify(serverResponse));
-//        for (let elem of receivedArticles) {
-//          this.articlesFeed.push(elem);
-//        }
-        this.pushReverseArticlesTab(this.articlesFeed, receivedArticles);
+        if (receivedArticles.length > 0) {
+          this.articles.last_article_date = receivedArticles[receivedArticles.length - 1].publication_date;
+          for (let elem of receivedArticles) {
+            articleDate = new Date(elem["publication_date"]);
+            elem["publication_date"] = articleDate.toDateString() + " at " + articleDate.toTimeString();
+            this.articlesFeed.push(elem);
+          }
+        }
+        else {
+          console.log(logMessage + "No matching articles found");
+        }
       }
       else {
-        console.log(logMessage + "Rien ne va plus");
+        console.log(logMessage + "Request couldn't achieve");
       }
     });
   }

@@ -28,6 +28,7 @@ export class ArticlesRedactComponent {
           console.log(this.auth.email + ": " + this.redact);
           this.errorMessage = "";
           this.hide_redact_form();
+          this.redact = "";
         }
         else {
           this.errorMessage = "Publication failed: see backend";

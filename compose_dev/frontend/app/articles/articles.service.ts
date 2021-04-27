@@ -10,7 +10,7 @@ import { AuthService } from '../auth.service';
 export class ArticlesService {
 
   public isPublishing: boolean = false;
-  public lastLoadedArticle: string = "None";
+  public last_article_date: string = "None";
 
   constructor(private http: HttpClient, public auth: AuthService) { }
 
@@ -36,7 +36,7 @@ export class ArticlesService {
     return this.http.get(url
       +"/login="+(this.auth.email || "default")
       +"/password="+(this.auth.password || "default")
-      +"/lastLoadedArticle="+this.lastLoadedArticle);
+      +"/last_article_date="+this.last_article_date);
   }
 
 }
