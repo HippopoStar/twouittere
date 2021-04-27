@@ -1,7 +1,10 @@
-<p>articles works!</p>
 <div *ngIf="auth.isLoggedIn">
 	<app-articles-redact></app-articles-redact>
 </div>
 <div>
+	<a [routerLink]="['/articles', {outlets:{'articlesFeed': ['load']}}]"> Load more </a>
+</div>
+<div>
 	<app-articles-feed></app-articles-feed>
+	<router-outlet name="articlesFeed"></router-outlet>
 </div>
