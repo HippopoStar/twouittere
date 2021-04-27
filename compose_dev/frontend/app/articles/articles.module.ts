@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { ArticlesRoutingModule } from './articles-routing.module';
@@ -24,9 +22,7 @@ import { ArticlesService } from './articles.service';
   imports: [
     CommonModule,
     ArticlesRoutingModule,
-    BrowserModule,
     FormsModule,
-    HttpClientModule
   ],
   exports: [ArticlesComponent],
   providers: [
