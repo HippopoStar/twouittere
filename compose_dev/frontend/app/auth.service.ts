@@ -2,6 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export interface AuthentificationDataInterface {
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
+}
+
+export interface AuthRequestResponseInterface {
+  status: string;
+  content: AuthentificationDataInterface;
+}
+
 @Injectable()
 export class AuthService {
   public backend_server_url: string = "https://127.0.0.1:3000";
@@ -11,6 +23,7 @@ export class AuthService {
   public password: string|null = null;
   public firstname: string|null = null;
   public lastname: string|null = null;
+  public requestResponse: AuthRequestResponseInterface|null = null;
 
   constructor(private http: HttpClient) {}
 

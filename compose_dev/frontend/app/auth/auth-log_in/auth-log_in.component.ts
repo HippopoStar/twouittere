@@ -12,7 +12,6 @@ import { AuthService } from '../../auth.service';
 export class AuthLogInComponent {
   public login: string|null = null;
   public password: string|null = null;
-  private nomEtPrenom: string[] = [];
   public errorMessage: string = "";
 
   constructor(public auth: AuthService) {}
@@ -37,14 +36,14 @@ export class AuthLogInComponent {
           this.auth.isLoggedIn = false;
 
           this.auth.authentification(this.login, this.password).subscribe(res => {
-            this.nomEtPrenom = res;
-            if ( this.nomEtPrenom.length > 0 ) {
-                console.log(JSON.stringify(this.nomEtPrenom));
+            this.auth.requestResponse = res;
+            console.log(JSON.stringify(this.auth.requestResponse));
+            if ( this.auth.requestResponse !== null && this.auth.requestResponse["status"] === "success" ) {
                 this.auth.isLoggedIn = true;
                 this.auth.email = this.login;
                 this.auth.password = this.password;
-                this.auth.firstname = this.nomEtPrenom[0];
-                this.auth.lastname = this.nomEtPrenom[1];
+                this.auth.firstname = this.auth.requestResponse["content"]["firstname"];
+                this.auth.lastname = this.auth.requestResponse["content"]["lastname"];
                 this.errorMessage = "";
             }
             else {

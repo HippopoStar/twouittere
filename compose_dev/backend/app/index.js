@@ -141,23 +141,27 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
         }).toArray(function(err, documents) {
           if (documents !== undefined && documents.length == 1) {
             console.log(logMessage+"Authentification de "+documents[0].firstname+" "+documents[0].lastname);
-            res.end(JSON.stringify([documents[0].firstname, documents[0].lastname]));
+            res.end(JSON.stringify({
+              "status": "success",
+              "content": documents[0]
+            }));
           }
           else {
             console.log(logMessage+"Pas d'authentification");
-            res.end(JSON.stringify([]));
+            res.end(JSON.stringify({ "status": "fail" }));
           }
 	    });
 	  }
       else {
         console.log(logMessage+"Invalid parameters");
-        res.end(JSON.stringify([]));
+        res.end(JSON.stringify({ "status": "fail" }));
       }
     });
 
     /* ---------- REGISTRATION ------------------------------------------------------------ */
 
-	app.post("/auth/register", (req, res) => {
+    app.post("/auth/register", (req, res) => {
+      var logMessage = "Dans la requete '/auth/register' - POST: ";
       res.setHeader("Content-type","application/json; charset=UTF-8");
       res.setHeader("Access-Control-Allow-Origin","*");
       const reEmail = /^(\w+)@(\w+)\.(\w{2,3})$/;
@@ -173,28 +177,31 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
           "firstname": req.body.firstname,
           "lastname": req.body.lastname
         };
-        console.log(JSON.stringify(req.body));
+        console.log(logMessage + JSON.stringify(req.body));
         db.collection("Users").find({"email": newUser.email}).toArray((err, documents) => {
           if (documents !== undefined && documents.length == 0) {
-            db.collection("Users").insertOne(newUser);
-            res.end(JSON.stringify([newUser.firstname, newUser.lastname]));
-            console.log("Nouvel utilisateur : " + newUser.firstname + " " + newUser.lastname);
+            db.collection("Users").insertOne(newUser); //Ca ajoute la propriete '_id' a l'objet passe en parametre !
+            res.end(JSON.stringify({
+              "status": "success",
+              "content": newUser
+            }));
+            console.log(logMessage + "Nouvel utilisateur : " + newUser.firstname + " " + newUser.lastname);
           }
           else {
-            console.log("L'utilisateur \"" + newUser.login + "\" existe deja !");
-            res.end(JSON.stringify([]));
+            console.log(logMessage + "L'utilisateur \"" + newUser.login + "\" existe deja !");
+            res.end(JSON.stringify({ "status": "fail" }));
           }
         });
       }
       else {
-        console.log("Erreur dans la requete ('/auth/register' - POST)");
-        res.end(JSON.stringify([]));
+        console.log(logMessage + "Invalid parameters");
+        res.end(JSON.stringify({ "status": "fail" }));
       }
     });
 
     /* ---------- PUBLICATION ------------------------------------------------------------- */
 
-	app.post("/articles/publish", (req, res) => {
+    app.post("/articles/publish", (req, res) => {
       var logMessage = "Dans la requete '/articles/publish' - POST: ";
       res.setHeader("Content-type","application/json; charset=UTF-8");
       res.setHeader("Access-Control-Allow-Origin","*");
@@ -207,9 +214,12 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
             "content": param["filterObject"]["content"],
             "publication_date": new Date().toISOString()
           };
-          db.collection("Articles").insertOne(newArticle);
+          db.collection("Articles").insertOne(newArticle); //Ca ajoute la propriete '_id' a l'objet passe en parametre !
           console.log("Nouvel article poste:\n"+JSON.stringify(newArticle));
-          res.end(JSON.stringify({ "status": "success" }));
+          res.end(JSON.stringify({
+            "status": "success",
+            "content": newArticle._id
+          }));
         }
         else {
           console.log(logMessage + "invalid parameters");
