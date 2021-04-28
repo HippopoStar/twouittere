@@ -16,7 +16,7 @@ export interface AuthRequestResponseInterface {
 
 @Injectable()
 export class AuthService {
-  public backend_server_url: string = "https://127.0.0.1:3000";
+  public backend_server_url: string = "https://127.0.0.1:3002";
   public isLoggedIn: boolean = false;
   public isSigningIn: boolean = false;
   public email: string|null = null;

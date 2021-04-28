@@ -1,6 +1,6 @@
 FROM node:lts-buster-slim
 
-RUN npm install -g express cors https body-parser mongodb fs md5sum nodemon
+RUN npm install -g express cors body-parser fs mongodb nodemon
 
 RUN mkdir --parents /root/TWOUITTERE
 

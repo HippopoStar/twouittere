@@ -2,7 +2,7 @@ services:
   frontend:
     build: frontend
     ports:
-      - 4200:4200
+      - 4202:4200
     stdin_open: true
     volumes:
       - ./frontend/app:/root/angular/TWOUITTERE/src/app
@@ -18,7 +18,7 @@ services:
     restart: always
     build: backend
     ports:
-      - 3000:3000
+      - 3002:3000
     volumes:
       - ./backend/app:/root/TWOUITTERE
     depends_on:
