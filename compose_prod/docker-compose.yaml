@@ -1,0 +1,45 @@
+services:
+  frontend:
+    build: frontend
+    ports:
+      - 443:443
+    stdin_open: true
+    volumes:
+      - ./frontend/conf:/usr/local/apache2/conf
+      - ./frontend/htdocs:/usr/local/apache2/htdocs
+    container_name: compose_prod_frontend
+    restart: always
+    image: httpd:latest
+    networks:
+      - httpd-express
+    depends_on:
+      - backend
+
+  backend:
+    container_name: compose_prod_backend
+    restart: always
+    build: backend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./backend/app:/root/TWOUITTERE
+    depends_on:
+      - mongo
+    networks:
+      - express-mongo
+      - httpd-express
+
+  mongo:
+    container_name: compose_prod_mongo
+    restart: always
+    image: mongo:latest
+    volumes:
+      - ./data:/data/db
+    networks:
+      - express-mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+networks:
+  httpd-express:
+  express-mongo:
