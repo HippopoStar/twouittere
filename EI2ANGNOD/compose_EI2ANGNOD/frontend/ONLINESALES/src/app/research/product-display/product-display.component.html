@@ -1,0 +1,32 @@
+<p>
+  Liste des produits sélectionnés / List of selected products :
+</p>
+
+<table>
+   <tr>
+     <td>
+       <ul>
+	 <li *ngFor="let product of (products | evenOdd:'odd')">
+	      <label *ngIf="product.stock > 0" class="red"> <a [routerLink]="['/cart', {outlets:{'cartManagement': ['management', 'add', product._id, 0]}}]"> {{product.name}} </a>, </label>
+	      <label *ngIf="product.stock == 0">  {{product.name}} (not available), </label>	       
+                 brand: {{product.brand}},
+                 price: {{product.price}},
+                 <!-- _id: {{product._id}} -->	      
+	 </li>
+       </ul>
+     </td>
+     <td>
+       <ul>
+	 <li *ngFor="let product of (products | evenOdd:'even')">
+	      <label *ngIf="product.stock > 0" class="red"> <a [routerLink]="['/cart', {outlets:{'cartManagement': ['management', 'add', product._id, 0]}}]"> {{product.name}} </a>, </label>
+	      <label *ngIf="product.stock == 0">  {{product.name}} (not available), </label>	       
+                 brand: {{product.brand}},
+                 price: {{product.price}},
+                 <!-- _id: {{product._id}} -->
+         </li>
+       </ul>
+     </td>
+   </tr>
+</table>
+  
+

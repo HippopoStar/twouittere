@@ -1,0 +1,16 @@
+<table>
+  <tr>
+    <td>
+      <select *ngFor="let selector of selectors" (change)="selection($event, selector.name)">
+        <option id="{{selector.name}}">{{selector.nom}}</option>
+        <option *ngFor="let value of selector.values">{{value}}</option>
+      </select>
+    </td>
+    <td>
+      &rarr;
+    </td>
+    <td>
+       <a [routerLink]="['/research', {outlets: {'display': ['display', this.params.type, this.params.brand, this.params.minprice, this.params.maxprice, this.params.minpopularity]}}]"> Sélection des produits </a>
+    </td>
+  </tr>
+</table>

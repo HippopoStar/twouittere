@@ -1,0 +1,55 @@
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { ResearchService } from "../research.service";
+
+
+@Component({
+  selector: 'app-product-selection',
+  templateUrl: './product-selection.component.html',
+  styleUrls: ['./product-selection.component.css']
+})
+export class ProductSelectionComponent implements OnInit {
+  private productSelectionTitle :string = "Recherche par critères";
+  private selectors :Object[];
+  private params :any = {"type":"*", "brand":"*", "minprice":"*", "maxprice":"*", "minpopularity":"*"};  
+
+
+  constructor(private research :ResearchService, private router :Router) {}
+
+  ngOnInit() {
+    this.recherche.getJSON("selectors").subscribe(res => this.selecteurs = res,
+                                                  err => console.error(err),
+                                                  ()  => console.log('done'));
+  }
+
+  selection($event, selector) {
+     let selectElement = $event.target;
+     let optionIndex = selectElement.selectedIndex;
+     let optionText = selectElement.options[optionIndex].text;
+     console.log("Dans "+selector+"="+ optionText + " sélectionné !");
+
+     if (selector == optionText) {
+        if (selector == "price") {
+	    this.params["minprice"] = "*";
+	    this.params["maxprice"] = "*";	    
+        }
+	else this.params[selector] = "*";
+	selectElement.style.backgroundColor = "#F5F3F3";
+     }
+     else {
+        if (selector == "price") {
+            let price = /(.+)-(.+)/.exec(optionText);
+	    this.params["minprice"] = price[1];
+	    this.params["maxprice"] = price[2];
+        }     
+	else this.params[selector] = optionText;
+        selectElement.style.backgroundColor = "yellow";
+     }
+     console.dir(this.params);
+  }
+
+  selectionProduits() {
+     this.router.navigate(['/research/display', this.params.type, this.params.brand, this.params.minprice, this.params.maxprice, this.params.minpopularity]);
+  }
+}

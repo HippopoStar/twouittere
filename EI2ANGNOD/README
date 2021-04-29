@@ -1,0 +1,29 @@
+[Cette procédure d'installation est plus particulièrement dédiée à une utilisation sous Linux.]
+
+La mise en oeuvre de l'application Angular donnée en fil rouge nécessite de créer la base de données MongoDB, de lancer les serveurs et de construire l'application Angular.
+(Cet embryon d'application ne gère pas les clients).
+
+Pour créer le base de données MongoDB OnlineSales, créez directement les trois collections Users, Products, Carts :
+mongoimport --db OnlineSales --collection Users --file listeClients.json --jsonArray --drop
+mongoimport --db OnlineSales --collection Products --file listeProduits.json --jsonArray --drop
+mongoimport --db OnlineSales --collection Carts --file listePaniers.json --jsonArray --drop
+
+Si ce n'est déjà fait, installez globalement Node.js et npm (son gestionnaire de modules) :
+sudo apt install nodejs npm
+
+Serveurs Node.js OnlineSalesServer.js et OnlineSalesHttpsServer.js :
+- déplacez-vous dans le dossier SERVEURS_NODE ;
+- installez localement les modules Node.js nécessaires à votre application : npm install
+- lancez les deux serveurs :
+  node OnlineSalesServer.js &
+  node OnlineSalesHttpsServer.js &
+
+Application Angular :
+- déplacez-vous dans le dossier ONLINESALES correspondant à l'application Angular ;
+- installez localement les modules Node.js nécessaires à votre application : npm install
+- construire l'application et la faire afficher dans votre navigateur : ng serve -o --aot
+- pour tester une authentification, prenez les identifiants de Claire DELUNE :
+  login : delune@lirmm.fr
+  password : sideree
+
+

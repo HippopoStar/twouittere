@@ -1,0 +1,8 @@
+<div id="cart" *ngIf="auth.isLoggedIn">
+  <p>
+    <button (click)="cartDisplay()"> Panier de {{this.auth.firstname}} {{this.auth.lastname}} / {{this.auth.firstname}} {{this.auth.lastname}} cart </button>
+  </p>
+  <router-outlet name="cartDisplay"></router-outlet>
+  <router-outlet name="cartManagement"></router-outlet>
+  <router-outlet name="cartValidation"></router-outlet>
+</div>

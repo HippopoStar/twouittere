@@ -1,0 +1,40 @@
+services:
+  frontend_patatra:
+    build: frontend
+    ports:
+      - 4200:4200
+    stdin_open: true
+    container_name: compose_EI2ANGNOD_frontendblabla
+    restart: always
+    networks:
+      - angular-express
+    depends_on:
+      - backend
+
+  backend:
+    container_name: compose_EI2ANGNOD_backend
+    restart: always
+    build: backend
+    ports:
+      - 8888:8888
+    depends_on:
+      - database
+    networks:
+      - express-mongo
+      - angular-express
+
+  database:
+    container_name: compose_EI2ANGNOD_database
+    restart: always
+    build: database
+    ports:
+      - 27017:27017
+    networks:
+      - express-mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: OnlineSales
+networks:
+  angular-express:
+  express-mongo:
