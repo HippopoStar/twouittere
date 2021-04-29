@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AuthService } from '../../auth.service';
 import { ArticlesService } from '../articles.service';
+
 
 @Component({
   selector: 'app-articles-redact',
@@ -13,7 +15,7 @@ export class ArticlesRedactComponent {
   public redact: string|null = null;
   public errorMessage: string = "";
 
-  constructor(public auth: AuthService, public articles: ArticlesService) {}
+  constructor(public auth: AuthService, public articles: ArticlesService, private router: Router) {}
 
   onSubmit() {
 
@@ -27,7 +29,9 @@ export class ArticlesRedactComponent {
           this.hide_redact_form();
           this.redact = "";
           this.errorMessage = "";
-          this.articles.refreshArticles();
+          this.router.navigate(['/articles', { 'outlets': { 'articlesFeed': ['feed']}}]);
+//          this.articles.refreshArticles();
+        
         }
         else {
           this.errorMessage = "Publication failed: see backend";

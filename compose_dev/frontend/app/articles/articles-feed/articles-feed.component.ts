@@ -32,9 +32,9 @@ export class ArticlesFeedComponent implements OnInit {
 
   articlesFeedManagement(action?: string): void {
     let logMessage: string = "Dans la fontion \"articlesFeedManagement\": ";
-    if (action === undefined || action === "refresh-component") {
+    if (action === undefined) {
       console.log(logMessage + "refreshing 'article-feed' component");
-      this.articlesFeedManagement("load");
+      this.articles.refreshArticles();
     }
     else {
       console.log(logMessage + action);

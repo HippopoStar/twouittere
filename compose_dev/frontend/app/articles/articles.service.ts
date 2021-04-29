@@ -28,8 +28,9 @@ export class ArticlesService {
 
   /* https://angular.io/guide/http#handling-request-errors */
   private handleError(error: HttpErrorResponse) {
-    this.errorMessage = "ERROR";
-    this.router.navigate(['/articles', { outlets: { 'articlesFeed': ['feed']}}]);
+    this.errorMessage = this.auth.unreachableServerMessage;
+    alert(this.errorMessage);
+    this.router.navigate(['/articles', { outlets: { 'articlesFeed': ['feed']}}]); //INVESTIGATION: this.router is undefined ?
 
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
