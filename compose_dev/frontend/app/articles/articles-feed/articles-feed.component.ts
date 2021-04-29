@@ -21,26 +21,32 @@ export class ArticlesFeedComponent implements OnInit {
   ngOnInit(): void {
     let logMessage: string = "Appel de ngOnInit du composant 'articles-feed'";
     console.log(logMessage);
-/*
+
     this.route.params.subscribe((params: Params) => {
-      console.log(JSON.stringify(params));
-      this.articlesFeedManagement(params["action"]);
+      console.log(logMessage + JSON.stringify(params));
+	  this.articlesFeedManagement(params["action"]);
     });
-*/
-    this.articlesFeedManagement("load");
+
   }
 
-  articlesFeedManagement(action: string): void {
+
+  articlesFeedManagement(action?: string): void {
     let logMessage: string = "Dans la fontion \"articlesFeedManagement\": ";
-    console.log(logMessage + action);
-    if (action === "load") {
-      this.articles.loadArticles();
-    }
-    else if (action === "refresh") {
-      this.articles.refreshArticles();
+    if (action === undefined || action === "refresh-component") {
+      console.log(logMessage + "refreshing 'article-feed' component");
+      this.articlesFeedManagement("load");
     }
     else {
-      console.log(logMessage + "Unknown action");
+      console.log(logMessage + action);
+      if (action === "load") {
+        this.articles.loadArticles();
+      }
+      else if (action === "refresh") {
+        this.articles.refreshArticles();
+      }
+      else {
+        console.log(logMessage + "Unknown action");
+      }
     }
   }
 

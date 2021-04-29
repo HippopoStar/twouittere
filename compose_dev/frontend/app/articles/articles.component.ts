@@ -13,6 +13,7 @@ export class ArticlesComponent implements OnInit {
   constructor(private router: Router, public auth: AuthService) { }
 
   ngOnInit(): void {
+    this.router.navigate(['/articles', { outlets: { 'articlesFeed': ['feed']}}]);
   }
 
 }

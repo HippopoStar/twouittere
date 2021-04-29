@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 
@@ -20,10 +22,31 @@ export class ArticlesService {
   public articlesFeed: Array<ArticleInterface> = [];
   public last_article_date: string = "None";
   public last_article_id: string = "None";
+  public errorMessage = "";
 
-  constructor(private http: HttpClient, public auth: AuthService) { }
+  constructor(private http: HttpClient, public auth: AuthService, public router: Router) { }
 
-  publishRedact(parameters: string): Observable<any> {
+  /* https://angular.io/guide/http#handling-request-errors */
+  private handleError(error: HttpErrorResponse) {
+    this.errorMessage = "ERROR";
+    this.router.navigate(['/articles', { outlets: { 'articlesFeed': ['feed']}}]);
+
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(
+      'Something bad happened; please try again later.');
+  }
+
+  public publishRedact(parameters: string): Observable<any> {
     console.log("Appel de \"publishRedact\"");
     let url: string = this.auth.backend_server_url+"/articles/publish";
     let req: Object = {
@@ -39,14 +62,14 @@ export class ArticlesService {
     return this.http.post(url, JSON.stringify(req), httpOptions);
   }
 
-  refreshArticles(): void {
+  public refreshArticles(): void {
     this.articlesFeed = [];
     this.last_article_date = "None";
     this.last_article_id = "None";
     this.loadArticles();
   }
 
-  loadArticles(): void {
+  public loadArticles(): void {
     let logMessage: string = "Dans la fonction \"loadArticles\": ";
     let receivedArticles: Array<ArticleInterface>|null = null;
     let articleDatePrinter: Date|null = null;
@@ -65,25 +88,30 @@ export class ArticlesService {
             elem["publication_date"] = articleDatePrinter.toDateString() + " at " + articleDatePrinter.toTimeString();
             this.articlesFeed.push(elem);
           }
+          this.errorMessage = "";
         }
         else {
-          console.log(logMessage + "No matching articles found");
+          this.errorMessage = logMessage + "No matching articles found";
+          console.log(this.errorMessage);
         }
       }
       else {
-        console.log(logMessage + "Request couldn't achieve");
+        this.errorMessage = logMessage + "Request couldn't achieve";
+        console.log(this.errorMessage);
       }
     });
   }
 
-  loadTen(): Observable<any> {
+  public loadTen(): Observable<any> {
     console.log("Appel de \"loadTen\"");
     let url: string = this.auth.backend_server_url+"/articles/feed";
     return this.http.get(url
       +"/login="+(this.auth.email || "default")
       +"/password="+(this.auth.password || "default")
       +"/last_article_date="+(this.last_article_date || "None")
-      +"/last_article_id="+(this.last_article_id || "None")
+      +"/last_article_id="+(this.last_article_id || "None"),
+    ).pipe(
+      catchError(this.handleError)
     );
   }
 

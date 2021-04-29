@@ -17,6 +17,8 @@ export interface AuthRequestResponseInterface {
 @Injectable()
 export class AuthService {
   public backend_server_url: string = "https://127.0.0.1:3002";
+  public unreachableServerMessage = "Serveur injoignable. Essayez de vous connecter au serveur back-end depuis votre navigateur "
+          + "afin d'accepter manuellement le certificat auto-signe (" + this.backend_server_url + ").";
   public isLoggedIn: boolean = false;
   public isSigningIn: boolean = false;
   public email: string|null = null;

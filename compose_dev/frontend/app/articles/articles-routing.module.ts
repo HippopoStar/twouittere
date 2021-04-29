@@ -14,6 +14,11 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
+    path: 'feed',
+    component: ArticlesFeedComponent,
+    outlet: 'articlesFeed'
+  },
+  {
     path: 'feed/:action',
     component: ArticlesFeedComponent,
     outlet: 'articlesFeed'

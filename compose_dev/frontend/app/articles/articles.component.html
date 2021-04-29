@@ -2,10 +2,10 @@
 	<app-articles-redact></app-articles-redact>
 </div>
 <div>
-	<app-articles-feed></app-articles-feed>
+	<router-outlet name="articlesFeed"></router-outlet>
 	<!--
 	<div>
-		<router-outlet name="articlesFeed"></router-outlet>
+	<app-articles-feed></app-articles-feed>
 		<a [routerLink]="['/articles', {outlets:{'articlesFeed': ['feed', 'load']}}]"> Load more </a>
 	</div>
 	-->

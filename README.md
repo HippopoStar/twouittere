@@ -11,6 +11,7 @@ Repertoires :
 `/data/db/` [Source (voir section Caveats)](https://hub.docker.com/_/mongo)  
 `/usr/local/lib/node_modules/` [Source](https://docs.npmjs.com/cli/v7/configuring-npm/folders)  
 
+POUR QUE LA CONNECTION FRONTEND/BACKEND PUISSE S'ETABLIR: se rendre a l'adresse du server back-end dans son navigateur et accepter manuellement le certificat auto-signe  
 DROIT D'ACCES AUX FICHIERS: `sudo chown --recursive "$(id --user):$(id --group)" ./`  
 
 `mkdir docker_image_build_context`  
@@ -86,4 +87,7 @@ Dans un navigateur :
 |	[docs.mongodb - order & limit](https://docs.mongodb.com/manual/reference/method/cursor.sort/#limit-results)  
 
 Note: importer 'BrowserModule' abusivement peut s'averer contre-productif
+
+Dans un navigateur :  
+|	[Angular: http - handling request errors](https://angular.io/guide/http#handling-request-errors)  
 

@@ -33,19 +33,24 @@ export class AuthSignInComponent {
       this.auth.isSigningIn = true;
 
       this.auth.register(this.login, this.password, this.firstname, this.lastname).subscribe(res => {
-        this.auth.requestResponse = res;
-        console.log(JSON.stringify(this.auth.requestResponse));
-        if ( this.auth.requestResponse !== null && this.auth.requestResponse["status"] === "success" ) {
-          this.auth.isLoggedIn = true;
-          this.auth.email = this.login;
-          this.auth.password = this.password;
-          this.auth.firstname = this.firstname;
-          this.auth.lastname = this.lastname;
-          this.errorMessage = "";
-          this.hide_signin_form();
+        if (res !== undefined) {
+          this.auth.requestResponse = res;
+          console.log(JSON.stringify(this.auth.requestResponse));
+          if ( this.auth.requestResponse !== null && this.auth.requestResponse["status"] === "success" ) {
+            this.auth.isLoggedIn = true;
+            this.auth.email = this.login;
+            this.auth.password = this.password;
+            this.auth.firstname = this.firstname;
+            this.auth.lastname = this.lastname;
+            this.errorMessage = "";
+            this.hide_signin_form();
+          }
+          else {
+            this.errorMessage = "Registration failed: existing user";
+          }
         }
         else {
-          this.errorMessage = "Registration failed: existing user";
+          this.errorMessage = this.auth.unreachableServerMessage;
         }
       });
     }
