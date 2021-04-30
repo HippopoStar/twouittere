@@ -15,7 +15,7 @@ app.listen(8888);
 
 let MongoClient = require("mongodb").MongoClient;
 let ObjectId = require("mongodb").ObjectId;
-let url = "mongodb://root:example@127.0.0.1:27017";
+let url = "mongodb://root:example@database:27017";
 
 // Recherche de produits : cette fonction retourne le message passé en paramètre en cas d'erreur
 function productResearch(db, param, callback) {

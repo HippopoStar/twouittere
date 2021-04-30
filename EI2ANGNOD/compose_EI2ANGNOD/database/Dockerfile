@@ -4,7 +4,7 @@ COPY ./DATA /var/lib/mongodb
 
 COPY ./init_onlinesales_db.sh /docker-entrypoint-initdb.d/init_onlinesales_db.sh
 
-COPY ./mongod.conf /etc/mongo/mongod.conf
+#COPY ./mongod.conf /etc/mongo/mongod.conf
 
 #ENV MONGO_INITDB_ROOT_USERNAME=root
 #ENV MONGO_INITDB_ROOT_PASSWORD=example

@@ -16,7 +16,7 @@ https.createServer(options, app).listen(8443);
 
 let MongoClient = require("mongodb").MongoClient;
 let ObjectId = require("mongodb").ObjectId;
-let url = "mongodb://root@example@127.0.0.1:27017";
+let url = "mongodb://root@example@database:27017";
 
 
 MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err, client) => {
