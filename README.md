@@ -91,8 +91,9 @@ Note: importer 'BrowserModule' abusivement peut s'averer contre-productif
 Dans un navigateur :  
 |	[Angular: Guide - http - reading the full response](https://angular.io/guide/http#reading-the-full-response)  
 |	[Angular: Guide - http - handling request errors](https://angular.io/guide/http#handling-request-errors)  
-|	[Angular: Reference - API reference - HttpClient - get](https://angular.io/api/common/http/HttpClient#get)  
+|	[Angular: Reference - API reference - @angular/common/http - HttpClient - get](https://angular.io/api/common/http/HttpClient#get)  
 |	[Angular: Guide - router](https://angular.io/guide/router)  
-|	[Angular: Reference - API reference - Router - navigate](https://angular.io/api/router/Router#navigate)  
-|	[Angular: Reference - API reference - ActivatedRoute - params](https://angular.io/api/router/ActivatedRoute#params)  
+|	[Angular: Reference - API reference - @angular/router - Router - navigate](https://angular.io/api/router/Router#navigate)  
+|	[Angular: Reference - API reference - @angular/router - ActivatedRoute - params](https://angular.io/api/router/ActivatedRoute#params)  
+|	[Angular: Reference - API reference - @angular/core - DoCheck](https://angular.io/api/core/DoCheck)  
 
