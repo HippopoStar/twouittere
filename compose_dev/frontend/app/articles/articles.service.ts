@@ -10,7 +10,13 @@ export interface ArticleInterface {
   _id: string;
   author: string;
   content: string;
+//  content_lines?: Array<string>;
   publication_date: string;
+}
+
+export interface ArticlesServerResponseInterface {
+  status: string;
+  result: Array<ArticleInterface>;
 }
 
 @Injectable({
@@ -22,15 +28,17 @@ export class ArticlesService {
   public articlesFeed: Array<ArticleInterface> = [];
   public last_article_date: string = "None";
   public last_article_id: string = "None";
-  public errorMessage = "";
+  public errorMessage: string = "";
 
-  constructor(private http: HttpClient, public auth: AuthService, public router: Router) { }
+  constructor(private http: HttpClient, public auth: AuthService, public router: Router) {
+  }
 
   /* https://angular.io/guide/http#handling-request-errors */
   private handleError(error: HttpErrorResponse) {
+
     this.errorMessage = this.auth.unreachableServerMessage;
-    alert(this.errorMessage);
-    this.router.navigate(['/articles', { outlets: { 'articlesFeed': ['feed']}}]); //INVESTIGATION: this.router is undefined ?
+    console.log(this.errorMessage);
+//    alert(this.errorMessage);
 
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -74,35 +82,46 @@ export class ArticlesService {
     let logMessage: string = "Dans la fonction \"loadArticles\": ";
     let receivedArticles: Array<ArticleInterface>|null = null;
     let articleDatePrinter: Date|null = null;
-    this.loadTen().subscribe(serverResponse => {
-      if (serverResponse.status !== undefined && typeof(serverResponse.status) === "string"
-        && serverResponse.status === "success" && (receivedArticles = serverResponse.result) !== null) {
-        //receivedArticles = serverResponse.result; /* Voir condition ci-dessus */
-        console.log(logMessage + JSON.stringify(serverResponse));
-        if (receivedArticles.length > 0) {
+    this.loadTen().subscribe(
+      (serverResponse: ArticlesServerResponseInterface) => {
+        if (serverResponse.status !== undefined && typeof(serverResponse.status) === "string"
+          && serverResponse.status === "success" && (receivedArticles = serverResponse.result) !== null) {
+          //receivedArticles = serverResponse.result; /* Voir condition ci-dessus */
+          console.log(logMessage + JSON.stringify(serverResponse));
+          if (receivedArticles.length > 0) {
 
-          this.last_article_date = receivedArticles[receivedArticles.length - 1].publication_date;
-          this.last_article_id = receivedArticles[receivedArticles.length - 1]._id;
-
-          for (let elem of receivedArticles) {
-            articleDatePrinter = new Date(elem["publication_date"]);
-            elem["publication_date"] = articleDatePrinter.toDateString() + " at " + articleDatePrinter.toTimeString();
-            this.articlesFeed.push(elem);
+            this.last_article_date = receivedArticles[receivedArticles.length - 1].publication_date;
+            this.last_article_id = receivedArticles[receivedArticles.length - 1]._id;
+ 
+            for (let elem of receivedArticles) {
+              articleDatePrinter = new Date(elem["publication_date"]);
+              elem["publication_date"] = articleDatePrinter.toDateString() + " at " + articleDatePrinter.toTimeString();
+              //elem["content_lines"] = elem["content"].split(/\n/);
+              //elem["content"] = elem["content"].replace(/\n/g, "<br/>");
+              this.articlesFeed.push(elem);
+            }
+            this.errorMessage = "";
           }
-          this.errorMessage = "";
+          else {
+            this.errorMessage = logMessage + "No matching articles found";
+            console.log(this.errorMessage);
+          }
         }
         else {
-          this.errorMessage = logMessage + "No matching articles found";
+          this.errorMessage = logMessage + "Request couldn't achieve";
           console.log(this.errorMessage);
         }
-      }
-      else {
-        this.errorMessage = logMessage + "Request couldn't achieve";
-        console.log(this.errorMessage);
-      }
-    });
+      },
+      (errorResponse: HttpErrorResponse) => {
+        console.log(logMessage + "Appel de 'articles.handleError'");
+        this.handleError(errorResponse);
+      },
+      () => {
+        console.log(logMessage + "Requete completee");
+      });
   }
 
+  /* https://angular.io/guide/http#reading-the-full-response */
   public loadTen(): Observable<any> {
     console.log("Appel de \"loadTen\"");
     let url: string = this.auth.backend_server_url+"/articles/feed";
@@ -110,9 +129,7 @@ export class ArticlesService {
       +"/login="+(this.auth.email || "default")
       +"/password="+(this.auth.password || "default")
       +"/last_article_date="+(this.last_article_date || "None")
-      +"/last_article_id="+(this.last_article_id || "None"),
-    ).pipe(
-      catchError(this.handleError)
+      +"/last_article_id="+(this.last_article_id || "None")
     );
   }
 

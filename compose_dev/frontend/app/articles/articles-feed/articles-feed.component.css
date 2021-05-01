@@ -16,6 +16,7 @@ div.article {
 }
 
 div.article-content {
+	font-size: 15px;
 	width: 100%;
 }
 
@@ -32,12 +33,12 @@ div.article-publication-date {
 }
 
 span.bold {
-	font-size: 20px;
+	!font-size: 20px;
 	font-style: bold;
 }
 
 pre.article-content-text {
-	font-size: 20px;
+	!font-size: 20px;
 	font-style: italic;
 }
 
