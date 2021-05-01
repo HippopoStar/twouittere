@@ -94,4 +94,5 @@ Dans un navigateur :
 |	[Angular: Reference - API reference - HttpClient - get](https://angular.io/api/common/http/HttpClient#get)  
 |	[Angular: Guide - router](https://angular.io/guide/router)  
 |	[Angular: Reference - API reference - Router - navigate](https://angular.io/api/router/Router#navigate)  
+|	[Angular: Reference - API reference - ActivatedRoute - params](https://angular.io/api/router/ActivatedRoute#params)  
 
