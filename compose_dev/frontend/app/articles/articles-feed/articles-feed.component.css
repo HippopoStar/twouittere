@@ -32,11 +32,12 @@ div.article-publication-date {
 }
 
 span.bold {
-	font-size: 25px;
+	font-size: 20px;
 	font-style: bold;
 }
 
-span.article-content-text {
+pre.article-content-text {
+	font-size: 20px;
 	font-style: italic;
 }
 
