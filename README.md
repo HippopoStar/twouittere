@@ -92,16 +92,21 @@ Dans un navigateur :
 |	[Angular: Guide - http - reading the full response](https://angular.io/guide/http#reading-the-full-response)  
 |	[Angular: Guide - http - handling request errors](https://angular.io/guide/http#handling-request-errors)  
 |	[Angular: Reference - API reference - @angular/common/http - HttpClient - get](https://angular.io/api/common/http/HttpClient#get)  
+
 |	[Angular: Guide - router](https://angular.io/guide/router)  
 |	[Angular: Reference - API reference - @angular/router - Router - navigate](https://angular.io/api/router/Router#navigate)  
 |	[Angular: Reference - API reference - @angular/router - ActivatedRoute - params](https://angular.io/api/router/ActivatedRoute#params)  
+
+|	[Angular: Guide - component lifecycle - lifecycle hooks - DoCheck](https://angular.io/guide/lifecycle-hooks#defining-custom-change-detection)  
 |	[Angular: Reference - API reference - @angular/core - DoCheck](https://angular.io/api/core/DoCheck)  
+
+|	[Mozilla Developer - JavaScript reference - Array - concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat)  
+|	[Mozilla Developer - JavaScript reference - Array - push(/apply) - Merging two arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push#merging_two_arrays)  
+
 |	[Jason Watmore's blog - Angular 2/5 - Communicating Between Components with Observable & Subject](https://jasonwatmore.com/post/2016/12/01/angular-2-communicating-between-components-with-observable-subject)  
 |	[RxJS: Reference - API reference - Observable](https://rxjs.dev/api/index/class/Observable)  
 |	[RxJS: Reference - API reference - Subject](https://rxjs.dev/api/index/class/Subject)  
 |	[RxJS: Reference - API reference - Observer](https://rxjs.dev/api/index/interface/Observer)  
 |	[RxJS: Reference - API reference - Subscriber](https://rxjs.dev/api/index/class/Subscriber)  
-|	[Mozilla Developer - JavaScript reference - Array - concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat)  
-|	[Mozilla Developer - JavaScript reference - Array - push - Merging two arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push#merging_two_arrays)  
 |	[NgRx - @ngrx/store](https://ngrx.io/)  
 
