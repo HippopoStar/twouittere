@@ -26,7 +26,7 @@ export class ArticlesService {
 
   public isPublishing: boolean = false;
 //  public articlesFeed: Array<ArticleInterface> = [];
-  public articlesFeed$: BehaviorSubject<ArticleInterface[]> = new BehaviorSubject<ArticleInterface[]>([]); //Observable
+  public articlesFeed$: BehaviorSubject<ArticleInterface[]> = new BehaviorSubject<ArticleInterface[]>([]); //OBSERVABLE
   public last_article_date: string = "None";
   public last_article_id: string = "None";
   public errorMessage: string = "";
@@ -34,12 +34,11 @@ export class ArticlesService {
   constructor(private http: HttpClient, public auth: AuthService, public router: Router) {
   }
 
-  /* https://angular.io/guide/http#handling-request-errors */
+  /* Angular: Guide - http - Handling request errors */
   private handleError(error: HttpErrorResponse) {
 
     this.errorMessage = this.auth.unreachableServerMessage;
     console.log(this.errorMessage);
-//    alert(this.errorMessage);
 
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -56,29 +55,31 @@ export class ArticlesService {
       'Something bad happened; please try again later.');
   }
 
-  public displayRedact(args?: Array<string>): Promise<boolean> {
-    const logMessage: string = "Dans la fonction 'displayRedact': ";
-    let navigationParameters: Array<string> = ['redact'];
-    if (args !== undefined) {
-      for (let navigationParameter of args) {
-        navigationParameters.push(navigationParameter);
-      }
-    }
-    console.log(logMessage + "navigationParameters: " + JSON.stringify(navigationParameters));
-    return this.router.navigate(['/articles', { outlets: { 'articlesRedact': navigationParameters } }]);
-  }
+  /* Relating to: OUTLET INVOCATION */
+//  public displayRedact(args?: Array<string>): Promise<boolean> {
+//    const logMessage: string = "Dans la fonction 'displayRedact': ";
+//    let navigationParameters: Array<string> = ['redact'];
+//    if (args !== undefined) {
+//      for (let navigationParameter of args) {
+//        navigationParameters.push(navigationParameter);
+//      }
+//    }
+//    console.log(logMessage + "navigationParameters: " + JSON.stringify(navigationParameters));
+//    return this.router.navigate(['/articles', { outlets: { 'articlesRedact': navigationParameters } }]);
+//  }
 
-  public displayFeed(args?: Array<string>): Promise<boolean> {
-    const logMessage: string = "Dans la fonction 'displayFeed': ";
-    let navigationParameters: Array<string> = ['feed'];
-    if (args !== undefined) {
-      for (let navigationParameter of args) {
-        navigationParameters.push(navigationParameter);
-      }
-    }
-    console.log(logMessage + "navigationParameters: " + JSON.stringify(navigationParameters));
-    return this.router.navigate(['/articles', { outlets: { 'articlesFeed': navigationParameters } }]);
-  }
+  /* Relating to: OUTLET INVOCATION */
+//  public displayFeed(args?: Array<string>): Promise<boolean> {
+//    const logMessage: string = "Dans la fonction 'displayFeed': ";
+//    let navigationParameters: Array<string> = ['feed'];
+//    if (args !== undefined) {
+//      for (let navigationParameter of args) {
+//        navigationParameters.push(navigationParameter);
+//      }
+//    }
+//    console.log(logMessage + "navigationParameters: " + JSON.stringify(navigationParameters));
+//    return this.router.navigate(['/articles', { outlets: { 'articlesFeed': navigationParameters } }]);
+//  }
 
   public publishRedact(parameters: string): Observable<any> {
     const logMessage: string = "Dans la fonction 'publishRedact': ";
@@ -109,7 +110,7 @@ export class ArticlesService {
     const logMessage: string = "Dans la fonction 'refrehArticles': ";
     console.log(logMessage + "Appel");
 //    this.articlesFeed = [];
-    this.articlesFeed$.next([]); //Observable
+    this.articlesFeed$.next([]); //OBSERVABLE
     this.last_article_date = "None";
     this.last_article_id = "None";
     this.loadArticles();
@@ -125,7 +126,7 @@ export class ArticlesService {
         if (serverResponse.status !== undefined && typeof(serverResponse.status) === "string"
           && serverResponse.status === "success" && (receivedArticles = serverResponse.result) !== null) {
           //receivedArticles = serverResponse.result; /* Voir condition ci-dessus */
-          console.log(logMessage + JSON.stringify(serverResponse));
+          console.log(logMessage.replace(/\s$/, "\n") + JSON.stringify(serverResponse));
           if (receivedArticles.length > 0) {
 
             this.last_article_date = receivedArticles[receivedArticles.length - 1].publication_date;
@@ -138,12 +139,12 @@ export class ArticlesService {
 //              //elem["content"] = elem["content"].replace(/\n/g, "<br/>");
 //              this.articlesFeed.push(elem);
             }
-            console.log("articlesFeed$.value:\n" + JSON.stringify(this.articlesFeed$.value)); //Observable
-//            Array.prototype.push.apply(this.articlesFeed$.value, receivedArticles); //Observable bad practice - read-only attribute
-//            console.log("articlesFeed$.value:\n" + JSON.stringify(this.articlesFeed$.value)); //Observable bad practice - read-only attribute
-//            this.articlesFeed$.next(this.articlesFeed$.value); //Observable bad practive - read-only attribute
-            this.articlesFeed$.next(this.articlesFeed$.value.concat(receivedArticles)); //Observable
-            console.log("articlesFeed$.value:\n" + JSON.stringify(this.articlesFeed$.value)); //Observable
+            console.log("articlesFeed$.value:\n" + JSON.stringify(this.articlesFeed$.value)); //OBSERVABLE
+            //Array.prototype.push.apply(this.articlesFeed$.value, receivedArticles); //OBSERVABLE bad practice - read-only attribute
+            //console.log("articlesFeed$.value:\n" + JSON.stringify(this.articlesFeed$.value)); //OBSERVABLE bad practice - read-only attribute
+            //this.articlesFeed$.next(this.articlesFeed$.value); //OBSERVABLE bad practive - read-only attribute
+            this.articlesFeed$.next(this.articlesFeed$.value.concat(receivedArticles)); //OBSERVABLE
+            console.log("articlesFeed$.value:\n" + JSON.stringify(this.articlesFeed$.value)); //OBSERVABLE
             this.errorMessage = "";
           }
           else {
@@ -165,7 +166,7 @@ export class ArticlesService {
       });
   }
 
-  /* https://angular.io/guide/http#reading-the-full-response */
+  /* Angular: Guide - http - Requesting a typed response */
   public loadTen(): Observable<ArticlesServerResponseInterface> {
     const logMessage: string = "Dans la fonction 'loadTen': ";
     console.log(logMessage + "Appel");

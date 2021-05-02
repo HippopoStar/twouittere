@@ -17,21 +17,22 @@ import { ArticlesService, ArticleInterface } from '../articles.service';
 export class ArticlesFeedComponent implements OnInit, OnDestroy {
 
 //  public articlesFeed: Array<ArticleInterface> = [];
-  public articlesFeedObserver: Subscription; //Observer
-  public articlesFeedChangesCount: number = 0;
+//  public articlesFeedObserver: Subscription; //OBSERVER
+//  public articlesFeedChangesCount: number = 0;
 
   constructor(public articles: ArticlesService, public auth: AuthService, private route: ActivatedRoute, private router: Router) {
-    const logMessage: string = "Dans le constucteur de la classe 'ArticlesFeedComponent': ";
-
-    this.articlesFeedObserver = this.articles.articlesFeed$.asObservable().subscribe(
-      (param: Array<ArticleInterface>) => {
-        console.log(logMessage + "articlesFeedObserver - param:\n" + JSON.stringify(param));
-        this.articlesFeedChangesCount++;
-        console.log(logMessage + "articlesFeedChangesCount: " + JSON.stringify(this.articlesFeedChangesCount));
-      },
-      (err: string) => { console.log(logMessage + "articlesFeedObserver - err:\n" + JSON.stringify(err)) },
-      () => { console.log(logMessage + "articlesFeedObserver - Observation completed") }
-    ); //Observer
+    /* Relating to: OUTLET AUTO-REFRESH */
+//    const logMessage: string = "Dans le constucteur de la classe 'ArticlesFeedComponent': ";
+//
+//    this.articlesFeedObserver = this.articles.articlesFeed$.asObservable().subscribe(
+//      (param: Array<ArticleInterface>) => {
+//        console.log(logMessage + "articlesFeedObserver - param:\n" + JSON.stringify(param));
+//        this.articlesFeedChangesCount++;
+//        console.log(logMessage + "articlesFeedChangesCount: " + JSON.stringify(this.articlesFeedChangesCount));
+//      },
+//      (err: string) => { console.log(logMessage + "articlesFeedObserver - err:\n" + JSON.stringify(err)) },
+//      () => { console.log(logMessage + "articlesFeedObserver - Observation completed") }
+//    ); //OBSERVER
 
   }
 
@@ -39,28 +40,30 @@ export class ArticlesFeedComponent implements OnInit, OnDestroy {
     let logMessage: string = "Dans la fonction ngOnInit du composant 'articles-feed': ";
     console.log(logMessage + "Appel");
 
-    this.route.params.subscribe(
-      (params: Params) => {
-        console.log(logMessage + "params: " + JSON.stringify(params));
-	    this.articlesFeedManagement(params["action"]);
-      },
-      (err) => {
-        console.log(logMessage + "An error occured with the route invocation:" + err);
-      },
-      () => {
-        console.log(logMessage + "route invocation completed");
-      }
-    );
+    /* Relating to: OUTLET INVOCATION */
+//    this.route.params.subscribe(
+//      (params: Params) => {
+//        console.log(logMessage + "params: " + JSON.stringify(params));
+//	    this.articlesFeedManagement(params["action"]);
+//      },
+//      (err) => {
+//        console.log(logMessage + "An error occured with the route invocation:" + err);
+//      },
+//      () => {
+//        console.log(logMessage + "route invocation completed");
+//      }
+//    );
 
-    this.articles.articlesFeed$.asObservable().subscribe(
-      (param: Array<ArticleInterface>) => {
-        console.log(logMessage + "articlesFeed$:\n" + JSON.stringify(param));
-        this.articlesFeedChangesCount++;
-        console.log(logMessage + "articlesFeedChangesCount: " + JSON.stringify(this.articlesFeedChangesCount));
-      },
-      (err: string) => { console.log(logMessage + "articlesFeedObserver - err:\n" + JSON.stringify(err)) },
-      () => { console.log(logMessage + "articlesFeedObserver - Observation completed") }
-    ); //Observer
+    /* Relating to: OUTLET AUTO-REFRESH */
+//    this.articles.articlesFeed$.asObservable().subscribe(
+//      (param: Array<ArticleInterface>) => {
+//        console.log(logMessage + "articlesFeed$:\n" + JSON.stringify(param));
+//        this.articlesFeedChangesCount++;
+//        console.log(logMessage + "articlesFeedChangesCount: " + JSON.stringify(this.articlesFeedChangesCount));
+//      },
+//      (err: string) => { console.log(logMessage + "articlesFeedObserver - err:\n" + JSON.stringify(err)) },
+//      () => { console.log(logMessage + "articlesFeedObserver - Observation completed") }
+//    ); //OBSERVER
 
   }
 
@@ -85,9 +88,10 @@ export class ArticlesFeedComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    const logMessage: string = "Dans la fonction ngOnDestroy du composant 'articles-feed': ";
-    console.log(logMessage + "Appel");
-    this.articlesFeedObserver.unsubscribe(); //Observer
+    /* Relating to: OUTLET AUTO-REFRESH */
+//    const logMessage: string = "Dans la fonction ngOnDestroy du composant 'articles-feed': ";
+//    console.log(logMessage + "Appel");
+//    this.articlesFeedObserver.unsubscribe(); //OBSERVER
   }
 
 }

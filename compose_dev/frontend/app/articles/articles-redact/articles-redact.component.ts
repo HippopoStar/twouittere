@@ -21,17 +21,19 @@ export class ArticlesRedactComponent implements OnInit {
   ngOnInit(): void {
     const logMessage: string = "Dans la fonction ngOnInit du composant 'articles-redact': ";
     console.log(logMessage + "Appel");
-    this.route.params.subscribe(
-      (params: Params) => {
-        console.log(logMessage + "params: " + JSON.stringify(params));
-      },
-      (err) => {
-        console.log(logMessage + "An error occured with the route invocation: " + err);
-      },
-      () => {
-        console.log(logMessage + "route invocation completed");
-      }
-    );
+
+    /* Relating to: OUTLET INVOCATION */
+//    this.route.params.subscribe(
+//      (params: Params) => {
+//        console.log(logMessage + "params: " + JSON.stringify(params));
+//      },
+//      (err) => {
+//        console.log(logMessage + "An error occured with the route invocation: " + err);
+//      },
+//      () => {
+//        console.log(logMessage + "route invocation completed");
+//      }
+//    );
   }
 
   onSubmit() {
@@ -50,6 +52,7 @@ export class ArticlesRedactComponent implements OnInit {
           this.redact = "";
           this.errorMessage = "";
 
+          /* Relating to: OUTLET INVOCATION */
 //          this.articles.displayFeed(['refresh'])
 //            .then(
 //              (param: boolean) => {
