@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -25,7 +25,8 @@ export interface ArticlesServerResponseInterface {
 export class ArticlesService {
 
   public isPublishing: boolean = false;
-  public articlesFeed: Array<ArticleInterface> = [];
+//  public articlesFeed: Array<ArticleInterface> = [];
+  public articlesFeed$: BehaviorSubject<ArticleInterface[]> = new BehaviorSubject<ArticleInterface[]>([]); //Observable
   public last_article_date: string = "None";
   public last_article_id: string = "None";
   public errorMessage: string = "";
@@ -55,8 +56,33 @@ export class ArticlesService {
       'Something bad happened; please try again later.');
   }
 
+  public displayRedact(args?: Array<string>): Promise<boolean> {
+    const logMessage: string = "Dans la fonction 'displayRedact': ";
+    let navigationParameters: Array<string> = ['redact'];
+    if (args !== undefined) {
+      for (let navigationParameter of args) {
+        navigationParameters.push(navigationParameter);
+      }
+    }
+    console.log(logMessage + "navigationParameters: " + JSON.stringify(navigationParameters));
+    return this.router.navigate(['/articles', { outlets: { 'articlesRedact': navigationParameters } }]);
+  }
+
+  public displayFeed(args?: Array<string>): Promise<boolean> {
+    const logMessage: string = "Dans la fonction 'displayFeed': ";
+    let navigationParameters: Array<string> = ['feed'];
+    if (args !== undefined) {
+      for (let navigationParameter of args) {
+        navigationParameters.push(navigationParameter);
+      }
+    }
+    console.log(logMessage + "navigationParameters: " + JSON.stringify(navigationParameters));
+    return this.router.navigate(['/articles', { outlets: { 'articlesFeed': navigationParameters } }]);
+  }
+
   public publishRedact(parameters: string): Observable<any> {
-    console.log("Appel de \"publishRedact\"");
+    const logMessage: string = "Dans la fonction 'publishRedact': ";
+    console.log(logMessage + "Appel");
     let url: string = this.auth.backend_server_url+"/articles/publish";
     let req: Object = {
       "login": this.auth.email,
@@ -68,18 +94,30 @@ export class ArticlesService {
         'Content-Type': 'application/json'
       })
     };
+    if (this.auth === undefined) {
+      console.log(logMessage + "auth undefined");
+    }
+    else {
+      console.log(logMessage + "auth.email: " + JSON.stringify(this.auth.email));
+      console.log(logMessage + "auth.password: " + JSON.stringify(this.auth.password));
+      console.log(logMessage + "re: " + JSON.stringify(req));
+    }
     return this.http.post(url, JSON.stringify(req), httpOptions);
   }
 
   public refreshArticles(): void {
-    this.articlesFeed = [];
+    const logMessage: string = "Dans la fonction 'refrehArticles': ";
+    console.log(logMessage + "Appel");
+//    this.articlesFeed = [];
+    this.articlesFeed$.next([]); //Observable
     this.last_article_date = "None";
     this.last_article_id = "None";
     this.loadArticles();
   }
 
   public loadArticles(): void {
-    let logMessage: string = "Dans la fonction \"loadArticles\": ";
+    const logMessage: string = "Dans la fonction 'loadArticles': ";
+    console.log(logMessage + "Appel");
     let receivedArticles: Array<ArticleInterface>|null = null;
     let articleDatePrinter: Date|null = null;
     this.loadTen().subscribe(
@@ -92,14 +130,20 @@ export class ArticlesService {
 
             this.last_article_date = receivedArticles[receivedArticles.length - 1].publication_date;
             this.last_article_id = receivedArticles[receivedArticles.length - 1]._id;
- 
+
             for (let elem of receivedArticles) {
               articleDatePrinter = new Date(elem["publication_date"]);
               elem["publication_date"] = articleDatePrinter.toDateString() + " at " + articleDatePrinter.toTimeString();
-              //elem["content_lines"] = elem["content"].split(/\n/);
-              //elem["content"] = elem["content"].replace(/\n/g, "<br/>");
-              this.articlesFeed.push(elem);
+//              //elem["content_lines"] = elem["content"].split(/\n/);
+//              //elem["content"] = elem["content"].replace(/\n/g, "<br/>");
+//              this.articlesFeed.push(elem);
             }
+            console.log("articlesFeed$.value:\n" + JSON.stringify(this.articlesFeed$.value)); //Observable
+//            Array.prototype.push.apply(this.articlesFeed$.value, receivedArticles); //Observable bad practice - read-only attribute
+//            console.log("articlesFeed$.value:\n" + JSON.stringify(this.articlesFeed$.value)); //Observable bad practice - read-only attribute
+//            this.articlesFeed$.next(this.articlesFeed$.value); //Observable bad practive - read-only attribute
+            this.articlesFeed$.next(this.articlesFeed$.value.concat(receivedArticles)); //Observable
+            console.log("articlesFeed$.value:\n" + JSON.stringify(this.articlesFeed$.value)); //Observable
             this.errorMessage = "";
           }
           else {
@@ -122,10 +166,11 @@ export class ArticlesService {
   }
 
   /* https://angular.io/guide/http#reading-the-full-response */
-  public loadTen(): Observable<any> {
-    console.log("Appel de \"loadTen\"");
+  public loadTen(): Observable<ArticlesServerResponseInterface> {
+    const logMessage: string = "Dans la fonction 'loadTen': ";
+    console.log(logMessage + "Appel");
     let url: string = this.auth.backend_server_url+"/articles/feed";
-    return this.http.get(url
+    return this.http.get<ArticlesServerResponseInterface>(url
       +"/login="+(this.auth.email || "default")
       +"/password="+(this.auth.password || "default")
       +"/last_article_date="+(this.last_article_date || "None")

@@ -107,6 +107,12 @@ Dans un navigateur :
 |	[RxJS: Reference - API reference - Observable](https://rxjs.dev/api/index/class/Observable)  
 |	[RxJS: Reference - API reference - Subject](https://rxjs.dev/api/index/class/Subject)  
 |	[RxJS: Reference - API reference - Observer](https://rxjs.dev/api/index/interface/Observer)  
+|	[RxJS: Reference - API reference - Subscription](https://rxjs.dev/api/index/class/Subscription)  
 |	[RxJS: Reference - API reference - Subscriber](https://rxjs.dev/api/index/class/Subscriber)  
 |	[NgRx - @ngrx/store](https://ngrx.io/)  
+
+|	[Angular: Reference - API reference - @angular/common - AsyncPipe](https://angular.io/api/common/AsyncPipe)  
+
+|	[RxJS: Overview - Subject - BehaviorSubject](https://rxjs.dev/guide/subject#behaviorsubject)  
+|	[RxJS: Reference - API reference - BehaviorSubject](https://rxjs.dev/api/index/class/BehaviorSubject)  
 

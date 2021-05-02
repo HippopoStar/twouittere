@@ -9,12 +9,14 @@
 				<button (click)="this.articlesFeedManagement('refresh')"> Refresh </button>
 			</td>
 		</tr>
-		<tr *ngFor="let article of articles.articlesFeed">
+		<tr *ngFor="let article of (articles.articlesFeed$ | async)">
 			<td>
 				<div class="article">
 					<div class="article-content">
 						<pre class="article-content-text"><span class="bold">&#171; </span>{{article.content}}<span class="bold"> &#187;</span></pre>
-						<!-- <p class="article-content-text"><span class="bold">&#171; </span>{{article.content}}<span class="bold"> &#187;</span></p> -->
+						<!--
+						<p class="article-content-text"><span class="bold">&#171; </span>{{article.content}}<span class="bold"> &#187;</span></p>
+						-->
 					</div>
 					<div class="article-author">
 						<span class="article-author-text">{{article.author}}</span>

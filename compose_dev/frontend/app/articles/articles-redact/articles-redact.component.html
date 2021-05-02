@@ -16,7 +16,7 @@
 				</tr>
 				<tr>
 					<td>
-						<button type="submit"> Publish </button>
+						<button type="submit" [routerLink]="['/articles', { 'outlets': { 'articlesFeed': ['feed', 'refresh'] } }]"> Publish </button>
 					</td>
 				</tr>
 			</table>
