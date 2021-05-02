@@ -82,7 +82,7 @@ Dans un navigateur :
 Ne pas omettre de completer le champ "imports" des fichiers \<module\_name\>.module.ts
 
 Dans un navigateur :  
-|	[Mozilla Developer - JavaScript Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)  
+|	[Mozilla Developer - JavaScript reference - Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)  
 |	[GitHub.io - Mongo - find](http://mongodb.github.io/node-mongodb-native/3.6/api/Collection.html#find)  
 |	[docs.mongodb - order & limit](https://docs.mongodb.com/manual/reference/method/cursor.sort/#limit-results)  
 
@@ -96,4 +96,12 @@ Dans un navigateur :
 |	[Angular: Reference - API reference - @angular/router - Router - navigate](https://angular.io/api/router/Router#navigate)  
 |	[Angular: Reference - API reference - @angular/router - ActivatedRoute - params](https://angular.io/api/router/ActivatedRoute#params)  
 |	[Angular: Reference - API reference - @angular/core - DoCheck](https://angular.io/api/core/DoCheck)  
+|	[Jason Watmore's blog - Angular 2/5 - Communicating Between Components with Observable & Subject](https://jasonwatmore.com/post/2016/12/01/angular-2-communicating-between-components-with-observable-subject)  
+|	[RxJS: Reference - API reference - Observable](https://rxjs.dev/api/index/class/Observable)  
+|	[RxJS: Reference - API reference - Subject](https://rxjs.dev/api/index/class/Subject)  
+|	[RxJS: Reference - API reference - Observer](https://rxjs.dev/api/index/interface/Observer)  
+|	[RxJS: Reference - API reference - Subscriber](https://rxjs.dev/api/index/class/Subscriber)  
+|	[Mozilla Developer - JavaScript reference - Array - concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat)  
+|	[Mozilla Developer - JavaScript reference - Array - push - Merging two arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push#merging_two_arrays)  
+|	[NgRx - @ngrx/store](https://ngrx.io/)  
 
