@@ -35,9 +35,9 @@ export class ArticlesComponent implements OnInit {
 //          console.log(logMessage + "promise (err): " + err);
 //        }
 //      );
-//    //setInterval(() => this.articles.displayFeed(), 3000); //Here for testing purpose
+//    //setInterval(() => this.articles.displayFeed(), 3000); //Here for experiment purpose
 
-    this.articles.refreshArticles();
+    this.auth.checkBackendServerAddress(this.articles.refreshArticles.bind(this.articles));
 
   }
 

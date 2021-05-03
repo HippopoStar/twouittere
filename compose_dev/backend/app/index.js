@@ -38,8 +38,13 @@ https.createServer(options, app).listen(3000);
 
 let MongoClient = require("mongodb").MongoClient;
 let ObjectId = require("mongodb").ObjectId;
-let url = "mongodb://root:example@mongo:27017";
+let url = "mongodb://root:example@database:27017";
 
+const loginFieldMaxLength = 30;
+const passwordFieldMaxLength = 20;
+const firstnameFieldMaxLength = 20;
+const lastnameFieldMaxLength = 20;
+const contentFieldMaxLength = 500;
 
 MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err, client) => {
     let db = client.db("Twouittere");
@@ -155,13 +160,14 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
       var logMessage = "Dans la requete '/auth/register' - POST: ";
       res.setHeader("Content-type","application/json; charset=UTF-8");
       res.setHeader("Access-Control-Allow-Origin","*");
-      const reEmail = /^(\w+)@(\w+)\.(\w{2,3})$/;
+      const reEmail = /^(\w+)((\.{1})(\w+))?@(\w+)\.(\w{2,3})$/; // le login ne doit notamment pas pouvoir etre 'default' (voir frontend: auth.service)
       const reWord = /^(\w+)$/;
 
-      if (!(req.body.login === undefined) && typeof(req.body.login) === "string" && reEmail.test(req.body.login)
-        && !(req.body.password === undefined) && typeof(req.body.password) === "string" && reWord.test(req.body.password)
-        && !(req.body.firstname === undefined) && typeof(req.body.firstname) === "string" && reWord.test(req.body.firstname)
-        && !(req.body.lastname === undefined) && typeof(req.body.lastname) === "string" && reWord.test(req.body.lastname)) {
+      if (!(req.body.login === undefined) && typeof(req.body.login) === "string" && reEmail.test(req.body.login) && req.body.login.length <= loginFieldMaxLength
+        && !(req.body.password === undefined) && typeof(req.body.password) === "string" && reWord.test(req.body.password) && req.body.password.length <= passwordFieldMaxLength
+        && !(req.body.firstname === undefined) && typeof(req.body.firstname) === "string" && reWord.test(req.body.firstname) && req.body.firstname.length <= firstnameFieldMaxLength
+        && !(req.body.lastname === undefined) && typeof(req.body.lastname) === "string" && reWord.test(req.body.lastname) && req.body.lastname.length <= lastnameFieldMaxLength)
+      {
         let newUser = {
           "email": req.body.login,
           "password": req.body.password,
@@ -199,7 +205,10 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
 
       checkClientAuth(db, req, res, { "filterObject": req.body }, (db, req, res, param, documents) => {
         console.log(logMessage + JSON.stringify(req.body));
-        if (param["filterObject"]["content"] !== undefined && typeof(param["filterObject"]["content"]) === "string") {
+        if (!(param["filterObject"]["login"] === undefined) && typeof(param["filterObject"]["content"]) === "string"
+          && !(param["filterObject"]["content"] === undefined) && typeof(param["filterObject"]["content"]) === "string"
+          && param["filterObject"]["login"].length <= loginFieldMaxLength && param["filterObject"]["content"].length <= contentFieldMaxLength)
+        {
           let newArticle = {
             "author": param["filterObject"]["login"],
             "content": param["filterObject"]["content"],

@@ -69,7 +69,8 @@ export class ArticlesFeedComponent implements OnInit, OnDestroy {
 
 
   articlesFeedManagement(action?: string): void {
-    let logMessage: string = "Dans la fontion \"articlesFeedManagement\": ";
+    const logMessage: string = "Dans la fontion 'articlesFeedManagement': ";
+    console.log(logMessage + "Appel");
     if (action === undefined) {
       console.log(logMessage + "refreshing 'article-feed' component");
     }

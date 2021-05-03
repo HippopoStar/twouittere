@@ -22,12 +22,12 @@ services:
     volumes:
       - ./backend/app:/root/TWOUITTERE
     depends_on:
-      - mongo
+      - database
     networks:
       - express-mongo
       - angular-express
 
-  mongo:
+  database:
     container_name: compose_dev_mongo
     restart: always
     image: mongo:latest

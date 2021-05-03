@@ -4,12 +4,8 @@ services:
     ports:
       - 8443:443
     stdin_open: true
-    volumes:
-      - ./frontend/conf:/usr/local/apache2/conf
-      - ./frontend/htdocs:/usr/local/apache2/htdocs
     container_name: compose_prod_frontend
     restart: always
-    image: httpd:latest
     networks:
       - httpd-express
     depends_on:
@@ -21,20 +17,18 @@ services:
     build: backend
     ports:
       - 3001:3000
-    volumes:
-      - ./backend/app:/root/TWOUITTERE
     depends_on:
-      - mongo
+      - database
     networks:
       - express-mongo
       - httpd-express
 
-  mongo:
+  database:
     container_name: compose_prod_mongo
     restart: always
     image: mongo:latest
     volumes:
-      - ./data:/data/db
+      - compose_prod_database_volume:/data/db
     networks:
       - express-mongo
     environment:
@@ -43,3 +37,5 @@ services:
 networks:
   httpd-express:
   express-mongo:
+volumes:
+  compose_prod_database_volume:

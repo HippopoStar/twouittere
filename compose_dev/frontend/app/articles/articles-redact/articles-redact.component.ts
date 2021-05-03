@@ -13,7 +13,8 @@ import { ArticlesService } from '../articles.service';
 })
 export class ArticlesRedactComponent implements OnInit {
   public login: string|null = null;
-  public redact: string|null = null;
+  public redact: string = "";
+  public publicationMaxLength: number = 500;
   public errorMessage: string = "";
 
   constructor(public auth: AuthService, public articles: ArticlesService, public router: Router, public route: ActivatedRoute) {}
@@ -43,7 +44,7 @@ export class ArticlesRedactComponent implements OnInit {
 
     /* ---------- PUBLISH ----------------------------------------------------------------- */
 
-    if (!(this.redact === null)) {
+    if (!(this.redact === null || this.redact.length > this.publicationMaxLength)) {
       this.articles.publishRedact(this.redact).subscribe(res => {
         if (res.status === "success") {
           console.log("ARTICLE PUBLIE AVEC SUCCES:\n");

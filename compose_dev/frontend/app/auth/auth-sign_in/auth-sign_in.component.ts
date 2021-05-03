@@ -20,9 +20,9 @@ export class AuthSignInComponent {
 
     /* ---------- REGISTERING ------------------------------------------------------------- */
 
-    const reEmailString = "/^(\\w+)@(\\w+)\\.(\\w{2,3})$/"
+    const reEmailString = "/^(\\w+)((\\.{1})(\\w+))?(@(\\w+)\\.(\\w{2,3})$/"
     const reWordString = "/^(\\w+)$/"
-    const reEmail = /^(\w+)@(\w+)\.(\w{2,3})$/;
+    const reEmail = /^(\w+)((\.{1})(\w+))?@(\w+)\.(\w{2,3})$/;
     const reWord = /^(\w+)$/;
 
     if (!(this.login === null) && reEmail.test(this.login)
@@ -50,7 +50,7 @@ export class AuthSignInComponent {
           }
         }
         else {
-          this.errorMessage = this.auth.unreachableServerMessage;
+          this.errorMessage = this.auth.getUnreachableServerMessage();
         }
       });
     }

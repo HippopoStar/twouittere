@@ -16,6 +16,11 @@
 				</tr>
 				<tr>
 					<td>
+						<span class="redact-length">{{redact.length}}/{{publicationMaxLength}}</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
 						<button type="submit" [routerLink]="['/articles', { 'outlets': { 'articlesFeed': ['feed', 'refresh'] } }]"> Publish </button>
 					</td>
 				</tr>

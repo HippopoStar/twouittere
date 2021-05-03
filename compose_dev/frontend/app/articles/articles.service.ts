@@ -29,7 +29,10 @@ export class ArticlesService {
   public articlesFeed$: BehaviorSubject<ArticleInterface[]> = new BehaviorSubject<ArticleInterface[]>([]); //OBSERVABLE
   public last_article_date: string = "None";
   public last_article_id: string = "None";
-  public errorMessage: string = "";
+  public loadingAnimationController: boolean = false;
+  public loadingPictogram: string = "";
+  public loadingMessage: string = "";
+  public errorMessage: string|undefined;
 
   constructor(private http: HttpClient, public auth: AuthService, public router: Router) {
   }
@@ -37,7 +40,7 @@ export class ArticlesService {
   /* Angular: Guide - http - Handling request errors */
   private handleError(error: HttpErrorResponse) {
 
-    this.errorMessage = this.auth.unreachableServerMessage;
+    this.errorMessage = this.auth.getUnreachableServerMessage();
     console.log(this.errorMessage);
 
     if (error.error instanceof ErrorEvent) {
@@ -53,6 +56,43 @@ export class ArticlesService {
     // Return an observable with a user-facing error message.
     return throwError(
       'Something bad happened; please try again later.');
+  }
+
+  /* L'extrait de code suivant necessite:                     */
+  /* - 1 attribut booleen appele 'loadingAnimationController' */
+  /* - 1 attribut string appele 'loadingPictogram'            */
+  /* - 1 attribut string appele 'loadingMessage'              */
+  /* - 1 div dans le template comprenant:                     */
+  /*   - 1 span [innerHtml]="<service_name>.loadingPictogram" */
+  /*   - 1 span {{<service_name>.loadingMessage}}             */
+  private loadingAnimationRecursive(): void {
+    if (this.loadingAnimationController === true) {
+      if (!(this.loadingPictogram === "&#8987;" || this.loadingPictogram === "&#9203;")) {
+        this.loadingPictogram = "&#8987;";
+      }
+      else if (this.loadingPictogram === "&#8987;") {
+        this.loadingPictogram = "&#9203;"; //Sablier avec coulee de sable
+      }
+      else {
+        this.loadingPictogram = "&#8987;"; //Sablier
+      }
+      setTimeout(this.loadingAnimationRecursive.bind(this), 1000);
+    }
+    else {
+      console.log("loadingAnimation stopped");
+    }
+  }
+
+  public loadingAnimationStart(message: string): void {
+    this.loadingMessage = message;
+    this.loadingAnimationController = true;
+    this.loadingAnimationRecursive();
+  }
+
+  public loadingAnimationStop(): void {
+    this.loadingAnimationController = false;
+    this.loadingPictogram = "";
+    this.loadingMessage = "";
   }
 
   /* Relating to: OUTLET INVOCATION */
@@ -121,8 +161,10 @@ export class ArticlesService {
     console.log(logMessage + "Appel");
     let receivedArticles: Array<ArticleInterface>|null = null;
     let articleDatePrinter: Date|null = null;
+    this.loadingAnimationStart("Attempting to collect data from server ("+ this.auth.backend_server_url + ")..."); //LOADING ANIMATION
     this.loadTen().subscribe(
       (serverResponse: ArticlesServerResponseInterface) => {
+        this.loadingAnimationStop(); //LOADING ANIMATION
         if (serverResponse.status !== undefined && typeof(serverResponse.status) === "string"
           && serverResponse.status === "success" && (receivedArticles = serverResponse.result) !== null) {
           //receivedArticles = serverResponse.result; /* Voir condition ci-dessus */
@@ -158,6 +200,7 @@ export class ArticlesService {
         }
       },
       (errorResponse: HttpErrorResponse) => {
+        this.loadingAnimationStop(); //LOADING ANIMATION
         console.log(logMessage + "Appel de 'articles.handleError'");
         this.handleError(errorResponse);
       },

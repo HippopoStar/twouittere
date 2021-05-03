@@ -10,6 +10,7 @@ Repertoires :
 `/var/lib/mongodb/` [Source](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-debian/#run-mongodb-community-edition)  
 `/data/db/` [Source (voir section Caveats)](https://hub.docker.com/_/mongo)  
 `/usr/local/lib/node_modules/` [Source](https://docs.npmjs.com/cli/v7/configuring-npm/folders)  
+`/usr/local/apache2/conf/` [Source (voir section SSL/HTTPS)](https://hub.docker.com/_/httpd)  
 
 POUR QUE LA CONNECTION FRONTEND/BACKEND PUISSE S'ETABLIR: se rendre a l'adresse du server back-end dans son navigateur et accepter manuellement le certificat auto-signe  
 DROIT D'ACCES AUX FICHIERS: `sudo chown --recursive "$(id --user):$(id --group)" ./`  
@@ -64,7 +65,7 @@ Dans le repertoire 'compose\_dev' :
 `docker run --name twouittere_node_container --interactive --tty --volume "$(pwd)/compose_dev/backend/app:/root/TWOUITTERE" --publish 3000:3000 --rm node:lts-buster-slim bash`  
 Dans le container :  
 |	`npm init --yes`  
-|	`npm install express cors mongodb fs async --save # rxjs rxjs-compact https body-parser md5sum crypto`  
+|	`npm install express cors mongodb fs async --save # rxjs rxjs-compat https body-parser md5sum crypto`  
 |	`npm install nodemon --save-dev`  
 
 Dans un navigateur :
@@ -115,4 +116,7 @@ Dans un navigateur :
 
 |	[RxJS: Overview - Subject - BehaviorSubject](https://rxjs.dev/guide/subject#behaviorsubject)  
 |	[RxJS: Reference - API reference - BehaviorSubject](https://rxjs.dev/api/index/class/BehaviorSubject)  
+
+Dans un navigateur:  
+|	[docs.docker - Overview of Docker Compose - Preserve volume data when container are created](https://docs.docker.com/compose/#preserve-volume-data-when-containers-are-created)  
 

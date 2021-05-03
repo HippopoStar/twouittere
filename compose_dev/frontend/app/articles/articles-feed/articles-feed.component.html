@@ -1,4 +1,7 @@
 <div>
+	<div class="loading-message">
+		<span [innerHtml]="articles.loadingPictogram"></span><span> {{articles.loadingMessage}}</span>
+	</div>
 	<div class="error-message">
 		<span>{{articles.errorMessage}}</span>
 	</div>
