@@ -36,6 +36,7 @@ td.leftColumn {
 
 div.middleColumn {
 	width: 50%;
+	!max-width: 50%;
 	margin-left: auto;
 	margin-right: auto;
 }

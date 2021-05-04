@@ -40,6 +40,9 @@ span.bold {
 p.article-content-text {
 	!font-size: 20px;
 	font-style: italic;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+	max-width: 35vw;
 }
 
 span.article-author-text {
