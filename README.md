@@ -129,4 +129,9 @@ Dans un navigateur:
 
 Dans un navigateur:  
 |	[Mozilla Developer - CSS reference - length - Viewport-percentage lengths](https://developer.mozilla.org/en-US/docs/Web/CSS/length#viewport-percentage_lengths)  
+|	[Mozilla Developer - CSS reference - border - border vs. outlines](https://developer.mozilla.org/en-US/docs/Web/CSS/border#borders_vs._outlines)  
+|	[Mozilla Developer - CSS reference - border-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius)  
+|	[Mozilla Developer - CSS reference - color value - Color keywords](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#color_keywords)  
+|	[Mozilla Developer - CSS reference - -webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)  
+|	[Mozilla Developer - CSS reference - text-overflow](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow)  
 

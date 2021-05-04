@@ -8,11 +8,16 @@ tr {
 
 div.article {
 	width: 100%;
-	padding: 5px;
+	max-width: 35vw;
+	padding: 15px 25px;
 	margin: 5px;
+	border-radius: 10px;
 	border-style: solid;
-	border-color: black;
+	border-color: skyblue;
 	border-width: 1px;
+	!outline-style: solid;
+	!outline-color: lightgreen;
+	!outline-width: 1px;
 }
 
 div.article-content {
@@ -42,7 +47,11 @@ p.article-content-text {
 	font-style: italic;
 	white-space: pre-wrap;
 	overflow-wrap: break-word;
-	max-width: 35vw;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 20;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 span.article-author-text {

@@ -65,9 +65,9 @@ export class AuthSignInComponent {
       );
     }
     else {
-      this.errorMessage = "Registration failed: invalid field(s)\n"
-        + "expected login: " + reEmailString + "\n"
-        + "expected other fields: " + reWordString;
+      this.errorMessage = "Registration failed: invalid field(s)" + "<br/>"
+        + "expected login: <code>" + reEmailString + "</code><br/>"
+        + "expected other fields: <code>" + reWordString + "</code>";
     }
 
   }
