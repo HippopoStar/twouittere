@@ -15,6 +15,7 @@ export class AuthLogInComponent {
   constructor(public auth: AuthService) {}
 
   onSubmit() {
+    const logMessage = "Dans la fonction onSubmit du composant 'auth-log_in': ";
 
       /* ---------- TEST 01 ----------------------------------------------------------------- */
 
@@ -33,21 +34,29 @@ export class AuthLogInComponent {
           console.log(this.login+" "+this.password);
           this.auth.isLoggedIn = false;
 
-          this.auth.authentification(this.login, this.password).subscribe(res => {
-            this.auth.requestResponse = res;
-            console.log(JSON.stringify(this.auth.requestResponse));
-            if ( this.auth.requestResponse !== null && this.auth.requestResponse["status"] === "success" ) {
-                this.auth.isLoggedIn = true;
-                this.auth.email = this.login;
-                this.auth.password = this.password;
-                this.auth.firstname = this.auth.requestResponse["content"]["firstname"];
-                this.auth.lastname = this.auth.requestResponse["content"]["lastname"];
-                this.errorMessage = "";
+          this.auth.authentification(this.login, this.password).subscribe(
+            (res) => {
+              this.auth.requestResponse = res;
+              console.log(JSON.stringify(this.auth.requestResponse));
+              if ( this.auth.requestResponse !== null && this.auth.requestResponse["status"] === "success" ) {
+                  this.auth.isLoggedIn = true;
+                  this.auth.email = this.login;
+                  this.auth.password = this.password;
+                  this.auth.firstname = this.auth.requestResponse["content"]["firstname"];
+                  this.auth.lastname = this.auth.requestResponse["content"]["lastname"];
+                  this.errorMessage = "";
+              }
+              else {
+                this.errorMessage = "Authentification failed: invalid login or password";
+              }
+            },
+            (err: string) => {
+              this.errorMessage = "Communication error: unreachable server";
+            },
+            () => {
+              console.log(logMessage + "Request completed");
             }
-            else {
-              this.errorMessage = "Authentification failed: invalid login or password";
-            }
-          });
+         );
       }
       else {
         this.errorMessage = "Authentification failed: invalid field(s)";

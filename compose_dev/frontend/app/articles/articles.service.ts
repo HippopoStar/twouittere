@@ -177,8 +177,8 @@ export class ArticlesService {
             for (let elem of receivedArticles) {
               articleDatePrinter = new Date(elem["publication_date"]);
               elem["publication_date"] = articleDatePrinter.toDateString() + " at " + articleDatePrinter.toTimeString();
-//              //elem["content_lines"] = elem["content"].split(/\n/);
-//              //elem["content"] = elem["content"].replace(/\n/g, "<br/>");
+//              elem["content_lines"] = elem["content"].split(/\n/);
+              elem["content"] = elem["content"].replace(/\n/g, "<br/>");
 //              this.articlesFeed.push(elem);
             }
             console.log("articlesFeed$.value:\n" + JSON.stringify(this.articlesFeed$.value)); //OBSERVABLE

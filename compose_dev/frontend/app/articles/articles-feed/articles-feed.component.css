@@ -37,7 +37,7 @@ span.bold {
 	font-style: bold;
 }
 
-pre.article-content-text {
+p.article-content-text {
 	!font-size: 20px;
 	font-style: italic;
 }

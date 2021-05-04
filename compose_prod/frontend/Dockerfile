@@ -6,3 +6,5 @@ COPY ./htdocs /usr/local/apache2/htdocs/
 
 EXPOSE 443
 
+#CMD ["httpd", "-D", "FOREGROUND"]
+

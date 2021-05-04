@@ -68,7 +68,7 @@ Dans le container :
 |	`npm install express cors mongodb fs async --save # rxjs rxjs-compat https body-parser md5sum crypto`  
 |	`npm install nodemon --save-dev`  
 
-Dans un navigateur :
+Dans un navigateur :  
 |	[nodemon](https://nodemon.io/)  
 |	[GitHub - nodemon documentation](https://github.com/remy/nodemon#nodemon)  
 
@@ -77,7 +77,7 @@ Dans le fichier './compose\_dev/backend/app/index.js' [Source](https://docs.mong
 Dans le fichier './compose\_dev/frontend/app/auth.service.ts' :  
 |	`https://127.0.0.1:3000/auth/login`  
 
-Dans un navigateur :
+Dans un navigateur :  
 |	[NodeJS - Crypto - Hash](https://nodejs.org/api/all.html#crypto_crypto)  
 
 Ne pas omettre de completer le champ "imports" des fichiers \<module\_name\>.module.ts
@@ -119,4 +119,11 @@ Dans un navigateur :
 
 Dans un navigateur:  
 |	[docs.docker - Overview of Docker Compose - Preserve volume data when container are created](https://docs.docker.com/compose/#preserve-volume-data-when-containers-are-created)  
+
+Dans un navigateur:  
+|	[Angular: Reference - API reference - @angular/common - ngForOf](https://angular.io/api/common/NgForOf)  
+|	[Angular: Guide - Understanding Angular - Templates - Property binding and security](https://angular.io/guide/property-binding#property-binding-and-security)  
+|	[Angular: Guide - Best Practices - Security - Sanitization and security contexts](https://angular.io/guide/security#sanitization-and-security-contexts)  
+|	[Mozilla Developer - JavaScript reference - API - DOMParser](https://developer.mozilla.org/en-US/docs/Web/API/DOMParser)  
+|	[Angular: Reference - API reference - @angular/platform-browser - DomSanitizer](https://angular.io/api/platform-browser/DomSanitizer)  
 

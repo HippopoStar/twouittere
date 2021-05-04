@@ -32,7 +32,7 @@ services:
     restart: always
     image: mongo:latest
     volumes:
-      - ./data:/data/db
+      - compose_dev_database_volume:/data/db
     networks:
       - express-mongo
     environment:
@@ -41,3 +41,5 @@ services:
 networks:
   angular-express:
   express-mongo:
+volumes:
+  compose_dev_database_volume:
