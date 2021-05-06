@@ -22,10 +22,12 @@ div.subtitle {
 
 table {
     width: 100%;
+    max-width: 100%;
 }
 
 tr {
     width: 100%;
+    max-width: 100%;
 }
 
 td.leftColumn {
@@ -34,9 +36,12 @@ td.leftColumn {
 	width: 10%;
 }
 
+/* Devrais-je ajouter td.middleColumn ? */
 div.middleColumn {
 	width: 50%;
-	!max-width: 50%;
+	!max-width: 80%;
+	max-width: 80vw;
+	box-sizing: border-box;
 	margin-left: auto;
 	margin-right: auto;
 }

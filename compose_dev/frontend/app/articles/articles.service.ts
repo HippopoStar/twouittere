@@ -143,7 +143,7 @@ export class ArticlesService {
       console.log(logMessage + "auth.password: " + JSON.stringify(this.auth.password));
       console.log(logMessage + "re: " + JSON.stringify(req));
     }
-    return this.http.post(url, JSON.stringify(req), httpOptions);
+    return this.http.post<any>(url, JSON.stringify(req), httpOptions);
   }
 
   public refreshArticles(): void {

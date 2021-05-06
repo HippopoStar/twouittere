@@ -1,41 +1,50 @@
 services:
   frontend:
     build: frontend
-    ports:
-      - 8443:443
     stdin_open: true
     container_name: compose_prod_frontend
-    restart: always
+    ports:
+      - 8443:443
     networks:
       - httpd-express
+    restart: always
     depends_on:
       - backend
 
   backend:
-    container_name: compose_prod_backend
-    restart: always
     build: backend
+    container_name: compose_prod_backend
     ports:
       - 3001:3000
-    depends_on:
-      - database
     networks:
       - express-mongo
       - httpd-express
+    restart: always
+    depends_on:
+      - database
 
   database:
-    container_name: compose_prod_mongo
-    restart: always
     image: mongo:latest
-    volumes:
-      - compose_prod_database_volume:/data/db
-    networks:
-      - express-mongo
+#    command: ["--quiet"]
+    command: ["--logpath", "/dev/null"]
+    container_name: compose_prod_mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+#      MONGO_INITDB_DATABASE: Twouittere
+    volumes:
+      - database_volume:/data/db
+    expose:
+      - 27017
+    networks:
+      - express-mongo
+    restart: always
+
 networks:
   httpd-express:
   express-mongo:
+
 volumes:
-  compose_prod_database_volume:
+  database_volume:
+#    name: compose_prod_database_volume
+

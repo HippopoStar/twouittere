@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { AuthService } from '../../auth.service';
 import { ArticlesService } from '../articles.service';
@@ -28,7 +29,7 @@ export class ArticlesRedactComponent implements OnInit {
 //      (params: Params) => {
 //        console.log(logMessage + "params: " + JSON.stringify(params));
 //      },
-//      (err) => {
+//      (err: any) => {
 //        console.log(logMessage + "An error occured with the route invocation: " + err);
 //      },
 //      () => {
@@ -46,7 +47,7 @@ export class ArticlesRedactComponent implements OnInit {
 
     if (!(this.redact === null || this.redact.length > this.publicationMaxLength)) {
       this.articles.publishRedact(this.redact).subscribe(
-        (res) => {
+        (res: any) => {
           if (res.status === "success") {
             console.log("ARTICLE PUBLIE AVEC SUCCES:\n");
             console.log(this.auth.email + ": " + this.redact);
@@ -73,7 +74,7 @@ export class ArticlesRedactComponent implements OnInit {
             this.errorMessage = "Publication failed: see backend";
           }
         },
-        (err: string) => {
+        (err: HttpErrorResponse) => {
           this.errorMessage = "Communication error: unreachable server";
         },
         () => {

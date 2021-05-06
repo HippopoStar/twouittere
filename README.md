@@ -65,7 +65,7 @@ Dans le repertoire 'compose\_dev' :
 `docker run --name twouittere_node_container --interactive --tty --volume "$(pwd)/compose_dev/backend/app:/root/TWOUITTERE" --publish 3000:3000 --rm node:lts-buster-slim bash`  
 Dans le container :  
 |	`npm init --yes`  
-|	`npm install express cors mongodb fs async --save # rxjs rxjs-compat https body-parser md5sum crypto`  
+|	`npm install express cors body-parser fs mongodb async --save # rxjs rxjs-compat` (!https !crypto)  
 |	`npm install nodemon --save-dev`  
 
 Dans un navigateur :  
@@ -134,4 +134,8 @@ Dans un navigateur:
 |	[Mozilla Developer - CSS reference - color value - Color keywords](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#color_keywords)  
 |	[Mozilla Developer - CSS reference - -webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)  
 |	[Mozilla Developer - CSS reference - text-overflow](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow)  
+
+Dans un navigateur:  
+|	[Mozilla Developer - CSS reference - box-sizing](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing)  
+|	[Mozilla Developer - CSS reference - Guide to wrapping and breaking text](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Text/Wrapping_Text)  
 

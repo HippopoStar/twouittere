@@ -84,15 +84,15 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
     /* ---------- USER VERIFICATION ------------------------------------------------------- */
 
     function checkClientAuth(db, req, res, param, callback) {
-      var logMessage = "In \"checkClientAuth\": ";
+      var logMessage = "Dans la fonction 'checkClientAuth': ";
       console.log(logMessage + JSON.stringify(param));
-      console.log(JSON.stringify(param["filterObject"] !== undefined));
-      console.log(JSON.stringify(param["filterObject"] instanceof Object));
-      console.log(JSON.stringify(param["filterObject"]["login"] !== undefined));
-      console.log(JSON.stringify(param["filterObject"]["login"] instanceof String));
-      console.log(typeof param["filterObject"]["login"]);
-      console.log(typeof(typeof "I need to know"));
-      console.log(JSON.stringify(typeof(param["filterObject"]["login"]) == "string"));
+      //console.log(JSON.stringify(param["filterObject"] !== undefined));
+      //console.log(JSON.stringify(param["filterObject"] instanceof Object));
+      //console.log(JSON.stringify(param["filterObject"]["login"] !== undefined));
+      //console.log(JSON.stringify(param["filterObject"]["login"] instanceof String));
+      //console.log(typeof param["filterObject"]["login"]);
+      //console.log(typeof(typeof "I need to know"));
+      //console.log(JSON.stringify(typeof(param["filterObject"]["login"]) == "string"));
       if (param["filterObject"] !== undefined && param["filterObject"] instanceof Object
         && param["filterObject"]["login"] !== undefined && typeof(param["filterObject"]["login"]) === "string"
         && param["filterObject"]["password"] !== undefined && typeof(param["filterObject"]["password"]) === "string") {
@@ -120,7 +120,7 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
       }
     }
 
-    /* ---------- AUTHENTIFICATION -------------------------------------------------------- */
+    /* ---------- AUTHENTICATION ---------------------------------------------------------- */
 
     app.get("/auth/login=:login/password=:password", (req, res) => {
       var logMessage = "Dans la requete '/auth/login' - GET: ";

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
-import { AuthService } from '../../auth.service';
+import { AuthService, AuthRequestResponseInterface } from '../../auth.service';
 
 @Component({
   selector: 'app-auth-sign-in',
@@ -21,7 +22,7 @@ export class AuthSignInComponent {
 
     /* ---------- REGISTERING ------------------------------------------------------------- */
 
-    const reEmailString = "/^(\\w+)((\\.{1})(\\w+))?(@(\\w+)\\.(\\w{2,3})$/"
+    const reEmailString = "/^(\\w+)((\\.{1})(\\w+))?@(\\w+)\\.(\\w{2,3})$/"
     const reWordString = "/^(\\w+)$/"
     const reEmail = /^(\w+)((\.{1})(\w+))?@(\w+)\.(\w{2,3})$/;
     const reWord = /^(\w+)$/;
@@ -35,7 +36,7 @@ export class AuthSignInComponent {
       this.auth.isSigningIn = true;
 
       this.auth.register(this.login, this.password, this.firstname, this.lastname).subscribe(
-        (res) => {
+        (res: AuthRequestResponseInterface) => {
           if (res !== undefined) {
             this.auth.requestResponse = res;
             console.log(JSON.stringify(this.auth.requestResponse));
@@ -56,7 +57,7 @@ export class AuthSignInComponent {
             this.errorMessage = this.auth.getUnreachableServerMessage();
           }
         },
-        (err: string) => {
+        (err: HttpErrorResponse) => {
           this.errorMessage = "Communication error: unreachable server";
         },
         () => {

@@ -1,41 +1,44 @@
 services:
   frontend:
     build: frontend
-    ports:
-      - 4200:4200
     stdin_open: true
     container_name: compose_EI2ANGNOD_frontend
-    restart: always
+    ports:
+      - 4200:4200
     networks:
       - angular-express
+    restart: always
     depends_on:
       - backend
 
   backend:
-    container_name: compose_EI2ANGNOD_backend
-    restart: always
     build: backend
+    container_name: compose_EI2ANGNOD_backend
     ports:
       - 8888:8888
-    depends_on:
-      - database
     networks:
       - express-mongo
       - angular-express
+    restart: always
+    depends_on:
+      - database
 
   database:
-    container_name: compose_EI2ANGNOD_database
-    restart: always
-#    image: mongo:latest
     build: database
-#    ports:
-#      - 27017:27017
-    networks:
-      - express-mongo
+    command: ["--quiet"]
+#    command: ["--logpath", "/dev/null"]
+    container_name: compose_EI2ANGNOD_database
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
 #      MONGO_INITDB_DATABASE: OnlineSales
+    expose:
+      - 27017
+    networks:
+      - express-mongo
+    restart: always
+
 networks:
   angular-express:
   express-mongo:
+

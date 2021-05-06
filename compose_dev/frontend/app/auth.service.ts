@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
-export interface AuthentificationDataInterface {
+export interface AuthenticationDataInterface {
   email: string;
   password: string;
   firstname: string;
@@ -11,7 +12,7 @@ export interface AuthentificationDataInterface {
 
 export interface AuthRequestResponseInterface {
   status: string;
-  content: AuthentificationDataInterface;
+  content?: AuthenticationDataInterface;
 }
 
 @Injectable()
@@ -31,15 +32,15 @@ export class AuthService {
   public checkBackendServerAddress(callback?: Function): void {
     const logMessage: string = "Dans la fonction 'checkBackendServerAddress': ";
     console.log(logMessage + "Appel");
-    this.http.get(this.backend_server_url+"/auth/login=default/password=default").subscribe(
-      (param: any) => {
+    this.http.get<AuthRequestResponseInterface>(this.backend_server_url+"/auth/login=default/password=default").subscribe(
+      (param: AuthRequestResponseInterface) => {
         console.log("backend server reached successfully at address: " + this.backend_server_url);
         if (callback) {
           console.log("callback: " + callback.name);
           callback();
         }
       },
-      (err: any) => {
+      (err: HttpErrorResponse) => {
         let tmp:string = this.backend_server_url;
         this.backend_server_url = this.backend_server_url_bis;
         this.backend_server_url_bis = tmp;
@@ -62,20 +63,21 @@ export class AuthService {
   public getUnreachableServerMessage(): string {
     return "Serveur injoignable. Essayez de vous connecter au serveur back-end depuis votre navigateur "
           + "afin d'accepter manuellement le certificat auto-signe ("
-          + this.backend_server_url
-          + " ou " + this.backend_server_url_bis
+          + '<a href="' + this.backend_server_url + '/">' + this.backend_server_url + '/</a>'
+          + " ou " + '<a href="' + this.backend_server_url_bis + '/">' + this.backend_server_url_bis + '/</a>'
           + " si vous naviguez depuis l'hebergeur), et rechargez la page.";
   }
 
   // Dans cet exemple nous n'utilisons pas le serveur https (?)
-  public authentification(login: string, password: string): Observable<any> {
-    console.log("Dans auth.service.ts avec login="+login+" password="+password);
+  public authentication(login: string, password: string): Observable<AuthRequestResponseInterface> {
+    const logMessage: string = "Dans la methode 'authentication' du service 'auth.service': ";
+    console.log(logMessage + "login="+login+" password="+password);
     let url: string = this.backend_server_url+"/auth/login="+login+"/password="+password;
-    return this.http.get(url);
+    return this.http.get<AuthRequestResponseInterface>(url);
   }
 
-  public register(login: string, password: string, firstname: string, lastname: string) : Observable<any> {
-    console.log("Dans la methode 'registering' de auth.service.ts");
+  public register(login: string, password: string, firstname: string, lastname: string) : Observable<AuthRequestResponseInterface> {
+    const logMessage: string = "Dans la methode 'registering' du service 'auth.service': ";
     let url: string = this.backend_server_url+"/auth/register";
     let req: Object = {
       "login": login,
@@ -88,7 +90,8 @@ export class AuthService {
         'Content-Type': 'application/json'
       })
     };
-    return this.http.post(url, JSON.stringify(req), httpOptions);
+    console.log(logMessage + JSON.stringify(req));
+    return this.http.post<AuthRequestResponseInterface>(url, JSON.stringify(req), httpOptions);
   }
 
 }

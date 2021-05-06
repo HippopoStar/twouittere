@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
-import { AuthService } from '../../auth.service';
+import { AuthService, AuthRequestResponseInterface } from '../../auth.service';
 
 @Component({
   selector: 'app-auth-log-in',
@@ -28,17 +29,19 @@ export class AuthLogInComponent {
 //      }
 //      //else if (...
 
-      /* ---------- AUTHENTIFICATION -------------------------------------------------------- */
+      /* ---------- AUTHENTICATION ---------------------------------------------------------- */
 
       if ((this.login !== null) && (this.password !== null)) {
           console.log(this.login+" "+this.password);
           this.auth.isLoggedIn = false;
 
-          this.auth.authentification(this.login, this.password).subscribe(
-            (res) => {
+          this.auth.authentication(this.login, this.password).subscribe(
+            (res: AuthRequestResponseInterface) => {
               this.auth.requestResponse = res;
               console.log(JSON.stringify(this.auth.requestResponse));
-              if ( this.auth.requestResponse !== null && this.auth.requestResponse["status"] === "success" ) {
+              if ( this.auth.requestResponse !== null && this.auth.requestResponse["status"] === "success"
+                && !(this.auth.requestResponse["content"] === undefined) )
+              {
                   this.auth.isLoggedIn = true;
                   this.auth.email = this.login;
                   this.auth.password = this.password;
@@ -47,10 +50,10 @@ export class AuthLogInComponent {
                   this.errorMessage = "";
               }
               else {
-                this.errorMessage = "Authentification failed: invalid login or password";
+                this.errorMessage = "Authentication failed: invalid login or password";
               }
             },
-            (err: string) => {
+            (err: HttpErrorResponse) => {
               this.errorMessage = "Communication error: unreachable server";
             },
             () => {
@@ -59,7 +62,7 @@ export class AuthLogInComponent {
          );
       }
       else {
-        this.errorMessage = "Authentification failed: invalid field(s)";
+        this.errorMessage = "Authentication failed: invalid field(s)";
       }
   }
 

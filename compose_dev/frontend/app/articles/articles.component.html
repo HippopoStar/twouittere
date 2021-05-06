@@ -1,17 +1,18 @@
-
-<div *ngIf="auth.isLoggedIn">
-	<app-articles-redact></app-articles-redact>
+<div id="articles-component-container">
+	<div *ngIf="auth.isLoggedIn">
+		<app-articles-redact></app-articles-redact>
+	</div>
+	<!--
+	<div>
+		<router-outlet name="articlesRedact"></router-outlet>
+	</div>
+	-->
+	<div>
+		<app-articles-feed></app-articles-feed>
+	</div>
+	<!--
+	<div>
+		<router-outlet name="articlesFeed"></router-outlet>
+	</div>
+	-->
 </div>
-<!--
-<div>
-	<router-outlet name="articlesRedact"></router-outlet>
-</div>
--->
-<div>
-	<app-articles-feed></app-articles-feed>
-</div>
-<!--
-<div>
-	<router-outlet name="articlesFeed"></router-outlet>
-</div>
--->

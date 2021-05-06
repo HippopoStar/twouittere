@@ -1,23 +1,30 @@
 table {
 	width: 100%;
+	max-width: 100%;
 }
 
 tr {
 	width: 100%;
+	max-width: 100%;
 }
 
 div.article {
-	width: 100%;
-	max-width: 35vw;
+	width: 97%;
+	!max-width: 90%;
+	max-width: 40vw;
+	box-sizing: border-box;
 	padding: 15px 25px;
-	margin: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	!margin-left: 10px;
+	!margin-right: 10px;
 	border-radius: 10px;
-	border-style: solid;
-	border-color: skyblue;
-	border-width: 1px;
-	!outline-style: solid;
-	!outline-color: lightgreen;
-	!outline-width: 1px;
+	!border-style: solid;
+	!border-color: lightgreen;
+	!border-width: 1px;
+	outline-style: solid;
+	outline-color: skyblue;
+	outline-width: 1px;
 }
 
 div.article-content {
@@ -38,13 +45,14 @@ div.article-publication-date {
 }
 
 span.bold {
-	!font-size: 20px;
 	font-style: bold;
 }
 
 p.article-content-text {
-	!font-size: 20px;
 	font-style: italic;
+	max-width: 95%;
+	!inline-size: 80%;
+	!word-wrap: break-word;
 	white-space: pre-wrap;
 	overflow-wrap: break-word;
 	display: -webkit-box;

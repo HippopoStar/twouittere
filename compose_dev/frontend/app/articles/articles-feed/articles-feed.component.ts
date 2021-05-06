@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Router } from '@angular/router';
 import { Observable, throwError, Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { AsyncPipe } from '@angular/common';
 
@@ -30,7 +31,7 @@ export class ArticlesFeedComponent implements OnInit, OnDestroy {
 //        this.articlesFeedChangesCount++;
 //        console.log(logMessage + "articlesFeedChangesCount: " + JSON.stringify(this.articlesFeedChangesCount));
 //      },
-//      (err: string) => { console.log(logMessage + "articlesFeedObserver - err:\n" + JSON.stringify(err)) },
+//      (err: any) => { console.log(logMessage + "articlesFeedObserver - err:\n" + JSON.stringify(err)) },
 //      () => { console.log(logMessage + "articlesFeedObserver - Observation completed") }
 //    ); //OBSERVER
 
@@ -46,7 +47,7 @@ export class ArticlesFeedComponent implements OnInit, OnDestroy {
 //        console.log(logMessage + "params: " + JSON.stringify(params));
 //	    this.articlesFeedManagement(params["action"]);
 //      },
-//      (err) => {
+//      (err: any) => {
 //        console.log(logMessage + "An error occured with the route invocation:" + err);
 //      },
 //      () => {
@@ -61,7 +62,7 @@ export class ArticlesFeedComponent implements OnInit, OnDestroy {
 //        this.articlesFeedChangesCount++;
 //        console.log(logMessage + "articlesFeedChangesCount: " + JSON.stringify(this.articlesFeedChangesCount));
 //      },
-//      (err: string) => { console.log(logMessage + "articlesFeedObserver - err:\n" + JSON.stringify(err)) },
+//      (err: any) => { console.log(logMessage + "articlesFeedObserver - err:\n" + JSON.stringify(err)) },
 //      () => { console.log(logMessage + "articlesFeedObserver - Observation completed") }
 //    ); //OBSERVER
 
