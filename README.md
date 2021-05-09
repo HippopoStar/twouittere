@@ -34,7 +34,7 @@ Dans un navigateur :
 `touch .gitignore`  
 `git add angular_front_end/TWOUITTERE/` (le dernier '/' est necessaire)  
 
-Dans un navigateur :
+Dans un navigateur :  
 |	[Install MongoDB Community Edition on Debian - MongoDB Manual](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-debian/)  
 `cp ./dockerfiles/Dockerfile_twouittere_mongodb ./docker_image_build_context/Dockerfile`  
 Dans le repertoire './docker\_image\_build\_context/' :  
@@ -78,7 +78,7 @@ Dans le fichier './compose\_dev/frontend/app/auth.service.ts' :
 |	`https://127.0.0.1:3000/auth/login`  
 
 Dans un navigateur :  
-|	[NodeJS - Crypto - Hash](https://nodejs.org/api/all.html#crypto_crypto)  
+|	[NodeJS - API reference - Crypto - Hash](https://nodejs.org/api/crypto.html#crypto_class_hash)  
 
 Ne pas omettre de completer le champ "imports" des fichiers \<module\_name\>.module.ts
 

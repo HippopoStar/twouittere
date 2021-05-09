@@ -30,7 +30,7 @@ export class ArticlesRedactComponent implements OnInit {
 //        console.log(logMessage + "params: " + JSON.stringify(params));
 //      },
 //      (err: any) => {
-//        console.log(logMessage + "An error occured with the route invocation: " + err);
+//        console.log(logMessage + "An error occured with the route invocation: " + JSON.stringify(err));
 //      },
 //      () => {
 //        console.log(logMessage + "route invocation completed");

@@ -48,7 +48,7 @@ export class ArticlesFeedComponent implements OnInit, OnDestroy {
 //	    this.articlesFeedManagement(params["action"]);
 //      },
 //      (err: any) => {
-//        console.log(logMessage + "An error occured with the route invocation:" + err);
+//        console.log(logMessage + "An error occured with the route invocation:" + JSON.stringify(err));
 //      },
 //      () => {
 //        console.log(logMessage + "route invocation completed");

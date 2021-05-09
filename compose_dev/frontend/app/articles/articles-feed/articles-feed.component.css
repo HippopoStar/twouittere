@@ -13,35 +13,36 @@ div.article {
 	!max-width: 90%;
 	max-width: 40vw;
 	box-sizing: border-box;
-	padding: 15px 25px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	!margin-left: 10px;
-	!margin-right: 10px;
-	border-radius: 10px;
-	!border-style: solid;
-	!border-color: lightgreen;
-	!border-width: 1px;
-	outline-style: solid;
-	outline-color: skyblue;
-	outline-width: 1px;
+	padding: 0.33em 1.67em;
+	margin-top: 0.33em;
+	margin-bottom: 0.33em;
+	!margin-left: 0px;
+	!margin-right: 0px;
+	border-radius: 1em;
+	border-style: solid;
+	border-color: skyblue;
+	border-width: 1px;
+	!outline-style: solid;
+	!outline-color: lightgreen;
+	!outline-width: 1px;
 }
 
 div.article-content {
-	font-size: 15px;
+	font-size: 1em;
+	line-height: 1.5em;
 	width: 100%;
 }
 
 div.article-author {
 	width: 100%;
 	text-align: right;
-	font-size: 10px;
+	font-size: 0.67em;
 }
 
 div.article-publication-date {
 	width: 100%;
 	text-align: right;
-	font-size: 10px;
+	font-size: 0.67em;
 }
 
 span.bold {
@@ -49,6 +50,7 @@ span.bold {
 }
 
 p.article-content-text {
+	font-family: sans-serif;
 	font-style: italic;
 	max-width: 95%;
 	!inline-size: 80%;

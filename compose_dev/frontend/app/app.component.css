@@ -2,17 +2,27 @@ header {
 	!position: -webkit-sticky;
 	position: sticky;
 	top: 0px;
-	padding: 5px;
+	!padding: 0.5%;
     background-color: lightgray;
 }
 
 div.title {
+	margin-top: 1.5rem;
 	text-align: center;
+	font-size: 1.5rem;
+	white-space: pre-wrap;
+}
+
+span.title-name {
+	font-family: sans-serif;
+	font-weight: 700;
+	letter-spacing: 0.05em;
 }
 
 div.subtitle {
+	margin-bottom: 1.5rem;
 	text-align: center;
-	font-size: 10px;
+	font-size: 0.75rem;
 	font-style: italic;
 }
 
@@ -31,7 +41,7 @@ tr {
 }
 
 td.leftColumn {
-	font-size: 10px;
+	font-size: 0.67rem;
 	color: gray;
 	width: 10%;
 }
@@ -47,13 +57,13 @@ div.middleColumn {
 }
 
 td.rightColumn {
-	font-size: 10px;
+	font-size: 0.67rem;
 	color: gray;
 	width: 10%;
 }
 
 tr.topRaw {
-	font-size: 10px;
+	font-size: 0.67rem;
 	color: gray;
 	width: 10%;
 }

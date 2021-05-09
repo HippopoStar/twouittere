@@ -21,6 +21,7 @@ const assert = require("assert");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const async = require("async");
+const crypto = require("crypto");
 
 const options = {
     key: fs.readFileSync('./server.key'),
@@ -86,6 +87,7 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
     function checkClientAuth(db, req, res, param, callback) {
       var logMessage = "Dans la fonction 'checkClientAuth': ";
       console.log(logMessage + JSON.stringify(param));
+      /* Ces quelques lignes commentees representent des tests concernant l'usage de 'typeof' et 'instanceof' */
       //console.log(JSON.stringify(param["filterObject"] !== undefined));
       //console.log(JSON.stringify(param["filterObject"] instanceof Object));
       //console.log(JSON.stringify(param["filterObject"]["login"] !== undefined));
@@ -93,20 +95,28 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
       //console.log(typeof param["filterObject"]["login"]);
       //console.log(typeof(typeof "I need to know"));
       //console.log(JSON.stringify(typeof(param["filterObject"]["login"]) == "string"));
-      if (param["filterObject"] !== undefined && param["filterObject"] instanceof Object
-        && param["filterObject"]["login"] !== undefined && typeof(param["filterObject"]["login"]) === "string"
-        && param["filterObject"]["password"] !== undefined && typeof(param["filterObject"]["password"]) === "string") {
-        db.collection("Users").find({
+      if (!(param["filterObject"] === undefined) && param["filterObject"] instanceof Object
+        && !(param["filterObject"]["login"] === undefined) && typeof(param["filterObject"]["login"]) === "string"
+        && !(param["filterObject"]["password"] === undefined) && typeof(param["filterObject"]["password"]) === "string")
+      {
+        var hash = crypto.createHash('sha256');
+        hash.update(param["filterObject"]["password"]);
+        var userResearchObject = {
           "email": param["filterObject"]["login"],
-          "password": param["filterObject"]["password"]
-        }).toArray((err, documents) => {
+          "password": param["filterObject"]["password"],
+          "password_hash": hash.digest('hex')
+        };
+        console.log(logMessage + JSON.stringify(userResearchObject));
+        delete userResearchObject["password"];
+        console.log(logMessage + "SEARCHING item " + JSON.stringify(userResearchObject));
+        db.collection("Users").find(userResearchObject).toArray((err, documents) => {
           if (err) {
             console.log(logMessage + err);
             res.end(JSON.stringify({ "status": "fail" }));
           }
-          else if (documents !== undefined && documents.length > 0) {
+          else if (!(documents === undefined) && documents.length > 0) {
             console.log(logMessage + "OK");
-            callback(db, req, res, param, documents);
+            callback(db, req, res, param, documents); /* CALLBACK */
           }
           else {
             console.log(logMessage + "auth not found in \"Users\" database");
@@ -126,28 +136,38 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
       var logMessage = "Dans la requete '/auth/login' - GET: ";
       res.setHeader("Content-type","application/json; charset=UTF-8");
       res.setHeader("Access-Control-Allow-Origin","*");
-      if (req.params.login !== undefined && typeof(req.params.login) === "string"
-        && req.params.password !== undefined && typeof(req.params.password) === "string") {
-        let login = req.params.login;
-        let password = req.params.password;
-        console.log(logMessage + "Demande d'authentification avec login="+login+" et password="+password);
-        db.collection("Users").find({
-          "email": login,
-          "password": password
-        }).toArray(function(err, documents) {
-          if (documents !== undefined && documents.length == 1) {
-            console.log(logMessage+"Authentification de "+documents[0].firstname+" "+documents[0].lastname);
-            res.end(JSON.stringify({
-              "status": "success",
-              "content": documents[0]
-            }));
-          }
-          else {
-            console.log(logMessage+"Pas d'authentification");
-            res.end(JSON.stringify({ "status": "fail" }));
-          }
-	    });
-	  }
+      if (!(req.params.login === undefined) && typeof(req.params.login) === "string"
+        && !(req.params.password === undefined) && typeof(req.params.password) === "string")
+      {
+/*
+**        let login = req.params.login;
+**        let password = req.params.password;
+**        console.log(logMessage + "Demande d'authentification avec login="+login+" et password="+password);
+**        db.collection("Users").find({
+**          "email": login,
+**          "password": password
+**        }).toArray(function(err, documents) {
+**          if (documents !== undefined && documents.length == 1) {
+**            console.log(logMessage+"Authentification de "+documents[0].firstname+" "+documents[0].lastname);
+**            res.end(JSON.stringify({
+**              "status": "success",
+**              "content": documents[0]
+**            }));
+**          }
+**          else {
+**            console.log(logMessage+"Pas d'authentification");
+**            res.end(JSON.stringify({ "status": "fail" }));
+**          }
+**        });
+*/
+        checkClientAuth(db, req, res, { "filterObject": req.params }, (db, req, res, param, documents) => {
+          console.log(logMessage + JSON.stringify(req.params));
+          res.end(JSON.stringify({
+            "status": "success",
+            "content": documents[0]
+          }));
+        });
+      }
       else {
         console.log(logMessage+"Invalid parameters");
         res.end(JSON.stringify({ "status": "fail" }));
@@ -168,24 +188,30 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
         && !(req.body.firstname === undefined) && typeof(req.body.firstname) === "string" && reWord.test(req.body.firstname) && req.body.firstname.length <= firstnameFieldMaxLength
         && !(req.body.lastname === undefined) && typeof(req.body.lastname) === "string" && reWord.test(req.body.lastname) && req.body.lastname.length <= lastnameFieldMaxLength)
       {
-        let newUser = {
+        console.log(logMessage + JSON.stringify(req.body));
+        var hash = crypto.createHash('sha256');
+        hash.update(req.body.password);
+        var userRegistrationObject = {
           "email": req.body.login,
           "password": req.body.password,
+          "password_hash": hash.digest('hex'),
           "firstname": req.body.firstname,
           "lastname": req.body.lastname
         };
-        console.log(logMessage + JSON.stringify(req.body));
-        db.collection("Users").find({"email": newUser.email}).toArray((err, documents) => {
+        console.log(logMessage + JSON.stringify(userRegistrationObject));
+        delete userRegistrationObject.password;
+        db.collection("Users").find({"email": userRegistrationObject.email}).toArray((err, documents) => {
           if (documents !== undefined && documents.length == 0) {
-            db.collection("Users").insertOne(newUser); //Ca ajoute la propriete '_id' a l'objet passe en parametre !
+            console.log(logMessage + "INSERTING item " + JSON.stringify(userRegistrationObject));
+            db.collection("Users").insertOne(userRegistrationObject); //Ca ajoute la propriete '_id' a l'objet passe en parametre !
             res.end(JSON.stringify({
               "status": "success",
-              "content": newUser
+              "content": userRegistrationObject
             }));
-            console.log(logMessage + "Nouvel utilisateur : " + newUser.firstname + " " + newUser.lastname);
+            console.log(logMessage + "Nouvel utilisateur : " + userRegistrationObject.firstname + " " + userRegistrationObject.lastname);
           }
           else {
-            console.log(logMessage + "L'utilisateur \"" + newUser.login + "\" existe deja !");
+            console.log(logMessage + "L'utilisateur \"" + userRegistrationObject.email + "\" existe deja !");
             res.end(JSON.stringify({ "status": "fail" }));
           }
         });
@@ -207,7 +233,7 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
         console.log(logMessage + JSON.stringify(req.body));
         if (!(param["filterObject"]["login"] === undefined) && typeof(param["filterObject"]["content"]) === "string"
           && !(param["filterObject"]["content"] === undefined) && typeof(param["filterObject"]["content"]) === "string"
-          && param["filterObject"]["login"].length <= loginFieldMaxLength && param["filterObject"]["content"].length <= contentFieldMaxLength)
+          && param["filterObject"]["content"].length <= contentFieldMaxLength)
         {
           let newArticle = {
             "author": param["filterObject"]["login"],
@@ -239,8 +265,8 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
 
       console.log(logMessage + JSON.stringify(req.params));
       console.log("reDate test: " + JSON.stringify(reDate.test("1970-00-00T00:00:00.000Z")));
-      if (req.params.last_article_date !== undefined && typeof(req.params.last_article_date) === "string"
-        && req.params.last_article_id !== undefined && typeof(req.params.last_article_id) === "string") //TODO
+      if (!(req.params.last_article_date === undefined) && typeof(req.params.last_article_date) === "string"
+        && !(req.params.last_article_id === undefined) && typeof(req.params.last_article_id) === "string") //TODO
       {
         if (req.params.last_article_date === "None" || !reDate.test(req.params.last_article_date)) {
           console.log(logMessage + "Init/Refresh");
