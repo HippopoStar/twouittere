@@ -85,7 +85,10 @@ Ne pas omettre de completer le champ "imports" des fichiers \<module\_name\>.mod
 Dans un navigateur :  
 |	[Mozilla Developer - JavaScript reference - Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)  
 |	[GitHub.io - Mongo - find](http://mongodb.github.io/node-mongodb-native/3.6/api/Collection.html#find)  
-|	[docs.mongodb - order & limit](https://docs.mongodb.com/manual/reference/method/cursor.sort/#limit-results)  
+|	[docs.mongodb - Reference - Methods - Sort - order & limit](https://docs.mongodb.com/manual/reference/method/cursor.sort/#limit-results)  
+|	[docs.mongodb - drivers - node - Fundamentals - Promises and Callbacks - Callbacks](https://docs.mongodb.com/drivers/node/current/fundamentals/promises/#callbacks)  
+|	[docs.mongodb - drivers - node - Usage examples - Insert a document](https://docs.mongodb.com/drivers/node/current/usage-examples/insertOne/)  
+|	[docs.mongodb - Reference - Operators - Update operators - Array](https://docs.mongodb.com/manual/reference/operator/update/#array)  
 
 Note: importer 'BrowserModule' abusivement peut s'averer contre-productif
 

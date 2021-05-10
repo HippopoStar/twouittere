@@ -14,7 +14,23 @@
 		</tr>
 		<tr *ngFor="let article of (articles.articlesFeed$ | async)">
 			<td>
-				<div class="article">
+				<!-- Si l'auteur de l'article est un utilisateur tiers -->
+				<div *ngIf="article.author !== auth.email" class="third-party-article">
+					<div class="article-content">
+						<p class="article-content-text"><span class="bold">&#171; </span><span [innerHtml]="article.content"></span><span class="bold"> &#187;</span></p>
+						<!--
+						<pre class="article-content-text"><span class="bold">&#171; </span>{{article.content}}<span class="bold"> &#187;</span></pre>
+						-->
+					</div>
+					<div class="article-author">
+						<span class="article-author-text">{{article.author}}</span>
+					</div>
+					<div class="article-publication-date">
+						<span>[</span><span class="article-publication-date-text">{{article.publication_date}}</span><span>]</span>
+					</div>
+				</div>
+				<!-- Si l'auteur de l'article est l'utilisateur courant -->
+				<div *ngIf="article.author === auth.email" class="self-article">
 					<div class="article-content">
 						<p class="article-content-text"><span class="bold">&#171; </span><span [innerHtml]="article.content"></span><span class="bold"> &#187;</span></p>
 						<!--
