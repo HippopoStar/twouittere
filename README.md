@@ -142,3 +142,6 @@ Dans un navigateur:
 |	[Mozilla Developer - CSS reference - box-sizing](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing)  
 |	[Mozilla Developer - CSS reference - Guide to wrapping and breaking text](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Text/Wrapping_Text)  
 
+Dans un navigateur:  
+|	[Mozilla Developer - JavaScript reference - JSON.stringify](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)  
+

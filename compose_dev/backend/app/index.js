@@ -47,6 +47,31 @@ const firstnameFieldMaxLength = 20;
 const lastnameFieldMaxLength = 20;
 const contentFieldMaxLength = 500;
 
+  /* ------------ REQUESTS' LOG INTRO ----------------------------------------------------- */
+
+  function printLogIntro(message, param) {
+    var currentServerDate = new Date();
+    console.log("----- ----- ----- ----- ----- [" + currentServerDate.toDateString() + " at " + currentServerDate.toTimeString() + "]");
+    if (!(message === undefined) && typeof(message) === "string") {
+      console.log(message);
+    }
+    if (!(param === undefined) && param instanceof Object) {
+      if (!(param.password === undefined) && typeof(param.password) === "string") {
+        var replacer = (function (key, value) {
+            if (key === "password") {
+              value = "********";
+            }
+            return (value);
+          }
+        );
+        console.log(JSON.stringify(param, replacer, 2));
+      }
+      else {
+        console.log(JSON.stringify(param, null, 2));
+      }
+    }
+  }
+
   /* ------------ USER VERIFICATION ------------------------------------------------------- */
 
   /* 'req' et 'param' sont 2 arguments distincts car on ignore si la fonction appelante est liee a une request GET ou POST */
@@ -105,9 +130,7 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
     /* ---------- TEST 02 ----------------------------------------------------------------- */
 
     app.get('/', (request, response) => {
-      var currentServerDate = new Date();
-      console.log("----- ----- ----- ----- ----- [" + currentServerDate.toDateString() + " at " + currentServerDate.toTimeString() + "]");
-      console.log("Bonjour de Node.js");
+      printLogIntro("Bonjour de Node.js");
       response.setHeader('ContentType', 'text/plain');
       response.setHeader('Access-Control-Allow-Origin', '*');
       response.end('Bonjour de Node.js');
@@ -139,13 +162,11 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
     /* ---------- AUTHENTICATION ---------------------------------------------------------- */
 
     app.get("/auth/login=:login/password=:password", (req, res) => {
-      var currentServerDate = new Date();
       var logMessage = "Dans la requete GET '/auth/login': ";
       res.setHeader("Content-type","application/json; charset=UTF-8");
       res.setHeader("Access-Control-Allow-Origin","*");
 
-      console.log("----- ----- ----- ----- ----- [" + currentServerDate.toDateString() + " at " + currentServerDate.toTimeString() + "]");
-      console.log(logMessage + "attempting to authenticate:\n" + JSON.stringify(req.params, null, 2));
+      printLogIntro(logMessage + "attempting to authenticate:", req.params);
       if (!(req.params.login === undefined) && typeof(req.params.login) === "string"
         && !(req.params.password === undefined) && typeof(req.params.password) === "string")
       {
@@ -186,15 +207,13 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
     /* ---------- REGISTRATION ------------------------------------------------------------ */
 
     app.post("/auth/register", (req, res) => {
-      var currentServerDate = new Date();
       var logMessage = "Dans la requete POST '/auth/register': ";
       res.setHeader("Content-type","application/json; charset=UTF-8");
       res.setHeader("Access-Control-Allow-Origin","*");
       const reEmail = /^(\w+)((\.{1})(\w+))?@(\w+)\.(\w{2,3})$/; // le login ne doit notamment pas pouvoir etre 'default' (voir frontend: auth.service)
       const reWord = /^(\w+)$/;
 
-      console.log("----- ----- ----- ----- ----- [" + currentServerDate.toDateString() + " at " + currentServerDate.toTimeString() + "]");
-      console.log(logMessage + "attempting to register:\n" + JSON.stringify(req.body, null, 2));
+      printLogIntro(logMessage + "attempting to register:", req.body);
       if (!(req.body.login === undefined) && typeof(req.body.login) === "string" && reEmail.test(req.body.login) && req.body.login.length <= loginFieldMaxLength
         && !(req.body.password === undefined) && typeof(req.body.password) === "string" && reWord.test(req.body.password) && req.body.password.length <= passwordFieldMaxLength
         && !(req.body.firstname === undefined) && typeof(req.body.firstname) === "string" && reWord.test(req.body.firstname) && req.body.firstname.length <= firstnameFieldMaxLength
@@ -269,13 +288,11 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
     /* ---------- PUBLICATION ------------------------------------------------------------- */
 
     app.post("/articles/publish", (req, res) => {
-      var currentServerDate = new Date();
       var logMessage = "Dans la requete POST '/articles/publish': ";
       res.setHeader("Content-type","application/json; charset=UTF-8");
       res.setHeader("Access-Control-Allow-Origin","*");
 
-      console.log("----- ----- ----- ----- ----- [" + currentServerDate.toDateString() + " at " + currentServerDate.toTimeString() + "]");
-      console.log(logMessage + "attempting to publish:\n" + JSON.stringify(req.body, null, 2));
+      printLogIntro(logMessage + "attempting to publish:", req.body);
       async.waterfall(
         [
           function (callback) {
@@ -357,14 +374,12 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
     /* ---------- FEED -------------------------------------------------------------------- */
 
     app.get("/articles/feed/login=:login/password=:password/last_article_date=:last_article_date/last_article_id=:last_article_id", (req, res) => {
-      var currentServerDate = new Date();
       var logMessage = "Dans la requete GET '/articles/feed': ";
       var reDate = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\.(\d{3})Z$/;
       res.setHeader("Content-type","application/json; charset=UTF-8");
       res.setHeader("Access-Control-Allow-Origin","*");
 
-      console.log("----- ----- ----- ----- ----- [" + currentServerDate.toDateString() + " at " + currentServerDate.toTimeString() + "]");
-      console.log(logMessage + "attempting to load:\n" +  JSON.stringify(req.params, null, 2));
+      printLogIntro(logMessage + "attempting to load:", req.params);
       console.log(logMessage + "reDate test: " + JSON.stringify(reDate.test("1970-00-00T00:00:00.000Z")));
       async.waterfall(
         [
