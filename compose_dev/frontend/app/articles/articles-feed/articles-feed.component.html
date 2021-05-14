@@ -44,7 +44,7 @@
 						<span>[</span><span class="article-publication-date-text">{{article.publication_date}}</span><span>]</span>
 					</div>
 					<div>
-						<a [routerLink]="['/articles', { 'outlets': { 'articlesEdit': ['edit', 'edit', article._id] } }]">edit</a>
+						<a [routerLink]="['/articles', { 'outlets': { 'articlesInteractions': ['interactions', 'edit', article._id] } }]">edit</a>
 						<!--
 						<named-outlet [name]="'article-'+article._id"></named-outlet>
 						-->

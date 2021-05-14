@@ -3,9 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ArticlesRedactComponent } from './articles-redact/articles-redact.component';
 import { ArticlesFeedComponent } from './articles-feed/articles-feed.component';
+import { ArticlesInteractionsComponent } from './articles-interactions/articles-interactions.component';
 import { ArticlesEditComponent } from './articles-edit/articles-edit.component';
 
 import { AuthGuardService } from '../auth-guard.service';
+
+//import { NamedOutletDirective } from './named-outlet.directive';
 
 const routes: Routes = [
   {
@@ -25,15 +28,15 @@ const routes: Routes = [
     outlet: 'articlesFeed'
   },
   {
-    path: 'edit',
-    component: ArticlesEditComponent,
-    outlet: 'articlesEdit',
+    path: 'interactions',
+    component: ArticlesInteractionsComponent,
+    outlet: 'articlesInteractions',
     canActivate: [AuthGuardService]
   },
   {
-    path: 'edit/:action/:id',
-    component: ArticlesEditComponent,
-    outlet: 'articlesEdit',
+    path: 'interactions/:action/:id',
+    component: ArticlesInteractionsComponent,
+    outlet: 'articlesInteractions',
     canActivate: [AuthGuardService]
   }
 ];

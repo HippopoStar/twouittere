@@ -124,16 +124,16 @@ export class ArticlesService {
 //  }
 
   /* Relating to: OUTLET INVOCATION */
-  public displayEdit(args?: Array<string>): Promise<boolean> {
-    const logMessage: string = "Dans la fonction 'displayEdit': ";
-    let navigationParameters: Array<string> = ['edit'];
+  public displayInteractions(args?: Array<string>): Promise<boolean> {
+    const logMessage: string = "Dans la fonction 'displayInteractions': ";
+    let navigationParameters: Array<string> = ['interactions'];
     if (args !== undefined) {
       for (let navigationParameter of args) {
         navigationParameters.push(navigationParameter);
       }
     }
     console.log(logMessage + "navigationParameters: " + JSON.stringify(navigationParameters));
-    return this.router.navigate(['/articles', { outlets: { 'articlesEdit': navigationParameters } }]);
+    return this.router.navigate(['/articles', { outlets: { 'articlesInteractions': navigationParameters } }]);
   }
 
   public publishRedact(parameters: string): Observable<any> {

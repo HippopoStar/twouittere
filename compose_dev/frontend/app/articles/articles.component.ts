@@ -40,7 +40,7 @@ export class ArticlesComponent implements OnInit {
 //      );
 //    //setInterval(() => this.articles.displayFeed(), 3000); //Here for experiment purpose
 
-//    this.articles.displayEdit(); //ARTICLES-EDIT
+//    this.articles.displayInteractions(); //ARTICLES-EDIT
 
     this.auth.checkBackendServerAddress(this.articles.refreshArticles.bind(this.articles));
 
