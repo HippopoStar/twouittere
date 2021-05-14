@@ -35,6 +35,8 @@ export class ArticlesService {
   public errorMessage: string|undefined;
 
   constructor(private http: HttpClient, public auth: AuthService, public router: Router) {
+    const logMessage: string = "Dans le constructeur du service 'articles.service': ";
+    console.log(logMessage + "Appel");
   }
 
   /* Angular: Guide - http - Handling request errors */
@@ -121,6 +123,19 @@ export class ArticlesService {
 //    return this.router.navigate(['/articles', { outlets: { 'articlesFeed': navigationParameters } }]);
 //  }
 
+  /* Relating to: OUTLET INVOCATION */
+  public displayEdit(args?: Array<string>): Promise<boolean> {
+    const logMessage: string = "Dans la fonction 'displayEdit': ";
+    let navigationParameters: Array<string> = ['edit'];
+    if (args !== undefined) {
+      for (let navigationParameter of args) {
+        navigationParameters.push(navigationParameter);
+      }
+    }
+    console.log(logMessage + "navigationParameters: " + JSON.stringify(navigationParameters));
+    return this.router.navigate(['/articles', { outlets: { 'articlesEdit': navigationParameters } }]);
+  }
+
   public publishRedact(parameters: string): Observable<any> {
     const logMessage: string = "Dans la fonction 'publishRedact': ";
     console.log(logMessage + "Appel");
@@ -146,6 +161,20 @@ export class ArticlesService {
     return this.http.post<any>(url, JSON.stringify(req), httpOptions);
   }
 
+  public getArticleById(articleId: string): ArticleInterface|null {
+    const logMessage: string = "Dans la fonction 'getArticleById': ";
+    console.log(logMessage + "Appel");
+//    console.log(logMessage + "articlesFeed$.value: " + JSON.stringify(this.articlesFeed$.value));
+//    console.log(logMessage + "articlesFeed: " + JSON.stringify(this.articlesFeed));
+    for (let article of this.articlesFeed$.value) {
+//      console.log(article._id);
+      if (article._id === articleId) {
+        return (article);
+      }
+    }
+    return (null);
+  }
+
   public refreshArticles(): void {
     const logMessage: string = "Dans la fonction 'refrehArticles': ";
     console.log(logMessage + "Appel");
@@ -161,6 +190,8 @@ export class ArticlesService {
     console.log(logMessage + "Appel");
     let receivedArticles: Array<ArticleInterface>|null = null;
     let articleDatePrinter: Date|null = null;
+//    console.log("articlesFeed$.value:\n" + JSON.stringify(this.articlesFeed$.value));
+//    console.log(logMessage + "articlesFeed:\n" + JSON.stringify(this.articlesFeed));
     this.loadingAnimationStart("Attempting to collect data from server ("+ this.auth.backend_server_url + ")..."); //LOADING ANIMATION
     this.loadTen().subscribe(
       (serverResponse: ArticlesServerResponseInterface) => {

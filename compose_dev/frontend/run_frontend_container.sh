@@ -18,9 +18,10 @@ docker run \
 	--tty \
 	--volume "$(pwd)/app:/root/angular/TWOUITTERE/src/app" \
 	--volume "${CONTAINER_REPOSITORY_NAME}:/root/export" \
-	--publish 4202:4000 \
 	--rm \
 	"${IMAGE_NAME}" bash
+
+#	--publish 4202:4000 \
 
 echo "sudo chown --recursive \"$(id --user):$(id --group)\" ${CONTAINER_REPOSITORY_NAME}"
 

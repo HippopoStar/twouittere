@@ -3,33 +3,27 @@ import { CommonModule } from '@angular/common';
 
 import { FormsModule } from '@angular/forms';
 
-import { ArticlesRoutingModule } from './articles-routing.module';
 import { ArticlesComponent } from './articles.component';
 import { ArticlesRedactComponent } from './articles-redact/articles-redact.component';
 import { ArticlesFeedComponent } from './articles-feed/articles-feed.component';
+import { ArticlesEditComponent } from './articles-edit/articles-edit.component';
 
-import { AuthService } from '../auth.service';
-import { AuthGuardService } from '../auth-guard.service';
-
-import { ArticlesService } from './articles.service';
+import { ArticlesRoutingModule } from './articles-routing.module';
 
 @NgModule({
   declarations: [
     ArticlesComponent,
     ArticlesRedactComponent,
-    ArticlesFeedComponent
+    ArticlesFeedComponent,
+    ArticlesEditComponent
   ],
   imports: [
     CommonModule,
     ArticlesRoutingModule,
-    FormsModule,
+    FormsModule
   ],
   exports: [ArticlesComponent],
-  providers: [
-    AuthService,
-    AuthGuardService,
-    ArticlesService
-  ],
+  providers: [],
   bootstrap: [ArticlesComponent]
 })
 export class ArticlesModule { }

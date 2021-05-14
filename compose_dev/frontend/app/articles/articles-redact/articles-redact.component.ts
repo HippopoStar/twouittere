@@ -18,7 +18,10 @@ export class ArticlesRedactComponent implements OnInit {
   public publicationMaxLength: number = 500;
   public errorMessage: string = "";
 
-  constructor(public auth: AuthService, public articles: ArticlesService, public router: Router, public route: ActivatedRoute) {}
+  constructor(public auth: AuthService, public articles: ArticlesService, public router: Router, public route: ActivatedRoute) {
+    const logMessage: string = "Dans le constructeur du composant 'articles-redact.component': ";
+    console.log(logMessage + "Appel");
+  }
 
   ngOnInit(): void {
     const logMessage: string = "Dans la fonction ngOnInit du composant 'articles-redact': ";
@@ -36,6 +39,7 @@ export class ArticlesRedactComponent implements OnInit {
 //        console.log(logMessage + "route invocation completed");
 //      }
 //    );
+
   }
 
   onSubmit() {

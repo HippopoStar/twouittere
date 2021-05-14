@@ -145,3 +145,17 @@ Dans un navigateur:
 Dans un navigateur:  
 |	[Mozilla Developer - JavaScript reference - JSON.stringify](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)  
 
+Dans un navigateur:  
+|	[GitHub.com - Angular - Issues - Changing router-outlet's name variable from Attribute to Input type #12522](https://github.com/angular/angular/issues/12522)  
+|	[GitHub.com - Angular - Issues - Dynamically/Programmatically add new named router outlets to the template. #17173 - comment 415322417](https://github.com/angular/angular/issues/17173#issuecomment-415322417)  
+
+Note: completer par des services le champ 'Providers' du decorateur '@ngModule' annotant la classe declarant un module, appelle le constructeur de ces services lors de l'invocation d'un composant au travers de son outlet  
+Dans un navigateur:  
+|	[Angular: Guide - Providers - Limiting provider scope by lazy loading modules](https://angular.io/guide/providers#limiting-provider-scope-by-lazy-loading-modules)  
+Investigation: `import { ModuleWithProviders } from '@angular/core';`  
+Dans un navigateur:  
+|	[Angular: Reference - API reference - @angular/core - ModuleWithProviders](https://angular.io/api/core/ModuleWithProviders)  
+
+Dans un navigateur:  
+|	[Mozilla Developer - HTML reference - label - Accessibility concerns](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label#accessibility_concerns)  
+

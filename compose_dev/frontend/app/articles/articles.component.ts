@@ -13,7 +13,10 @@ import { ArticlesService } from './articles.service';
 })
 export class ArticlesComponent implements OnInit {
 
-  constructor(private router: Router, public auth: AuthService, public articles: ArticlesService) { }
+  constructor(private router: Router, public auth: AuthService, public articles: ArticlesService) {
+    const logMessage: string = "Dans le constructeur du composant 'articles.component': ";
+    console.log(logMessage + "Appel");
+  }
 
   ngOnInit(): void {
     let logMessage: string = "Dans la fonction ngOnInit du composant 'articles': ";
@@ -36,6 +39,8 @@ export class ArticlesComponent implements OnInit {
 //        }
 //      );
 //    //setInterval(() => this.articles.displayFeed(), 3000); //Here for experiment purpose
+
+//    this.articles.displayEdit(); //ARTICLES-EDIT
 
     this.auth.checkBackendServerAddress(this.articles.refreshArticles.bind(this.articles));
 

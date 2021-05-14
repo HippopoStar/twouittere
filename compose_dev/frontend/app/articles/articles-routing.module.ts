@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ArticlesRedactComponent } from './articles-redact/articles-redact.component';
 import { ArticlesFeedComponent } from './articles-feed/articles-feed.component';
+import { ArticlesEditComponent } from './articles-edit/articles-edit.component';
 
 import { AuthGuardService } from '../auth-guard.service';
 
@@ -22,6 +23,18 @@ const routes: Routes = [
     path: 'feed/:action',
     component: ArticlesFeedComponent,
     outlet: 'articlesFeed'
+  },
+  {
+    path: 'edit',
+    component: ArticlesEditComponent,
+    outlet: 'articlesEdit',
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'edit/:action/:id',
+    component: ArticlesEditComponent,
+    outlet: 'articlesEdit',
+    canActivate: [AuthGuardService]
   }
 ];
 

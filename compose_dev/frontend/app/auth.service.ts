@@ -27,7 +27,10 @@ export class AuthService {
   public lastname: string|null = null;
   public requestResponse: AuthRequestResponseInterface|null = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    const logMessage: string = "Dans le constructeur du service 'auth.service': ";
+    console.log(logMessage + "Appel");
+  }
 
   public checkBackendServerAddress(callback?: Function): void {
     const logMessage: string = "Dans la fonction 'checkBackendServerAddress': ";

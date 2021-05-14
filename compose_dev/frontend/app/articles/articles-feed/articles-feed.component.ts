@@ -22,9 +22,10 @@ export class ArticlesFeedComponent implements OnInit, OnDestroy {
 //  public articlesFeedChangesCount: number = 0;
 
   constructor(public articles: ArticlesService, public auth: AuthService, private route: ActivatedRoute, private router: Router) {
+    const logMessage: string = "Dans le constucteur du composant 'article-feed.component': ";
+    console.log(logMessage + "Appel");
+
     /* Relating to: OUTLET AUTO-REFRESH */
-//    const logMessage: string = "Dans le constucteur de la classe 'ArticlesFeedComponent': ";
-//
 //    this.articlesFeedObserver = this.articles.articlesFeed$.asObservable().subscribe(
 //      (param: Array<ArticleInterface>) => {
 //        console.log(logMessage + "articlesFeedObserver - param:\n" + JSON.stringify(param));
