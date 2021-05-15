@@ -39,6 +39,24 @@ const routes: Routes = [
     outlet: 'articlesInteractions',
     canActivate: [AuthGuardService]
   }
+//  {
+//    path: 'edit/:id',
+//    component: ArticlesEditComponent,
+//    outlet: 'articlesEdit-609d62b0d87832002a03bbb5',
+//    canActivate: [AuthGuardService]
+//  },
+//  {
+//    path: 'edit/:id',
+//    component: ArticlesEditComponent,
+//    outlet: 'articlesEdit-609d743ed87832002a03bbb6',
+//    canActivate: [AuthGuardService]
+//  },
+//  {
+//    path: 'edit/:id',
+//    component: ArticlesEditComponent,
+////    outlet: 'articlesEdit-**',
+//    canActivate: [AuthGuardService]
+//  }
 ];
 
 @NgModule({

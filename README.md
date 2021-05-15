@@ -159,3 +159,10 @@ Dans un navigateur:
 Dans un navigateur:  
 |	[Mozilla Developer - HTML reference - label - Accessibility concerns](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label#accessibility_concerns)  
 
+Dans un navigateur :  
+|	[Angular: Reference - API reference - @angular/router - Route - outlet](https://angular.io/api/router/Route#outlet)  
+|	[Angular-university - Angular ng-template, ng-container and ngTemplateOutlet](https://blog.angular-university.io/angular-ng-template-ng-container-ngtemplateoutlet/#dynamictemplatecreationwiththengtemplateoutletdirective)  
+|	[Angular: Guide - Structural Directives - Creating template fragments with \<ng-template\>](https://angular.io/guide/structural-directives#creating-template-fragments-with-ng-template)  
+|	[Angular: Reference - API reference - @angular/common - NgTemplateOutlet](https://angular.io/api/common/NgTemplateOutlet)  
+|	[Angular: Reference - API reference - @angular/common - NgComponentOutlet](https://angular.io/api/common/NgComponentOutlet)  
+

@@ -1,1 +1,60 @@
-<p>articles-edit works!</p>
+<!--
+<div [targetArticleId]="article._id">
+</div>
+-->
+<div>
+	<!--
+	<div *ngIf="!this.articles.isPublishing">
+	</div>
+	-->
+	<form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+		<table class="form-group">
+			<tr>
+				<td colspan="2">
+					<label for="redact"> Redact </label>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<textarea type="text" class="form-control" id="redact" required
+						placeholder="Type your text here" [(ngModel)]="redact" name="redact" >
+					</textarea>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<span class="redact-length">{{redact.length}}/{{publicationMaxLength}}</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<button (click)="this.cancel_edit_form()"> Cancel </button>
+				</td>
+				<td>
+					<!--
+					<button type="submit" [routerLink]="['/articles', { 'outlets': { 'articlesFeed': ['feed', 'refresh'] } }]"> Publish </button>
+					-->
+					<button type="submit"> Submit edition </button>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<div class="error-message">
+		<span>{{errorMessage}}</span>
+	</div>
+</div>
+<!--
+<div *ngIf="this.articles.isPublishing">
+	<table>
+		<tr>
+			<td>
+				<span>Article edite avec succes !</span>
+			</td>
+			<td>
+				<button (click)="this.display_redact_form()"> OK &#10003; </button>
+			</td>
+		</tr>
+	</table>
+</div>
+-->
+

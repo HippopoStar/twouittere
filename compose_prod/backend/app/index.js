@@ -46,6 +46,7 @@ const passwordFieldMaxLength = 20;
 const firstnameFieldMaxLength = 20;
 const lastnameFieldMaxLength = 20;
 const contentFieldMaxLength = 500;
+const re_documentId = /^(\w{24})$/;
 
   /* ------------ REQUESTS' LOG INTRO ----------------------------------------------------- */
 
@@ -358,6 +359,83 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err
               "content": {
                 "article_id": insertedArticle._id,
                 "updated_user": updatedUser
+              }
+            }));
+            //callback(null);
+            console.log(logMessage + "async.waterfall completed");
+          }
+        ],
+        function () {
+          console.log(logMessage + "async.waterfall didn't go all along the way !");
+          res.end(JSON.stringify({ "status": "fail" }));
+        }
+      );
+    });
+
+    /* ---------- EDITION ----------------------------------------------------------------- */
+
+    app.put("/articles/edit", (req, res) => {
+      var logMessage = "Dans la requete PUT '/articles/edit': ";
+      res.setHeader("Content-type","application/json; charset=UTF-8");
+      res.setHeader("Access-Control-Allow-Origin","*");
+
+      printLogIntro(logMessage + "attempting to edit:", req.body);
+      async.waterfall(
+        [
+          function (callback) {
+            checkClientAuth(db, req, res, { "filterObject": req.body }, (db, req, res, param, documents) => {
+              //console.log(logMessage + "param:\n" + JSON.stringify(param, null, 2));
+              //console.log(logMessage + "param[\"filterObject\"]:\n" + JSON.stringify(param["filterObject"], null, 2));
+              callback(null, param["filterObject"]);
+            });
+          },
+          function (requestBody, callback) {
+            if (!(requestBody["content"] === undefined) && typeof(requestBody["content"]) === "string" && requestBody["content"].length <= contentFieldMaxLength
+              && !(requestBody["edited_id"] === undefined) && typeof(requestBody["edited_id"]) === "string" && re_documentId.test(requestBody["edited_id"]))
+            {
+              var editedArticle = {
+                //"author": requestBody["login"],
+                "id": requestBody["edited_id"],
+                "content": requestBody["content"],
+                "edition_date": new Date().toISOString()
+              };
+              callback(null, editedArticle);
+            }
+            else {
+              console.log(logMessage + "invalid parameters:\n" + JSON.stringify(requestBody, null, 2));
+              //res.end(JSON.stringify({ "status": "fail" }));
+              callback(true);
+            }
+          },
+          function (editedArticle, callback) {
+            console.log(logMessage + JSON.stringify(editedArticle, null, 2));
+//            db.collection("Articles").findOne({ _id: ObjectId(editedArticle.id) })
+//              .then((result) => console.log(logMessage + "debug: " + JSON.stringify(result, null, 2)));
+            db.collection("Articles").findOneAndUpdate({ _id: ObjectId(editedArticle.id) },
+                {
+                  $set: { content: editedArticle.content, last_edit: editedArticle.edition_date }
+                },
+                { returnOriginal: false }
+              )
+              .then((result) => {
+                if (!(result.value === undefined)) {
+                  console.log("Article mis a jour:\n"+JSON.stringify(result.value, null, 2));
+                  callback(null, result.value);
+                }
+                else {
+                  callback(true);
+                }
+              })
+              .catch((err) => {
+                console.log(logMessage + "an error occured while updating publication content in database: " + err);
+                res.end(JSON.stringify({ "status": "fail" }));
+              });
+          },
+          function (updatedArticle, callback) {
+            res.end(JSON.stringify({
+              "status": "success",
+              "content": {
+                "article_id": updatedArticle._id,
               }
             }));
             //callback(null);

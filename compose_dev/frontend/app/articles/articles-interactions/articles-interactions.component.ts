@@ -56,6 +56,20 @@ export class ArticlesInteractionsComponent implements OnInit {
         console.log(logMessage + JSON.stringify(article));
 //        console.log(logMessage + "articles.articlesFeed$.value: " + JSON.stringify(this.articles.articlesFeed$.value));
 //        console.log(logMessage + "articles.articlesFeed: " + JSON.stringify(this.articles.articlesFeed));
+        const nav: Array<any> = [
+          '/articles',
+          {
+            outlets: {
+              ["articlesEdit-" + id]: ['edit', id]
+            }
+          }
+        ];
+        console.log(logMessage + JSON.stringify(nav));
+        //this.router.navigate(['/articles', { outlets: { 'articlesFeed': ['feed', 'refresh'] } }]);
+        //this.router.navigate(['/articles', { outlets: { ["articlesEdit-" + id]: ['edit', id] } }]);
+        //this.router.navigate(nav);
+        //this.router.navigate(['/articles', 'edit', id]);
+        this.articles.articleToEditId = id;
       }
       else if (action === "refresh") {
         this.articles.refreshArticles();

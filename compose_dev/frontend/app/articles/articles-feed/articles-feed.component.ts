@@ -9,6 +9,9 @@ import { AsyncPipe } from '@angular/common';
 import { AuthService } from '../../auth.service';
 import { ArticlesService, ArticleInterface } from '../articles.service';
 
+//import { CommonModule } from '@angular/common';
+//import { NgComponentOutlet } from '@angular/common';
+import { ArticlesEditComponent } from '../articles-edit/articles-edit.component';
 
 @Component({
   selector: 'app-articles-feed',
@@ -20,6 +23,7 @@ export class ArticlesFeedComponent implements OnInit, OnDestroy {
 //  public articlesFeed: Array<ArticleInterface> = [];
 //  public articlesFeedObserver: Subscription; //OBSERVER
 //  public articlesFeedChangesCount: number = 0;
+  public ArticlesEditComponent: any = ArticlesEditComponent;
 
   constructor(public articles: ArticlesService, public auth: AuthService, private route: ActivatedRoute, private router: Router) {
     const logMessage: string = "Dans le constucteur du composant 'article-feed.component': ";

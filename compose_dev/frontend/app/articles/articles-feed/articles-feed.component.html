@@ -45,9 +45,19 @@
 					</div>
 					<div>
 						<a [routerLink]="['/articles', { 'outlets': { 'articlesInteractions': ['interactions', 'edit', article._id] } }]">edit</a>
+						<span> | </span>
+						<a [routerLink]="['/articles', { 'outlets': { 'articlesInteractions': ['interactions', 'remove', article._id] } }]">delete (not implemented yet)</a>
 						<!--
-						<named-outlet [name]="'article-'+article._id"></named-outlet>
+						<a [routerLink]="['/articles', { 'outlets': { 'articlesEdit-609d62b0d87832002a03bbb5': ['edit', article._id] } }]">[609d62b0d87832002a03bbb5]</a>
+						<a [routerLink]="['/articles', { 'outlets': { 'articlesEdit-609d743ed87832002a03bbb6': ['edit', article._id] } }]">[609d743ed87832002a03bbb6]</a>
+						<named-outlet [name]="'articlesEdit-'+article._id"></named-outlet>
+						<router-outlet name="articlesEdit-609d62b0d87832002a03bbb5"></router-outlet>
+						<router-outlet name="articlesEdit-609d743ed87832002a03bbb6"></router-outlet>
+						<router-outlet></router-outlet>
 						-->
+					</div>
+					<div *ngIf="article._id === articles.articleToEditId">
+						<ng-container *ngComponentOutlet="ArticlesEditComponent"></ng-container>
 					</div>
 				</div>
 			</td>

@@ -12,6 +12,7 @@ export interface ArticleInterface {
   content: string;
 //  content_lines?: Array<string>;
   publication_date: string;
+  last_edit?: string;
 }
 
 export interface ArticlesServerResponseInterface {
@@ -29,6 +30,7 @@ export class ArticlesService {
   public articlesFeed$: BehaviorSubject<ArticleInterface[]> = new BehaviorSubject<ArticleInterface[]>([]); //OBSERVABLE
   public last_article_date: string = "None";
   public last_article_id: string = "None";
+  public articleToEditId: string = "None";
   public loadingAnimationController: boolean = false;
   public loadingPictogram: string = "";
   public loadingMessage: string = "";
@@ -159,6 +161,32 @@ export class ArticlesService {
       console.log(logMessage + "re: " + JSON.stringify(req));
     }
     return this.http.post<any>(url, JSON.stringify(req), httpOptions);
+  }
+
+  public publishEdit(parameters: string, targetArticleId: string): Observable<any> {
+    const logMessage: string = "Dans la fonction 'publishEdit': ";
+    console.log(logMessage + "Appel");
+    let url: string = this.auth.backend_server_url+"/articles/edit";
+    let req: Object = {
+      "login": this.auth.email,
+      "password": this.auth.password,
+      "edited_id": targetArticleId,
+      "content": parameters
+    };
+    let httpOptions: Object = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    if (this.auth === undefined) {
+      console.log(logMessage + "auth undefined");
+    }
+    else {
+      console.log(logMessage + "auth.email: " + JSON.stringify(this.auth.email));
+      console.log(logMessage + "auth.password: " + JSON.stringify(this.auth.password));
+      console.log(logMessage + "re: " + JSON.stringify(req));
+    }
+    return this.http.put<any>(url, JSON.stringify(req), httpOptions);
   }
 
   public getArticleById(articleId: string): ArticleInterface|null {
